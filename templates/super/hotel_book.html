@@ -1,0 +1,337 @@
+{% extends "base/base2.html" %}
+{% load static %}
+{% block title %} Hotel Booking | Jomivic Travels {% endblock title %}
+
+{% block cssfiles %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"/>
+
+
+<style>
+
+  .faq_bg{
+    background-image: url("{% static 'img/bg-bread.jpg' %}");
+    display: grid;
+    place-items: center;
+    background-position:center;
+    background-size:cover;
+    height: 68vh;
+  }
+
+  .breadcrumb-item+.breadcrumb-item::before{
+    color: white !important;
+    content: ">>";
+  }
+  .make_bg{
+    background: #ffffff28;
+  }
+
+
+  .animated-section {
+    overflow: hidden;
+    position: relative; }
+    .animated-section .animation-section {
+      opacity: 0.3; }
+      .animated-section .animation-section .round {
+        width: 12px;
+        height: 12px;
+        background-color: transparent;
+        border: 2px solid #ef3f3e;
+        border-radius: 100%;
+        position: absolute;
+        -webkit-animation: myOrbit 9s linear infinite;
+                animation: myOrbit 9s linear infinite; }
+        .animated-section .animation-section .round.r-2 {
+          width: 15px;
+          height: 15px; }
+        .animated-section .animation-section .round.r-y {
+          border-color: #e8b10b; }
+      .animated-section .animation-section .square {
+        width: 12px;
+        height: 12px;
+        background-color: transparent;
+        position: absolute;
+        border: 2px solid #ef3f3e;
+        -webkit-animation: animationFramesTwo 50s infinite linear;
+                animation: animationFramesTwo 50s infinite linear; }
+        .animated-section .animation-section .square.s-2 {
+          width: 15px;
+          height: 15px; }
+      .animated-section .animation-section .cross {
+        height: 12px;
+        width: 12px;
+        position: absolute;
+        -webkit-animation: animationFramesTwo 50s infinite linear;
+                animation: animationFramesTwo 50s infinite linear; }
+        .animated-section .animation-section .cross:after, .animated-section .animation-section .cross:before {
+          position: absolute;
+          content: " ";
+          height: 12px;
+          width: 2px;
+          background-color: #ef3f3e; }
+        .animated-section .animation-section .cross:after {
+          -webkit-transform: rotate(-45deg);
+                  transform: rotate(-45deg); }
+        .animated-section .animation-section .cross:before {
+          -webkit-transform: rotate(45deg);
+                  transform: rotate(45deg); }
+      .animated-section .animation-section .po-1 {
+        top: 50%;
+        left: 5%; }
+      .animated-section .animation-section .po-2 {
+        right: 5%;
+        bottom: 7%; }
+      .animated-section .animation-section .po-3 {
+        top: 20%;
+        right: 8%; }
+      .animated-section .animation-section .po-4 {
+        bottom: 5%;
+        left: 30%; }
+      .animated-section .animation-section .po-5 {
+        right: 20%;
+        top: 10%; }
+      .animated-section .animation-section .po-6 {
+        top: 2%;
+        left: 47%; }
+      .animated-section .animation-section .po-7 {
+        right: 1%;
+        top: 53%; }
+      .animated-section .animation-section .po-8 {
+        bottom: 1%;
+        right: 27%; }
+      .animated-section .animation-section .po-9 {
+        top: 24%;
+        right: 30%; }
+      .animated-section .animation-section .po-10 {
+        top: 5%;
+        left: 15%; }
+      .animated-section .animation-section .po-11 {
+        bottom: 32%;
+        left: 36%; }
+      .animated-section .animation-section .po-12 {
+        left: 2%;
+        bottom: 10%; }
+
+        .svg_cover_box{
+          width: 90px !important;
+          height: 90px !important;
+          border-radius: 50%;
+          margin: auto;
+          background-color: rgba(239, 63, 62, 0.05);
+          padding: 20px;
+        }
+  
+
+      @-webkit-keyframes myOrbit {
+        from {
+          -webkit-transform: rotate(0deg) translateX(10px) rotate(0deg); }
+        to {
+          -webkit-transform: rotate(360deg) translateX(10px) rotate(-360deg); } }
+      
+      @-webkit-keyframes animationFramesTwo {
+        0% {
+          -webkit-transform: translate(0px, 0px) rotate(0deg) scale(1);
+                  transform: translate(0px, 0px) rotate(0deg) scale(1); }
+        20% {
+          -webkit-transform: translate(73px, -1px) rotate(36deg) scale(0.9);
+                  transform: translate(73px, -1px) rotate(36deg) scale(0.9); }
+        40% {
+          -webkit-transform: translate(141px, 72px) rotate(72deg) scale(1);
+                  transform: translate(141px, 72px) rotate(72deg) scale(1); }
+        60% {
+          -webkit-transform: translate(83px, 122px) rotate(108deg) scale(1.2);
+                  transform: translate(83px, 122px) rotate(108deg) scale(1.2); }
+        80% {
+          -webkit-transform: translate(-40px, 72px) rotate(144deg) scale(1.1);
+                  transform: translate(-40px, 72px) rotate(144deg) scale(1.1); }
+        100% {
+          -webkit-transform: translate(0px, 0px) rotate(0deg) scale(1);
+                  transform: translate(0px, 0px) rotate(0deg) scale(1); } }
+
+
+</style>
+
+{% endblock cssfiles %}
+
+{% block content %}
+
+<div id="preloader">
+  <img src="{% static 'img/loader.gif' %}" alt="" width="20%">
+</div>
+
+<div class="faq_bg">
+  <div class="text-white d-flex flex-column justify-content-center align-items-center shadow-5 p-3 p-md-5 make_bg">
+    <h2 class="fw-bolder" data-aos="fade-up" data-aos-duration="2000">Review</h2>
+    <nav aria-label="breadcrumb" class="container justify-content-center d-flex align-items-center" data-aos="fade-up" data-aos-duration="2000">
+      <ol class="breadcrumb m-0">
+        <li class="breadcrumb-item"><a href="{% url 'dashboard' %}" class="text-white fw-bolder">Home</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'hotel_details' %}" class="text-white fw-bolder">Hotels</a></li>
+        <li class="breadcrumb-item active text-white fw-bolder" aria-current="page">Review</li>
+      </ol>
+  </nav>
+  </div>
+</div>
+
+
+
+
+
+<section class="section-b-space bg-inner animated-section my-3 my-md-5">
+    <div class="animation-section">
+        <div class="cross po-2"></div>
+        <div class="round po-5"></div>
+        <div class="round r-2 po-6"></div>
+        <div class="round r-2 po-7"></div>
+        <div class="round r-y po-8"></div>
+        <div class="square po-10"></div>
+        <div class="square s-2 po-12"></div>
+    </div>
+
+
+    <div class="container text-capitalize">
+        <div class="row">
+            <div class="col-12 col-md-7">
+                <div class="guest-detail bg-white p-3 shadow-3" data-aos="fade-up" data-aos-duration="2000">
+                    <h4 class="text-black fw-bold">Traveller Information</h4>
+                    <form>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col first-name">
+                                    <label>first name</label>
+                                    <input type="text" id="firstName" class="form-control" placeholder="First name">
+                                </div>
+                                <div class="col mt-3 mt-md-0">
+                                    <label>last name</label>
+                                    <input type="text" id="lastName" class="form-control" placeholder="Last name">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mt-3">
+                            <label>Email address</label>
+                            <input type="email" class="form-control" placeholder="Enter email">
+                            <small id="emailHelp" class="form-text text-muted">Booking confirmation will be sent to
+                                this email ID.</small>
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <label>contact info</label>
+                            <input id="mobile-no" type="tel" class="form-control">
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <label for="exampleFormControlTextarea1">special request</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                                placeholder="e.g.. early check-in, airport transfer"></textarea>
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <label for="exampleFormControlTextarea1">have a coupon code?</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Promo Code">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">apply</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="submit-btn mt-3 text-end">
+                            <a href="{% url 'hotel_checkout' %}" class="btn make_bg_one text-white rounded-0 shadow-0">Pay Now</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-5 mt-3 mt-md-0 booking-order">
+                <div class="summery-box bg-white p-3 shadow-3" data-aos="fade-up" data-aos-duration="2000">
+                    <h4 class="fw-bold text-black">booking summery</h4>
+                    <div class="hotel-section d-flex align-items-center">
+                        <div class="hotel-img me-3">
+                            <img src="{% static 'img/room/1.jpg' %}" class="img-fluid blur-up lazyload" alt="" width="150">
+                        </div>
+                        <div class="hotel-detail">
+                            <h6 class="fw-bold text-black mb-0">sea view hotel</h6>
+                            <p class="m-0 p-0">Mina Road, Bur Dubai, Dubai</p>
+                        </div>
+                    </div>
+                    <div class="summery-section mt-3">
+                        <div class="box d-flex align-items-center justify-content-between">
+                            <div class="left">
+                                <div class="up">
+                                    <h6>check in</h6>
+                                    <h6 class="text-black">tue, 18 sep 2019</h6>
+                                </div>
+                                <div class="down">
+                                    <h6>check in time</h6>
+                                    <h6 class="text-black">2.00 pm</h6>
+                                </div>
+                            </div>
+                            <div class="right">
+                                <div class="up">
+                                    <h6>check out</h6>
+                                    <h6 class="text-black">fri, 21 sep 2019</h6>
+                                </div>
+                                <div class="down">
+                                    <h6>check out time</h6>
+                                    <h6 class="text-black">12.00 pm</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="summery-section d-flex align-items-center justify-content-between mt-3">
+                        <h6 class="mb-0 text-black">2 guest, 1 deluxe room, 3 night</h6>
+                        <a href="#" class="edit-cls make_color_one">edit</a>
+                    </div>
+
+                    <div class="summery-section mt-3">
+                        <div class="payment-details">
+                            <h6 class="text-black">payment details</h6>
+                            <table class="w-100">
+                                <tbody>
+                                    <tr>
+                                        <td class="text-start">base price</td>
+                                        <td class="text-end text-black">$2510</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-start">promo discount</td>
+                                        <td class="text-end text-black">- $250</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-start">tax & service fees</td>
+                                        <td class="text-end text-black">+ $150</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="summery-section mt-3">
+                        <div class="payment-details">
+                            <table class="w-100">
+                                <tbody>
+                                    <tr>
+                                        <td>payable amount</td>
+                                        <td class="amount text-end text-black fw-bold">$2410</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+{% endblock content %}
+
+{% block jsfiles %}
+
+{% endblock jsfiles %}

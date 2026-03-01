@@ -1,0 +1,529 @@
+{% extends "base/base2.html" %}
+{% load static %}
+{% block title %} Resturant Information | Jomivic Travels {% endblock title %}
+
+{% block cssfiles %}
+
+<style>
+  
+  .faq_bg{
+    background-image: url("{% static 'img/breadcrumb2.jpg' %}");
+    display: grid;
+    place-items: center;
+    background-position:center;
+    background-size:cover;
+    height: 68vh;
+  }
+
+  ul li{
+    list-style: none !important;
+  }
+
+  #scrollspy1{
+    top: 70px;
+    z-index: 0;
+  }
+
+</style>
+{% endblock cssfiles %}
+
+{% block content %}
+
+<div id="preloader">
+  <img src="{% static 'img/loader.gif' %}" alt="" width="20%">
+</div>
+
+<div class="faq_bg text-capitalize">
+  <div class="text-black d-flex flex-column justify-content-center align-items-center make_bg" data-aos="fade-up" data-aos-duration="2000">
+    <img src="{% static 'img/resturant_logo.png' %}" alt="" width="100" data-aos="fade-up" data-aos-duration="2000">
+    <h2 class="fw-bold text-capitalize text-black" data-aos="fade-up" data-aos-duration="2000">italian restro</h2>
+    <p class="p-0 m-0 fw-bold" data-aos="fade-up" data-aos-duration="2000">Fast Food, Cafe, Italian</p>
+    <div class="d-flex align-items-center mt-2" data-aos="fade-up" data-aos-duration="2000">
+      <span class="pe-3">4.5 Rating</span>
+      <span class="px-3 border-end border-start border-dark">30 mins</span>
+      <span class="ps-3">$25 for 2</span>
+    </div>
+    
+  </div>
+</div>
+
+<div class="container py-3 py-md-5">
+  <section class="single-section small-section bg-inner">
+    <div class="container text-capitalize">
+        <div class="row">
+
+            <div class="col-12 col-md-9">
+
+                <div class="description-section tab-section">
+                    <div class="menu-top menu-up">
+                        <ul class="nav nav-tabs shadow-3 bg-white mb-3" id="top-tab" role="tablist" data-aos="fade-up" data-aos-duration="2000">
+                            <li class="nav-item"><a data-mdb-toggle="tab" class="nav-link active" href="#order_online">Order Online</a></li>
+                            <li class="nav-item"><a data-mdb-toggle="tab" class="nav-link" href="#overview">Overview</a></li>
+                            <li class="nav-item"><a data-mdb-toggle="tab" class="nav-link" href="#gallery">Gallery</a></li>
+                            <li class="nav-item"><a data-mdb-toggle="tab" class="nav-link" href="#location">location</a></li>
+                            <li class="nav-item"><a data-mdb-toggle="tab" class="nav-link" href="#book_a_table">Book A Table</a></li>
+                            <li class="nav-item"><a data-mdb-toggle="tab" class="nav-link" href="#review">reviews</a></li>
+                        </ul>
+                        <div class="description-details shadow-3 tab-content" id="top-tabContent" data-aos="fade-up" data-aos-duration="2000">
+                            <div class="menu-part tab-pane bg-white p-3 fade show active order_online small" role="tabpanel" id="order_online">
+                            
+                              <div class="row">
+                                
+                                <div class="col-md-4">
+                                  <!-- Scrollspy -->
+                                  <div id="scrollspy1" class="sticky-top">
+                                    <ul class="nav flex-column nav-pills menu-sidebar">
+                                      <li class="nav-item py-2">
+                                        <a class="nav-link fs-6" href="#bestseller">Bestseller</a>
+                                      </li>
+                                      <li class="nav-item py-2">
+                                        <a class="nav-link fs-6" href="#quick bites">Quick Bites</a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                  <!-- Scrollspy -->
+                                </div>
+
+                                <div class="col-md-8">
+                                  <!-- Spied element -->
+                                  <div data-mdb-scrollspy-init data-mdb-target="#scrollspy1" data-mdb-offset="0" class="scrollspy-example">
+                                    <section id="bestseller" class="border-bottom py-3">
+                                      <div class="order-title">
+                                        <h5 class="text-black fw-bold">bestseller</h5>
+                                        <h6 class="text-muted">5 items</h6>
+                                    </div>
+                                    <div class="order-items">
+                                        <div class="items veg">
+                                            <h6 class="text-black fw-bold">Veg Cheese Quesadillas</h6>
+                                            <p>Mexican quesadillas overloaded with exotic
+                                                vegetables, layered with house special salsa
+                                                sauce and lots of cheese.</p>
+                                            <!-- <h5>$10.00</h5> -->
+                                          
+                                        </div>
+                                        <div class="items non-veg">
+                                            <h6 class="text-black fw-bold">Barbaresca Pasta</h6>
+                                            <p>Spinach ravioli with combination sauce,
+                                                broccoli, zucchini.</p>
+
+                                        </div>
+                                        <div class="items veg">
+                                            <h6 class="text-black fw-bold">Sprouts Salad</h6>
+                                            <p>Tomato, cucumber, peppers, olives, onion,
+                                                feta, iceberg lettuce.</p>
+                                        </div>
+                                    </div>
+
+                                    </section>
+
+                                    <section id="quick bites" class="border-bottom py-3">
+                                        <div class="order-title">
+                                          <h5 class="text-black fw-bold">Quick Bites</h5>
+                                      </div>
+                                      <div class="order-items">
+                                          <div class="items veg">
+                                              <h6 class="text-black fw-bold">Veg Cheese Quesadillas</h6>
+                                              <p>Mexican quesadillas overloaded with exotic
+                                                  vegetables, layered with house special salsa
+                                                  sauce and lots of cheese.</p>
+                                              <!-- <h5>$10.00</h5> -->
+                                            
+                                          </div>
+                                          <div class="items non-veg">
+                                              <h6 class="text-black fw-bold">Barbaresca Pasta</h6>
+                                              <p>Spinach ravioli with combination sauce,
+                                                  broccoli, zucchini.</p>
+  
+                                          </div>
+                                          <div class="items veg">
+                                              <h6 class="text-black fw-bold">Sprouts Salad</h6>
+                                              <p>Tomato, cucumber, peppers, olives, onion,
+                                                  feta, iceberg lettuce.</p>
+                                          </div>
+                                      </div>
+                                    </section>
+
+
+                                  </div>
+                                  <!-- Spied element -->
+                                </div>
+                              
+                              
+                              </div>
+
+                            </div>
+
+                            <div class="overview menu-part tab-pane bg-white p-3 fade" role="tabpanel" id="overview">
+                              <div class="row p-3">
+                                <div class="col-sm-6">
+                                    <div class="about-sec">
+                                        <h6>Phone number: 09876543210</h6>
+                                    </div>
+                                    <div class="about-sec">
+                                        <h6>cuisine</h6>
+                                        <ul class="p-0">
+                                            <li>Fast Food</li>
+                                            <li>cafe</li>
+                                            <li>italian</li>
+                                        </ul>
+                                    </div>
+                                    <div class="about-sec">
+                                        <h6>opening hours</h6>
+                                        <ul class="p-0">
+                                            <li>Monday to Friday: 11.00 a.m. to 11.00 p.m.</li>
+                                            <li>Saturday & Sunday: 10.00 a.m. to 12.00 p.m.</li>
+                                        </ul>
+                                    </div>
+                                    <div class="about-sec">
+                                        <h6>address</h6>
+                                        <ul class="p-0">
+                                            <li>9716 Riverside Dr, Mays Landing, NJ 08330</li>
+                                            <li>24 Lafayette Drive, Ladson, SC 29456</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="about-sec mt-sm-0 mt-2">
+                                        <h6>facility</h6>
+                                        <ul class="p-0">
+                                            <li>card accepted</li>
+                                            <li>parking availble</li>
+                                            <li>banquet area</li>
+                                            <li>home delivery</li>
+                                            <li>table booking</li>
+                                            <li>available for events</li>
+                                            <li>game zone</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="menu-part tab-pane bg-white p-3 fade gallery" role="tabpanel" id="gallery">
+                                <div class="row">
+                                  <div class="col-12 col-md-6 col-lg-4 mt-3 mt-md-0">
+                                    <img src="{% static 'img/tour/7.jpg' %}" alt="" width="100%">
+                                  </div>
+                                  
+                                  <div class="col-12 col-md-6 col-lg-4 mt-3 mt-md-0">
+                                    <img src="{% static 'img/tour/8.jpg' %}" alt="" width="100%">
+                                  </div>
+
+                                  <div class="col-12 col-md-6 col-lg-4 mt-3 mt-md-0">
+                                    <img src="{% static 'img/tour/9.jpg' %}" alt="" width="100%">
+                                  </div>
+
+                                  <div class="col-12 col-md-6 col-lg-4 mt-3">
+                                    <img src="{% static 'img/tour/10.jpg' %}" alt="" width="100%">
+                                  </div>
+
+                                  <div class="col-12 col-md-6 col-lg-4 mt-3">
+                                    <img src="{% static 'img/tour/11.jpg' %}" alt="" width="100%">
+                                  </div>
+
+                                  <div class="col-12 col-md-6 col-lg-4 mt-3">
+                                    <img src="{% static 'img/tour/12.jpg' %}" alt="" width="100%">
+                                  </div>
+                                </div>
+                            </div>
+
+                            <div class="menu-part tab-pane bg-white p-3 fade map" role="tabpanel" id="location">
+                                <iframe
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d193595.9147718689!2d-74.11976358820196!3d40.69740344169578!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2sin!4v1568001991098!5m2!1sen!2sin"
+                                    style="border:0;" allowfullscreen="" width="100%" height="500px"></iframe>
+                            </div>
+
+                            <div class="menu-part tab-pane bg-white p-3 fade review" role="tabpanel" id="review">
+                                <div class="review-box">
+                                    <div class="rating">
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <span class="text-black fw-bold ms-2">The stay in the hotel was excellent</span>
+                                    </div>
+                                    <h6>by xyz, jun 18, 2019</h6>
+                                    <p>Our stay at sea view was pleasant. We stayed here for a day and the view from
+                                        the room was brilliant. Rooms were clean hygienic and big. foods were
+                                        amazing. rooms were neat and clean.staff is very courteous and
+                                        cooperative.great place to stay. Good atmosphere, Staff was amazing..well
+                                        education..mannered. Room was spacious and cleaned more then an expected.
+                                    </p>
+                                </div>
+                                <div class="review-box">
+                                    <div class="rating">
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="far fa-star text-warning"></i>
+                                        <span class="text-black fw-bold ms-2">Awesome Stay..value for money</span>
+                                    </div>
+                                    <h6>by xyz, jun 18, 2019</h6>
+                                    <p>We were there for 3 nights and hotel was too good. Greenery was flaunting
+                                        everywhere. There were games kept for our entertainment. View from room was
+                                        good. Hotel staff behavior was nice. They provided each and every
+                                        service in hand. Overall stay was too good.</p>
+                                </div>
+                                <div class="review-box">
+                                    <div class="rating">
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="far fa-star text-warning"></i>
+                                        <span class="text-black fw-bold ms-2">Best getaway destination with family</span>
+                                    </div>
+                                    <h6>by xyz, jun 18, 2019</h6>
+                                    <p>The location, view from the rooms are just awesome. Very cool landscaping has
+                                        been done Around the hotel. There are small activities that you can indulge
+                                        with your family. Pool wasn't functional at the time of our
+                                        stay. In all, the stay is really peaceful, calm and Silent. A place we would
+                                        definitely want to visit again.</p>
+                                </div>
+                            </div>
+
+                            <div class="menu-part tab-pane bg-white p-3 fade book_a_table" role="tabpanel" id="book_a_table">
+                              <div class="table-book">
+                                <form>
+                                    <div class="row form-group">
+                                        <div class="col-12 col-md-6 mt-3 mt-md-0">
+                                            <input type="text" class="form-control" placeholder="First name">
+                                        </div>
+                                        <div class="col-12 col-md-6 mt-3 mt-md-0">
+                                            <input type="text" class="form-control" placeholder="Last name">
+                                        </div>
+                                    </div>
+                                    <div class="row form-group mt-3">
+                                        <div class="col-12 col-md-6">
+                                            <input type="email" class="form-control" id="inputEmail4"
+                                                placeholder="Email">
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <input type="number" class="form-control" placeholder="Phone No:">
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group mt-3">
+                                        <div class="col-12 col-md-6">
+                                          <div class="form-outline w-100">
+                                            <input type="date" id="datepicker" class="form-control" />
+                                            <label class="form-label" for="datepicker">Choose Date</label>
+                                          </div>
+                                        </div>
+
+                                        <div class="col-12 col-md-6">
+                                            <input type="number" class="form-control" placeholder="Person">
+                                        </div>
+                                    </div>
+                                    <div class="text-end mt-3">
+                                        <a href="#" class="btn make_bg_one text-white rounded-0">submit</a>
+                                    </div>
+                                </form>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="special-section related-box ratio3_2 grid-box">
+                  <section class="blog_section destination-section section-b-space ratio_55 mt-3 mt-lg-3">
+                    <div class="container">        
+                        <div class="owl-carousel owl-theme destinations mt-3 mt-md-4">
+        
+                          <div class="item" data-aos="flip-right" data-aos-duration="2000">
+                            <div class="card mb-3">
+                              <img src="{% static 'img/dishes/2.jpg' %}" class="card-img-top" alt="Fissure in Sandstone"/>
+                              <div class="card-body">
+                              <h5 class="card-title text-black fw-bolder">Italian Restro</h5>
+                              <ul class="p-0 small">
+                                <li>fast food, cafe, italian</li>
+                                <li>11.30am - 11.30pm (mon-sun)</li>
+                                <li>cost $25 for two</li>
+                              </ul>
+                            </div>
+                          </div>
+                          </div>
+      
+                          <div class="item" data-aos="flip-right" data-aos-duration="2000">
+                            <div class="card mb-3">
+                              <img src="{% static 'img/dishes/1.jpg' %}" class="card-img-top" alt="Fissure in Sandstone"/>
+                              <div class="card-body">
+                              <h5 class="card-title text-black fw-bolder">Italian Restro</h5>
+                              <ul class="p-0 small">
+                                <li>fast food, cafe, italian</li>
+                                <li>11.30am - 11.30pm (mon-sun)</li>
+                                <li>cost $25 for two</li>
+                              </ul>
+                            </div>
+                          </div>
+                          </div>
+      
+                          <div class="item" data-aos="flip-right" data-aos-duration="2000">
+                            <div class="card mb-3">
+                              <img src="{% static 'img/dishes/3.jpg' %}" class="card-img-top" alt="Fissure in Sandstone"/>
+                              <div class="card-body">
+                              <h5 class="card-title text-black fw-bolder">Italian Restro</h5>
+                              <ul class="p-0 small">
+                                <li>fast food, cafe, italian</li>
+                                <li>11.30am - 11.30pm (mon-sun)</li>
+                                <li>cost $25 for two</li>
+                              </ul>
+                            </div>
+                          </div>
+                          </div>
+      
+                          <div class="item" data-aos="flip-right" data-aos-duration="2000">
+                            <div class="card mb-3">
+                              <img src="{% static 'img/dishes/8.jpg' %}" class="card-img-top" alt="Fissure in Sandstone"/>
+                              <div class="card-body">
+                              <h5 class="card-title text-black fw-bolder">Italian Restro</h5>
+                              <ul class="p-0 small">
+                                <li>fast food, cafe, italian</li>
+                                <li>11.30am - 11.30pm (mon-sun)</li>
+                                <li>cost $25 for two</li>
+                              </ul>
+                            </div>
+                          </div>
+                          </div>
+        
+                        </div>
+                    </div>
+        
+                </section>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-3" id="booking">
+                <div class="sticky-cls-top">
+                    <div class="single-sidebar bg-white p-3 shadow-3" data-aos="fade-up" data-aos-duration="2000">
+                        <div class="selection-section">
+                            <div class="book-btn-section">
+                              <h6 class="text-black fw-bold">Cart Items:</h6>
+
+                              <div class="order-cart">
+                                <div class="cart-items">
+
+                                  <div class="items veg">
+                                      <h6 class="text-black">Veg Cheese Quesadillas</h6>
+                                      <h5 class="small">$10.00</h5>
+                                      <div class="qty-box cart_qty d-flex align-items-center">
+                                          <div class="input-group me-3">
+                                              <input type="number" name="quantity" class="form-control input-number qty-input" value="1" tabindex="0">
+                                          </div>
+                                          <div class="price text-black fw-bold">
+                                            <span>$12.00</span>
+                                          </div>
+                                      </div>
+                                  </div>
+
+                                  <div class="items veg mt-3">
+                                      <h6 class="text-black">Barbaresca Pasta</h6>
+                                      <h5 class="small">$10.00</h5>
+                                      <div class="qty-box cart_qty d-flex align-items-center">
+                                          <div class="input-group me-3">
+                                              <input type="number" name="quantity" class="form-control input-number qty-input" value="1" tabindex="0">
+                                          </div>
+                                          <div class="price text-black fw-bold">
+                                            <span>$12.00</span>
+                                          </div>
+                                      </div>
+                                  </div>
+
+                                  <div class="items veg mt-3">
+                                      <h6 class="text-black">Sprouts Salad</h6>
+                                      <h5 class="small">$10.00</h5>
+                                      <div class="qty-box cart_qty d-flex align-items-center">
+                                          <div class="input-group me-3">
+                                              <input type="number" name="quantity" class="form-control input-number qty-input" value="1" tabindex="0">
+                                          </div>
+                                          <div class="price text-black fw-bold">
+                                            <span>$12.00</span>
+                                          </div>
+                                      </div>
+                                  </div>
+
+                                </div>
+                                <div class="cart-bottom mt-3">
+                                    <h6 class="sub-total d-flex justify-content-between align-items-center fw-bold text-black">
+                                      subtotal
+                                        <span>$200</span>
+                                    </h6>
+                                    <p class="p-0 m-0 small">delivery charges may apply to your order</p>
+                                    <div class="checkout mt-3">
+                                        <a href="{% url 'resturant_checkout' %}" class="btn make_bg_one text-white rounded-0 w-100">place order</a>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="single-sidebar bg-white p-3 shadow-3 mt-3 mt-md-4" data-aos="fade-up" data-aos-duration="2000">
+                        <h6 class="contact-title text-black fw-bold">always first</h6>
+                        <p class="address text-muted small">Be the first to find out latest tours and exclusive offers and get 15% off your first booking.</p>
+                     
+                        <div class="form-outline w-100 mt-3">
+                          <input type="email" id="email" class="form-control" />
+                          <label class="form-label" for="email">Enter Your Email</label>
+                        </div>
+                        
+                        <div class="mt-3 text-end">
+                          <a href="{% url 'tour_book' %}" class="btn make_bg_one rounded-0 text-white">Be The First</a>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+
+
+
+
+{% endblock content %}
+
+
+
+{% block jsfiles %}
+
+<script>
+  $(document).ready(function(){
+
+      var owl = $(".destinations");
+
+      owl.owlCarousel({
+          loop: true,
+          margin: 20,
+          nav: false,
+          dots: false,
+          autoplay: true,
+          // autoplayTimeout: 3000,
+          autoplayHoverPause: true,
+          responsive:{
+              0:{ items: 1 },
+              600:{ items: 2 },
+              1000:{ items: 2 }
+          }
+      });
+
+      // Custom navigation button events
+      $(".owl-start").click(function() {
+          owl.trigger("prev.owl.carousel");
+      });
+
+      $(".owl-end").click(function() {
+          owl.trigger("next.owl.carousel");
+      });
+  });
+
+
+
+</script>
+{% endblock jsfiles %}

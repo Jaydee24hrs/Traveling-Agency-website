@@ -1,0 +1,1127 @@
+<form action="{% url 'markup_rule_tyktt_update' markup_rule.id %}">
+
+  {% csrf_token %}
+    <div class="row align-items-center">
+    <!-- Sub heading -->
+    <p class="m-0 text-primary text-center fw-bold w-100">General markup details</p>
+
+    <!-- <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <h6>Status</h6>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <select data-mdb-select-init class="form-select">
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+            </select>
+        </div>
+    </div> -->
+    <!-- Markup Name Starts -->
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <h6>Name</h6>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <div class="form-outline" data-mdb-input-init>
+                <input type="text" id="markup_name"
+                        class="form-control" value="{{ markup_rule }}"/>
+                <label class="form-label" for="markup_name">Markup
+                    Name</label>
+            </div>
+        </div>
+    </div>
+    <!-- Markup Name Ends -->
+
+
+    <!-- Markup Type Starts -->
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <h6>Markup Type</h6>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <select data-mdb-select-init class="form-select" name="markup_type">
+                <option value="discount" {% if markup_rule.markup_type == 'discount' %}selected{% endif %}>Discount</option>
+                <option value="markup" {% if markup_rule.markup_type == 'markup' %}selected{% endif %}>Markup</option>
+                <option value="service_fee" {% if markup_rule.markup_type == 'service_fee' %}selected{% endif %}>Service Fee</option>
+                <option value="promotional_discount" {% if markup_rule.markup_type == 'promotional_discount' %}selected{% endif %}>Promotional Discount</option>
+            </select>
+        </div>
+    </div>
+    <!-- Markup Type Ends -->
+
+    <!-- Markup Amount Starts -->
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <h6>Markup Amount</h6>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <div class="form-outline" data-mdb-input-init>
+                <input type="text" id="markup_amount"
+                        class="form-control" name="markup_amount" value="{{ markup_rule.markup_amount }}"/>
+                <label class="form-label" for="markup_amount">Markup
+                    Amount</label>
+            </div>
+        </div>
+    </div>
+    <!-- Markup Amount Ends -->
+
+    <!-- Account Type Starts -->
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <h6>Account Type</h6>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <select data-mdb-select-init class="form-select">
+                <option value="fixed" {% if markup_rule.account_type == 'fixed' %}selected{% endif %}>Fixed</option>
+                <option value="percentage" {% if markup_rule.account_type == 'percentage' %}selected{% endif %}>Percentage</option>
+            </select>
+        </div>
+    </div>
+    <!-- Account Type Ends -->
+
+    <!-- Apply Markup Starts -->
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <h6>Apply Markup At</h6>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <div class="dropdown dropdown-checkboxes">
+                <button class="btn btn-secondary dropdown-toggle markup_at_btn" type="button" id="markup_at_btn2" data-bs-toggle="dropdown" aria-expanded="false">Select</button>
+                <ul class="dropdown-menu p-3 markup_at_box" aria-labelledby="markup_at_btn2" style="display: none;" id="markup_at_box2">
+                    <li>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="booking" id="booking"
+                                {% if "booking" in markup_rule.apply_markup_at %}checked{% endif %}>
+                            <label class="form-check-label" for="booking">Booking</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="exchange" id="exchange"
+                                {% if "exchange" in markup_rule.apply_markup_at %}checked{% endif %}>
+                            <label class="form-check-label" for="exchange">Exchange</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="refund" id="refund"
+                                {% if "refund" in markup_rule.apply_markup_at %}checked{% endif %}>
+                            <label class="form-check-label" for="refund">Refund</label>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Apply Markup Ends -->
+
+    <!-- Fare Type Starts -->
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <h6>Fare Type</h6>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <div class="dropdown dropdown-checkboxes">
+                <button class="btn btn-secondary dropdown-toggle fare_type_btn" type="button" id="fare_type_btn2" data-bs-toggle="dropdown" aria-expanded="false">Select</button>
+
+                <ul class="dropdown-menu p-3 fare_type_box" aria-labelledby="fare_type_btn2" style="display: none;" id="fare_type_box2">
+                    <li>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="corporate" id="corporate"
+                            {% if "corporate" in markup_rule.fare_type %}checked{% endif %}>
+                            <label class="form-check-label" for="corporate">Corporate</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="published" id="published"
+                            {% if "published" in markup_rule.fare_type %}checked{% endif %}>
+                            <label class="form-check-label" for="published">Published</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="negotiated" id="negotiated"
+                            {% if "negotiated" in markup_rule.fare_type %}checked{% endif %}>
+                            <label class="form-check-label" for="negotiated">Negotiated</label>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Fare Type Ends -->
+
+    <!-- Passenger Type Starts -->
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <h6>Passenger Type</h6>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+
+            <div class="dropdown dropdown-checkboxes">
+                <button class="btn btn-secondary dropdown-toggle passenger_type_btn" type="button" id="passenger_type_btn2" data-bs-toggle="dropdown" aria-expanded="false">Select</button>
+
+                <ul class="dropdown-menu p-3 passenger_type_box" aria-labelledby="passenger_type_btn2" style="display: none;" id="passenger_type_box2">
+                    <li>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="adult" id="adult"
+                            {% if "adult" in markup_rule.passenger_type %}checked{% endif %}>
+                            <label class="form-check-label" for="adult">Adult</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="child" id="child"
+                            {% if "child" in markup_rule.passenger_type %}checked{% endif %}>
+                            <label class="form-check-label" for="child">Child</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="infant" id="infant"
+                            {% if "infant" in markup_rule.passenger_type %}checked{% endif %}>
+                            <label class="form-check-label" for="infant">Infant</label>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Passenger Type Ends -->
+
+    <!-- Remark Message Starts -->
+    <!-- <div class="col-12 mt-3">
+        <div>
+            <div class="form-outline" data-mdb-input-init>
+                <textarea class="form-control" id="textAreaExample"
+                            rows="4"></textarea>
+                <label class="form-label" for="textAreaExample">Remark
+                    Message</label>
+            </div>
+        </div>
+    </div> -->
+    <!-- Remark Message Ends -->
+
+    <!-- ============================================================================================================= -->
+
+    <p class="m-0 text-primary text-center fw-bold w-100 mt-5">Applicable Rules</p>
+
+    <!-- Marketing Carrier Starts -->
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <h6>Marketing Carrier</h6>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+
+            <div class="dropdown dropdown-checkboxes">
+                <button class="btn btn-secondary dropdown-toggle marketing_carrier_type_btn" type="button" id="marketing_carrier_type_btn2" data-bs-toggle="dropdown" aria-expanded="false">Select</button>
+
+                <ul class="dropdown-menu p-3 marketing_carrier_type_box marketing_carrier_type_box2" aria-labelledby="marketing_carrier_type_btn2" style="display: none;" id="marketing_carrier_type_box">
+                    <input type="text" id="marketing_carrier_airline2" name="marketing_carrier_airline2" class="form-control form-control-sm bg-white rounded outline-0 mb-2" placeholder="Enter Airline Name">
+
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <button type="button" class="btn btn-outline-primary text-capitalize px-2 py-0 marketing_carrier_check_btn2" id="marketing_carrier_check_btn2">Check All</button>
+                        <button type="button" class="btn btn-outline-primary text-capitalize px-2 py-0 marketing_carrier_uncheck_btn2" id="marketing_carrier_uncheck_btn2">Uncheck All</button>
+                    </div>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <!-- Marketing Carrier Ends -->
+
+    <!-- Operating Carrier Starts -->
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <h6>Operating Carrier</h6>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+
+            <div class="dropdown dropdown-checkboxes">
+                <button class="btn btn-secondary dropdown-toggle operating_carrier_type_btn" type="button" id="operating_carrier_type_btn2" data-bs-toggle="dropdown" aria-expanded="false">Select</button>
+
+                <ul class="dropdown-menu p-3 operating_carrier_type_box operating_carrier_type_box2" aria-labelledby="operating_carrier_type_btn2" style="display: none;" id="operating_carrier_type_box">
+                    <input type="text" id="operating_carrier_airline2" name="operating_carrier_airline2" class="form-control form-control-sm bg-white rounded outline-0 mb-2" placeholder="Enter Airline Name">
+
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <button type="button" class="btn btn-outline-primary text-capitalize px-2 py-0 operating_carrier_check_btn2" id="operating_carrier_check_btn2">Check All</button>
+                        <button type="button" class="btn btn-outline-primary text-capitalize px-2 py-0 operating_carrier_uncheck_btn2" id="operating_carrier_uncheck_btn2">Uncheck All</button>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Operating Carrier Ends -->
+
+    <!-- Validating Carrier Starts -->
+    <!-- <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <h6>Validating Carrier</h6>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+
+            <div class="dropdown dropdown-checkboxes">
+                <button class="btn btn-secondary dropdown-toggle validating_carrier_type_btn" type="button" id="validating_carrier_type_btn" data-bs-toggle="dropdown" aria-expanded="false">Select</button>
+
+                <ul class="dropdown-menu p-3 validating_carrier_type_box" aria-labelledby="validating_carrier_type_btn2" style="display: none;" id="validating_carrier_type_box">
+                    <input type="text" id="validating_carrier_airline2" name="validating_carrier_airline2" class="form-control form-control-sm bg-white rounded outline-0 mb-2" placeholder="Enter Airline Name">
+
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <button type="button" class="btn btn-outline-primary text-capitalize px-2 py-0" id="validating_carrier_check_btn2">Check All</button>
+                        <button type="button" class="btn btn-outline-primary text-capitalize px-2 py-0" id="validating_carrier_uncheck_btn2">Uncheck All</button>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </div> -->
+    <!-- Validating Carrier Ends -->
+
+
+    <!-- Affiliate Carrier Starts -->
+    <!-- <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <h6>Affiliate Carrier</h6>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+
+            <div class="dropdown dropdown-checkboxes">
+                <button class="btn btn-secondary dropdown-toggle affiliate_carrier_type_btn" type="button" id="affiliate_carrier_type_btn" data-bs-toggle="dropdown" aria-expanded="false">Select</button>
+
+                <ul class="dropdown-menu p-3 affiliate_carrier_type_box" aria-labelledby="affiliate_carrier_type_btn2" style="display: none;" id="affiliate_carrier_type_box">
+                    <input type="text" id="affiliate_carrier_airline2" name="affiliate_carrier_airline2" class="form-control form-control-sm bg-white rounded outline-0 mb-2" placeholder="Enter Airline Name">
+
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <button type="button" class="btn btn-outline-primary text-capitalize px-2 py-0" id="affiliate_carrier_check_btn2">Check All</button>
+                        <button type="button" class="btn btn-outline-primary text-capitalize px-2 py-0" id="affiliate_carrier_uncheck_btn2">Uncheck All</button>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </div> -->
+    <!-- Affiliate Carrier Ends -->
+
+    <!-- Air Providers Starts -->
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <h6>Air Providers</h6>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+
+            <div class="dropdown dropdown-checkboxes">
+                <button class="btn btn-secondary dropdown-toggle air_provider_type_btn" type="button" id="air_provider_type_btn2" data-bs-toggle="dropdown" aria-expanded="false">Select</button>
+
+                <ul class="dropdown-menu p-3 air_provider_type_box" aria-labelledby="air_provider_type_btn2" style="display: none;" id="air_provider_type_box2">
+                    <li>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="amadeus" id="amadeus"
+                            {% if "amadeus" in markup_rule.air_providers %}checked{% endif %}>
+                            <label class="form-check-label" for="amadeus">Amadeus</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="galileo" id="galileo"
+                            {% if "galileo" in markup_rule.air_providers %}checked{% endif %}>
+                            <label class="form-check-label" for="galileo">Galileo</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="verteil" id="verteil"
+                            {% if "verteil" in markup_rule.air_providers %}checked{% endif %}>
+                            <label class="form-check-label" for="verteil">Verteil</label>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Air Providers Ends -->
+
+    <!-- Code Share & Fare Basic Starts -->
+
+    <!-- <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <h6>Code Share Flights Type</h6>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <select data-mdb-select-init class="form-select">
+                <option value="equal marketing and operating system"
+                    {% if markup_rule.code_share_flights_type == "equal marketing and operating system" %}selected{% endif %}>
+                    Equal Marketing and Operating System
+                </option>
+                <option value="different marketing and operating system"
+                    {% if markup_rule.code_share_flights_type == "different marketing and operating system" %}selected{% endif %}>
+                    Different Marketing and Operating System
+                </option>
+
+            </select>
+        </div>
+    </div> -->
+
+<!-- 
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <h6>Fare Basic Code </h6>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12 mt-3">
+        
+        <div>
+            <div class="form-outline" data-mdb-input-init>
+                <input type="text" id="fare_basic_code"
+                        class="form-control" value="{{ fare_basis_code }}"/>
+                <label class="form-label" for="fare_basic_code">Enter
+                    Code</label>
+            </div>
+        </div>
+    </div> -->
+    <!-- Code Share & Fare Basic Ends -->
+    
+    <!-- Office ID & Whole Itinerary Starts -->
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <h6>Office ID</h6>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12 mt-3">
+        
+        <div>
+
+            <div class="dropdown dropdown-checkboxes">
+                <button class="btn btn-secondary dropdown-toggle office_id_type_btn" type="button" id="office_id_type_btn2" data-bs-toggle="dropdown" aria-expanded="false">Select Office ID</button>
+
+                <ul class="dropdown-menu p-3 office_id_type_box" aria-labelledby="office_id_type_btn2" style="display: none;" id="office_id_type_box2">
+                    <!-- <li>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="SHR1S28AA" id="SHR1S28AA"
+                            {% if "SHR1S28AA" in markup_rule.office_id %}checked{% endif %}>
+                            <label class="form-check-label" for="SHR1S28AA">SHR1S28AA</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="ACCG828TY" id="ACCG828TY"
+                            {% if "ACCG828TY" in markup_rule.office_id %}checked{% endif %}>
+                            <label class="form-check-label" for="ACCG828TY">ACCG828TY</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="LONU128XJ" id="LONU128XJ"
+                            {% if "LONU128XJ" in markup_rule.office_id %}checked{% endif %}>
+                            <label class="form-check-label" for="LONU128XJ">LONU128XJ</label>
+                        </div>
+                    </li> -->
+                    <li>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="LOSN828HJ" id="LOSN828HJ"
+                            {% if "LOSN828HJ" in markup_rule.office_id %}checked{% endif %}>
+                            <label class="form-check-label" for="LOSN828HJ">LOSN828HJ</label>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <h6>&nbsp;</h6>
+        </div>
+        <div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value=""
+                        id="flexCheckDefault"/>
+                <label class="form-check-label" for="flexCheckDefault">Same
+                    flight whole itinerary</label>
+            </div>
+        </div>
+    </div> -->
+    <!-- Office ID & Whole Itinerary Ends -->
+
+    <!--Journey Type &Cabin Class Starts -->
+
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <h6>Journey Type</h6>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12 mt-3">
+        
+        <div>
+
+            <div class="dropdown dropdown-checkboxes">
+                <button class="btn btn-secondary dropdown-toggle journey_type_btn" type="button" id="journey_type_btn2" data-bs-toggle="dropdown" aria-expanded="false">Select Journey Type</button>
+
+                <ul class="dropdown-menu p-3 journey_type_box" aria-labelledby="journey_type_btn2" style="display: none;" id="journey_type_box">
+                    <li>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="one way" id="one way"
+                            {% if "one way" in markup_rule.journey_type %}checked{% endif %}>
+                            <label class="form-check-label" for="one way">One Way</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="round trip" id="round trip"
+                            {% if "round trip" in markup_rule.journey_type %}checked{% endif %}>
+                            <label class="form-check-label" for="round trip">Round Trip</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="multi destination" id="multi destination"
+                            {% if "multi destination" in markup_rule.journey_type %}checked{% endif %}>
+                            <label class="form-check-label" for="multi destination">Multi Destination</label>
+                        </div>
+                    </li>
+        
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Cabin Class Start -->
+
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <h6>Cabin Classes </h6>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12 mt-3">
+        
+        <div>
+
+            <div class="dropdown dropdown-checkboxes">
+                <button class="btn btn-secondary dropdown-toggle cabin_classes_type_btn" type="button" id="cabin_classes_type_btn2" data-bs-toggle="dropdown" aria-expanded="false">Select Cabin Classes</button>
+
+                <ul class="dropdown-menu p-3 cabin_classes_type_box" aria-labelledby="cabin_classes_type_btn2" style="display: none;" id="cabin_classes_type_box2">
+                    <li>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="economy" id="economy"
+                            {% if "economy" in markup_rule.cabin_classes %}checked{% endif %}>
+                            <label class="form-check-label" for="economy">Economy</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="business" id="business"
+                            {% if "business" in markup_rule.cabin_classes %}checked{% endif %}>
+                            <label class="form-check-label" for="business">Business</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="premium" id="premium"
+                            {% if "premium" in markup_rule.cabin_classes %}checked{% endif %}>
+                            <label class="form-check-label" for="premium">Premium</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="first" id="first"
+                            {% if "first" in markup_rule.cabin_classes %}checked{% endif %}>
+                            <label class="form-check-label" for="first">First</label>
+                        </div>
+                    </li>
+        
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <!-- Cabin Class Ends -->
+
+    <!-- Booking Class of Service Start -->
+
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <h6>Booking Class of Service</h6>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <div class="form-outline" data-mdb-input-init>
+                <input type="text" id="book_class_of_service" class="form-control" name="book_class_of_service" value="{{ booking_class_of_service }}"/>
+                <label class="form-label" for="book_class_of_service">Enter</label>
+            </div>
+        </div>
+    </div>
+    <!-- Booking Class of Service Ends -->
+
+
+    <!-- From Country Starts -->
+
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <h6>From Country</h6>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+
+            <div class="dropdown dropdown-checkboxes">
+                <button class="btn btn-secondary dropdown-toggle from_country_type_btn from_country_type_btn2" type="button" id="from_country_type_btn2" data-bs-toggle="dropdown" aria-expanded="false">Select From Country</button>
+
+                <ul class="dropdown-menu p-3 from_country_type_box from_country_type_box2" aria-labelledby="from_country_type_btn2" style="display: none;" id="from_country_type_box2">
+                    <input type="text" id="from_country_airline2" name="from_country_airline" class="form-control form-control-sm bg-white rounded outline-0 mb-2" placeholder="Enter Country Name">
+
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <button type="button" class="btn btn-outline-primary text-capitalize px-2 py-0 from_country_check_btn2" id="from_country_check_btn2">Check All</button>
+                        <button type="button" class="btn btn-outline-primary text-capitalize px-2 py-0 from_country_uncheck_btn2" id="from_country_uncheck_btn2">Uncheck All</button>
+                    </div>
+
+                    <ul id="from_country_list2" class="list-unstyled from_country_list2"></ul>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- From Country Ends -->
+
+
+    <!-- From City Starts -->
+
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <h6>From City</h6>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12 mt-3">
+
+        
+        <div>
+            <div class="dropdown dropdown-checkboxes">
+                <button class="btn btn-secondary dropdown-toggle from_city_type_btn from_city_type_btn2" type="button" id="from_city_type_btn2" data-bs-toggle="dropdown" aria-expanded="false">Select From City</button>
+
+                <ul class="dropdown-menu p-3 from_city_type_box from_city_type_box2" aria-labelledby="from_city_type_btn2" style="display: none;" id="from_city_type_box2">
+                    <input type="text" id="from_city_airline2" name="from_city_airline" class="form-control form-control-sm bg-white rounded outline-0 mb-2" placeholder="Enter City Name">
+
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <button type="button" class="btn btn-outline-primary text-capitalize px-2 py-0 from_city_check_btn2" id="from_city_check_btn2">Check All</button>
+                        <button type="button" class="btn btn-outline-primary text-capitalize px-2 py-0 from_city_uncheck_btn2" id="from_city_uncheck_btn2">Uncheck All</button>
+                    </div>
+
+                    <ul id="from_city_list2" class="list-unstyled from_city_list2"></ul>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- From City Ends -->
+
+
+    <!-- To Country Starts -->
+
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <h6>To Country</h6>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12 mt-3">
+
+        <div>
+
+            <div class="dropdown dropdown-checkboxes">
+                <button class="btn btn-secondary dropdown-toggle to_country_type_btn to_country_type_btn2" type="button" id="to_country_type_btn2" data-bs-toggle="dropdown" aria-expanded="false">Select To Country</button>
+
+                <ul class="dropdown-menu p-3 to_country_type_box to_country_type_box2" aria-labelledby="to_country_type_btn2" style="display: none;" id="to_country_type_box2">
+                    <input type="text" id="to_country_airline2" name="to_country_airline" class="form-control form-control-sm bg-white rounded outline-0 mb-2" placeholder="Enter Country Name">
+
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <button type="button" class="btn btn-outline-primary text-capitalize px-2 py-0 to_country_check_btn2" id="to_country_check_btn2">Check All</button>
+                        <button type="button" class="btn btn-outline-primary text-capitalize px-2 py-0 to_country_uncheck_btn2" id="to_country_uncheck_btn2">Uncheck All</button>
+                    </div>
+
+                    <ul id="to_country_list2" class="list-unstyled to_country_list2"></ul>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- To Country Ends -->
+
+
+    <!-- To City Starts -->
+
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <h6>To City</h6>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12 mt-3">
+
+        
+        <div>
+            <div class="dropdown dropdown-checkboxes">
+                <button class="btn btn-secondary dropdown-toggle to_city_type_btn to_city_type_btn2" type="button" id="to_city_type_btn2" data-bs-toggle="dropdown" aria-expanded="false">Select To City</button>
+
+                <ul class="dropdown-menu p-3 to_city_type_box to_city_type_box2" aria-labelledby="to_city_type_btn2" style="display: none;" id="to_city_type_box2">
+                    <input type="text" id="to_city_airline2" name="to_city_airline" class="form-control form-control-sm bg-white rounded outline-0 mb-2" placeholder="Enter City Name">
+
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <button type="button" class="btn btn-outline-primary text-capitalize px-2 py-0 to_city_check_btn2" id="to_city_check_btn2">Check All</button>
+                        <button type="button" class="btn btn-outline-primary text-capitalize px-2 py-0 to_city_uncheck_btn2" id="to_city_uncheck_btn2">Uncheck All</button>
+                    </div>
+
+                    <ul id="to_city_list2" class="list-unstyled to_city_list2"></ul>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- To City Ends -->
+
+    <!-- Departure Date After Starts -->
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <h6>Departure date after</h6>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <div class="form-outline" data-mdb-input-init>
+                <input type="number" id="departure_date_after" class="form-control" name="departure_date_after" value="{{ departure_date_after }}"/>
+                <label class="form-label" for="departure_date_after">Enter</label>
+            </div>
+        </div>
+    </div>
+    <!-- Departure Date After Ends -->
+
+
+    <!-- Departure Date Between Starts -->
+    
+    <div class="col-md-6 col-sm-12 mt-3">
+
+        <div>
+            <h6>Departure Date Between</h6>
+        </div>
+
+        <div>
+            <div class="form-outline" data-mdb-input-init>
+                <input type="date" id="departure_date_between" class="form-control" name="departure_date_between" value="{{ departure_date_between_start }}"/>
+                <label class="form-label" for="departure_date_between">Select Date</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12 mt-3">
+
+        <div>
+            <h6>And</h6>
+        </div>
+
+        <div>
+            <div class="form-outline" data-mdb-input-init>
+                <input type="date" id="departure_date_between_and" class="form-control" name="departure_date_between_and" value="{{ departure_date_between_end }}"/>
+                <label class="form-label" for="departure_date_between_and">Select Date</label>
+            </div>
+        </div>
+    </div>
+    <!-- Departure Date Between Ends -->
+
+
+    <!-- Booking Date Between Starts -->
+    <div class="col-md-6 col-sm-12 mt-3">
+
+        <div>
+            <h6>Booking Date Between</h6>
+        </div>
+
+        <div>
+            <div class="form-outline" data-mdb-input-init>
+                <input type="date" id="booking_date_between" class="form-control" name="booking_date_between" value="{{ booking_date_between_start }}"/>
+                <label class="form-label" for="booking_date_between">Select Date</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12 mt-3">
+
+        <div>
+            <h6>And</h6>
+        </div>
+
+        <div>
+            <div class="form-outline" data-mdb-input-init>
+                <input type="date" id="booking_date_between_and" class="form-control" name="booking_date_between_and" value="{{ booking_date_between_end }}"/>
+                <label class="form-label" for="booking_date_between_and">Select Date</label>
+            </div>
+        </div>
+    </div>
+    <!-- Booking Date Between Ends -->
+
+
+    <p class="m-0 text-primary text-center fw-bold w-100 mt-5">Exclusion Rules</p>
+
+    <!-- Exclude Marketing Carrier Starts -->
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <h6>Exclude Marketing Carrier</h6>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+
+            <div class="dropdown dropdown-checkboxes">
+                <button class="btn btn-secondary dropdown-toggle exclude_marketing_carrier_type_btn exclude_marketing_carrier_type_btn2" type="button" id="exclude_marketing_carrier_type_btn2" data-bs-toggle="dropdown" aria-expanded="false">Select</button>
+
+                <ul class="dropdown-menu p-3 exclude_marketing_carrier_type_box exclude_marketing_carrier_type_box2" aria-labelledby="exclude_marketing_carrier_type_btn2" style="display: none;" id="exclude_marketing_carrier_type_box">
+                    <input type="text" id="exclude_marketing_carrier_airline2" name="exclude_marketing_carrier_airline" class="form-control form-control-sm bg-white rounded outline-0 mb-2" placeholder="Enter Airline Name">
+
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <button type="button" class="btn btn-outline-primary text-capitalize px-2 py-0 exclude_marketing_carrier_check_btn2" id="exclude_marketing_carrier_check_btn2">Check All</button>
+                        <button type="button" class="btn btn-outline-primary text-capitalize px-2 py-0 exclude_marketing_carrier_uncheck_btn2" id="exclude_marketing_carrier_uncheck_btn2">Uncheck All</button>
+                    </div>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <!-- Exclude Marketing Carrier Ends -->
+
+    <!-- Exclude Operating Carrier Starts -->
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <h6>Exclude Operating Carrier</h6>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+
+            <div class="dropdown dropdown-checkboxes">
+                <button class="btn btn-secondary dropdown-toggle exclude_operating_carrier_type_btn exclude_operating_carrier_type_btn2" type="button" id="exclude_operating_carrier_type_btn2" data-bs-toggle="dropdown" aria-expanded="false">Select</button>
+
+                <ul class="dropdown-menu p-3 exclude_operating_carrier_type_box exclude_operating_carrier_type_box2" aria-labelledby="exclude_operating_carrier_type_btn2" style="display: none;" id="exclude_operating_carrier_type_box2">
+                    <input type="text" id="exclude_operating_carrier_airline2" name="exclude_operating_carrier_airline" class="form-control form-control-sm bg-white rounded outline-0 mb-2" placeholder="Enter Airline Name">
+
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <button type="button" class="btn btn-outline-primary text-capitalize px-2 py-0 exclude_operating_carrier_check_btn2" id="exclude_operating_carrier_check_btn2">Check All</button>
+                        <button type="button" class="btn btn-outline-primary text-capitalize px-2 py-0 exclude_operating_carrier_uncheck_btn2" id="exclude_operating_carrier_uncheck_btn2">Uncheck All</button>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Exclude Operating Carrier Ends -->
+
+    <!-- Exclude Validating Carrier Starts -->
+    <!-- <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <h6>Exclude Validating Carrier</h6>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+
+            <div class="dropdown dropdown-checkboxes">
+                <button class="btn btn-secondary dropdown-toggle exclude_validating_carrier_type_btn" type="button" id="exclude_validating_carrier_type_btn" data-bs-toggle="dropdown" aria-expanded="false">Select</button>
+
+                <ul class="dropdown-menu p-3 exclude_validating_carrier_type_box" aria-labelledby="exclude_validating_carrier_type_btn" style="display: none;" id="exclude_validating_carrier_type_box2">
+                    <input type="text" id="exclude_validating_carrier_airline" name="exclude_validating_carrier_airline" class="form-control form-control-sm bg-white rounded outline-0 mb-2" placeholder="Enter Airline Name">
+
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <button type="button" class="btn btn-outline-primary text-capitalize px-2 py-0" id="exclude_validating_carrier_check_btn2">Check All</button>
+                        <button type="button" class="btn btn-outline-primary text-capitalize px-2 py-0" id="exclude_validating_carrier_uncheck_btn2">Uncheck All</button>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </div> -->
+    <!-- Exclude Validating Carrier Ends -->
+
+    <!-- Exclude Affiliate Carrier Starts -->
+    <!-- <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <h6>Exclude Affiliate Carrier</h6>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+
+            <div class="dropdown dropdown-checkboxes">
+                <button class="btn btn-secondary dropdown-toggle exclude_affiliate_carrier_type_btn" type="button" id="exclude_affiliate_carrier_type_btn" data-bs-toggle="dropdown" aria-expanded="false">Select</button>
+
+                <ul class="dropdown-menu p-3 exclude_affiliate_carrier_type_box" aria-labelledby="exclude_affiliate_carrier_type_btn2" style="display: none;" id="exclude_affiliate_carrier_type_box">
+                    <input type="text" id="exclude_affiliate_carrier_airline" name="exclude_affiliate_carrier_airline" class="form-control form-control-sm bg-white rounded outline-0 mb-2" placeholder="Enter Airline Name">
+
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <button type="button" class="btn btn-outline-primary text-capitalize px-2 py-0" id="exclude_affiliate_carrier_check_btn2">Check All</button>
+                        <button type="button" class="btn btn-outline-primary text-capitalize px-2 py-0" id="exclude_affiliate_carrier_uncheck_btn2">Uncheck All</button>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </div> -->
+    <!-- Exclude Affiliate Carrier Ends -->
+
+    <!-- Exclude Booking Class Start -->
+
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <h6>Exclude Booking Classes </h6>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12 mt-3">
+        
+        <div>
+
+            <div class="dropdown dropdown-checkboxes">
+                <button class="btn btn-secondary dropdown-toggle exclude_booking_classes_type_btn" type="button" id="exclude_booking_classes_type_btn2" data-bs-toggle="dropdown" aria-expanded="false">Select</button>
+
+                <ul class="dropdown-menu p-3 exclude_booking_classes_type_box" aria-labelledby="exclude_booking_classes_type_btn2" style="display: none;" id="exclude_booking_classes_type_box2">
+                    <li>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="economy" id="economy"
+                            {% if "economy" in markup_rule.exclude_booking_classes %}checked{% endif %}>
+                            <label class="form-check-label" for="economy">Economy</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="business" id="business"
+                            {% if "business" in markup_rule.exclude_booking_classes %}checked{% endif %}>
+                            <label class="form-check-label" for="business">Business</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="premium" id="premium"
+                            {% if "premium" in markup_rule.exclude_booking_classes %}checked{% endif %}>
+                            <label class="form-check-label" for="premium">Premium</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="first" id="first"
+                            {% if "first" in markup_rule.exclude_booking_classes %}checked{% endif %}>
+                            <label class="form-check-label" for="first">First</label>
+                        </div>
+                    </li>
+        
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <!-- Exclude Booking Class Ends -->
+
+    <!-- Exclude Booking Class of service Start -->
+
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <h6>Exclude Booking Classes Of Service</h6>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12 mt-3">
+
+        <div>
+            <div class="form-outline" data-mdb-input-init>
+                <input type="text" id="exclude_booking_class_of_service" class="form-control" name="exclude_booking_class_of_service" value="{{ exclude_booking_class_of_service }}"/>
+                <label class="form-label" for="exclude_booking_class_of_service">Enter</label>
+            </div>
+        </div>
+    </div>
+    <!-- Exclude Booking Class of service Ends -->
+
+    <!-- Exclude Fare Basis Code Start -->
+
+    <!-- <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <h6>Exclude Fare Basis Code</h6>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12 mt-3">
+        
+        <div>
+            <div class="form-outline" data-mdb-input-init>
+                <input type="text" id="exclude_fare_basis_code" class="form-control" name="exclude_fare_basis_code" value="{{ exclude_fare_basis_code }}"/>
+                <label class="form-label" for="exclude_fare_basis_code">Enter</label>
+            </div>
+        </div>
+    </div> -->
+    <!-- Exclude Fare Basis Code Ends -->
+
+    <!-- Exclude From Country Starts -->
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <h6>Exclude From Country</h6>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+
+            <div class="dropdown dropdown-checkboxes">
+                <button class="btn btn-secondary dropdown-toggle exclude_from_country_type_btn exclude_from_country_type_btn2" type="button" id="exclude_from_country_type_btn2" data-bs-toggle="dropdown" aria-expanded="false">Select</button>
+
+                <ul class="dropdown-menu p-3 exclude_from_country_type_box exclude_from_country_type_box2" aria-labelledby="exclude_from_country_type_btn2" style="display: none;" id="exclude_from_country_type_box2">
+                    <input type="text" id="exclude_from_country_airline2" name="exclude_from_country_airline" class="form-control form-control-sm bg-white rounded outline-0 mb-2" placeholder="Enter Country Name">
+
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <button type="button" class="btn btn-outline-primary text-capitalize px-2 py-0 exclude_from_country_check_btn2" id="exclude_from_country_check_btn2">Check All</button>
+                        <button type="button" class="btn btn-outline-primary text-capitalize px-2 py-0 exclude_from_country_uncheck_btn2" id="exclude_from_country_uncheck_btn2">Uncheck All</button>
+                    </div>
+
+                    <ul id="exclude_from_country_list2" class="list-unstyled exclude_from_country_list2"></ul>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Exclude From Country Ends -->
+
+    <!-- Exclude From City Starts -->
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <h6>Exclude From City</h6>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <div class="dropdown dropdown-checkboxes">
+                <button class="btn btn-secondary dropdown-toggle exclude_from_city_type_btn exclude_from_city_type_btn2" type="button" id="exclude_from_city_type_btn2" data-bs-toggle="dropdown" aria-expanded="false">Select</button>
+
+                <ul class="dropdown-menu p-3 exclude_from_city_type_box exclude_from_city_type_box2" aria-labelledby="exclude_from_city_type_btn2" style="display: none;" id="exclude_from_city_type_box2">
+                    <input type="text" id="exclude_from_city_airline2" name="exclude_from_city_airline" class="form-control form-control-sm bg-white rounded outline-0 mb-2" placeholder="Enter City Name">
+
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <button type="button" class="btn btn-outline-primary text-capitalize px-2 py-0 exclude_from_city_check_btn2" id="exclude_from_city_check_btn2">Check All</button>
+                        <button type="button" class="btn btn-outline-primary text-capitalize px-2 py-0 exclude_from_city_uncheck_btn2" id="exclude_from_city_uncheck_btn2">Uncheck All</button>
+                    </div>
+
+                    <ul id="exclude_from_city_list2" class="list-unstyled exclude_from_city_list2"></ul>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Exclude From City Ends -->
+
+    <!-- Exclude To Country Starts -->
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <h6>Exclude To Country</h6>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12 mt-3">
+
+        
+        <div>
+
+            <div class="dropdown dropdown-checkboxes">
+                <button class="btn btn-secondary dropdown-toggle exclude_to_country_type_btn exclude_to_country_type_btn2" type="button" id="exclude_to_country_type_btn2" data-bs-toggle="dropdown" aria-expanded="false">Select</button>
+
+                <ul class="dropdown-menu p-3 exclude_to_country_type_box exclude_to_country_type_box2" aria-labelledby="exclude_to_country_type_btn2" style="display: none;" id="exclude_to_country_type_box2">
+                    <input type="text" id="exclude_to_country_airline2" name="exclude_to_country_airline" class="form-control form-control-sm bg-white rounded outline-0 mb-2" placeholder="Enter Country Name">
+
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <button type="button" class="btn btn-outline-primary text-capitalize px-2 py-0 exclude_to_country_check_btn2" id="exclude_to_country_check_btn2">Check All</button>
+                        <button type="button" class="btn btn-outline-primary text-capitalize px-2 py-0 exclude_to_country_uncheck_btn2" id="exclude_to_country_uncheck_btn2">Uncheck All</button>
+                    </div>
+
+                    <ul id="exclude_to_country_list2" class="list-unstyled exclude_to_country_list2"></ul>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Exclude To Country Ends -->
+
+    <!-- Exclude To City Starts -->
+    <div class="col-md-6 col-sm-12 mt-3">
+        <div>
+            <h6>Exclude To City</h6>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12 mt-3">
+
+        
+        <div>
+            <div class="dropdown dropdown-checkboxes">
+                <button class="btn btn-secondary dropdown-toggle exclude_to_city_type_btn exclude_to_city_type_btn2" type="button" id="exclude_to_city_type_btn2" data-bs-toggle="dropdown" aria-expanded="false">Select</button>
+
+                <ul class="dropdown-menu p-3 exclude_to_city_type_box exclude_to_city_type_box2" aria-labelledby="exclude_to_city_type_btn2" style="display: none;" id="exclude_to_city_type_box2">
+                    <input type="text" id="exclude_to_city_airline2" name="exclude_to_city_airline" class="form-control form-control-sm bg-white rounded outline-0 mb-2" placeholder="Enter City Name">
+
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <button type="button" class="btn btn-outline-primary text-capitalize px-2 py-0 exclude_to_city_check_btn2" id="exclude_to_city_check_btn2">Check All</button>
+                        <button type="button" class="btn btn-outline-primary text-capitalize px-2 py-0 exclude_to_city_uncheck_btn2" id="exclude_to_city_uncheck_btn2">Uncheck All</button>
+                    </div>
+
+                    <ul id="exclude_to_city_list2" class="list-unstyled exclude_to_city_list2"></ul>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Exclude To City Ends -->
+    
+    <!-- ============================================================================================================= -->
+    </div>
+    <div class="mt-3 text-end">
+    <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+
+</form>
+
+<script>
+    console.log("Tesing the Mic")
+</script>

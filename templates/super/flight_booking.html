@@ -1,0 +1,2212 @@
+{% extends "base/base2.html" %}
+{% load static %}
+{% load custom_tags %}
+{% load humanize %}
+{% block title %} Flight Booking {% endblock title %}
+
+{% block cssfiles %}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+<style>
+    .make_hover:hover {
+        text-decoration: underline !important;
+    }
+
+    .parent_layover {
+        position: relative;
+    }
+    
+    /*
+    .layover_container {
+        position: relative;
+        width: 100%;
+        left: 52%;
+        bottom: 50%;
+        rotate: 90deg;
+        font-size: 15px;
+    }
+    */
+
+    .parent_result {
+        position: relative;
+    }
+
+    
+    .hide {
+        display: none;
+    }
+
+    .show {
+        display: block;
+    }
+
+
+    .logo_img{
+        width: 15px;
+        height: 15px;
+        object-fit: cover;
+        margin-right: 2px; 
+    }
+
+    
+    /* .spinner-border {
+        width: 10rem;
+        height: 10rem;
+    } */
+    
+    .preloader_img{
+        max-width: 300px;
+    }
+
+    .badge_text{
+        font-size: 12px;
+    }
+
+    .border-end-custom {
+        border-right: none; /* No border by default (for small screens) */
+    }
+    
+    .border-end-logo{
+        border: none;
+    }
+
+    .border-start-logo{
+        border: none;
+    }
+
+
+
+    @media (max-width: 991.0px) {
+        .to_fro_img {
+            max-width: 150px;
+        }
+    }
+    
+    @media (min-width: 768px) {
+        /* For medium and larger screens */
+        .border-end-custom {
+            border-right: 1px dashed #dee2e6; /* Add the border for md and above */
+        }
+
+        .border-end-logo{
+            border-right: 1px solid #dee2e6;
+        }
+
+        .border-start-logo{
+            border-left: 1px solid #dee2e6;
+        }
+    }
+    
+
+    .determine .active{
+        background: #4291b8;
+        color: #fff;
+    }
+
+    .back_btn,
+    .back_btn:hover{
+        background: #4291b8;
+        color: #fff;
+    }
+
+    .dashboard_checkinput:checked,
+    .custom-checkbox:checked {
+        background: #4291b8 !important;
+        border-color: #4291b8 !important;
+        outline-color: #4291b8 !important;
+    }
+
+    .search_outline{
+        border: 1px solid #4291b8;
+    }
+    
+    body,
+    .make_body_bg{
+        background: #fff !important;
+    }
+
+    .progress-bar-animated-custom {
+        animation: loadProgress 2s linear infinite;
+      }
+    
+      @keyframes loadProgress {
+      0% {
+          width: 0%;
+      }
+      100% {
+          width: 100%;
+      }
+      }
+
+      .flight_booking_div {
+        height: 12rem;
+        background-image: url("{% static 'img/flight-breadcrumb2.jpg' %}");
+        background-size: 100% auto;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+</style>
+
+{% endblock cssfiles %}
+
+{% block content %}
+    <!-- Modal -->
+    <div id="preloader">
+        <img src="{% static 'img/loader.gif' %}" alt="" width="20%">
+    </div>
+
+
+    <div class="flight_booking_div"></div>
+    <div class="make_bg_new py-2">
+        <nav aria-label="breadcrumb" class="container" data-aos="fade-up" data-aos-duration="2000">
+            <ol class="breadcrumb m-0">
+              <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Home</a></li>
+              <li class="breadcrumb-item"><a href="javascript:void(0);" onclick="history.back();">Flight</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Library</li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="container mt-5">
+
+        <div class="row">
+
+            <div class="col-12 col-lg-9 mt-3 mt-md-0 order-2 order-md-1">
+
+                <table class="table table-borderless" id="flight_result_table">
+                    <tbody>
+                    <!-- third Table -->
+                    <tr>
+                        <td class="p-0 shadow-4" data-aos="fade-up" data-aos-duration="2000">
+                            <p class="m-0 top_text make_bg_new p-3 fs-6 text-dark fw-bold mb-3">Flight Details</p>
+                            <div class="parent_result">
+
+                                <div class="d-flex d-md-none justify-content-between align-items-start mt-2 office_id px-2">
+
+                                    {% if flight.fareRules.rules.1.category == "REFUND" and not flight.fareRules.rules.1.notApplicable %}
+                                        <span class="badge rounded make_bg_three flexibility_filter">Refundable</span>
+                                    {% else %}
+                                        <span class="badge rounded make_bg_three flexibility_filter">Non Refundable</span>
+                                    {% endif %}
+
+                                    <div class="d-block d-md-none">
+                                        {% if not price_changed %}
+                                            <span class="m-0 fw-bold fs-6 text-danger text-center flight_price main_flight_price">
+                                                {% if currency == "NGN" %}&#8358;{% else %}&#36;{% endif %} {{ converted_grand_total|floatformat:2|intcomma }}
+                                            </span>
+                                        
+                                        {% else %}
+
+                                        <span class="m-0 fw-bold fs-6 text-danger text-center flight_price main_flight_price">
+                                            {% if currency == "NGN" %}&#8358;{% else %}&#36;{% endif %} {{ converted_grand_total|floatformat:2|intcomma }}
+                                        </span>
+                                        <span class="text-danger text-center d-block m-0">* Price may have changed</span>
+                                        
+                                        {% endif %}
+                                    </div>
+
+                                </div>
+
+                                <!-- Summary Starts -->
+
+                                <div class="row align-items-center px-3 mt-1 mt-md-0">
+
+                                    <div class="col-12">
+
+                                        <div class="row align-items-center py-2 pe-lg-5">
+                                            {% for itinerary in flight.itineraries %}
+                                                <div class="row first_result_row p-0 m-0 align-items-end align-items-md-center">
+                                                    <div class="col-sm-12 col-md-3 col-lg-3">
+                                                        <div class="d-flex flex-sm-row flex-md-column flex-lg-column align-items-center align-items-md-start flex-wrap mt-3 mt-md-0">
+                                                            <!-- Airline Image -->
+                                                            {% if itinerary.segments %}
+                                                                {% with carrier_code=itinerary.segments.0.carrierCode|upper carrier_name=airline|get_item:itinerary.segments.0.carrierCode|upper %}
+                                                                    {% with image_path=carrier_code|add:'_'|add:carrier_name|add:'.PNG' %}
+                                                                <div class="d-flex align-items-center align-items-md-start flex-sm-row flex-md-column flex-wrap w-100">
+                                                                    <div class="d-flex d-md-none justify-content-between align-items-center w-100">
+                                                                        <img src="{% static 'img/v2/tail/'|add:image_path %}"
+                                                                                alt="{{ carrier_name }}"
+                                                                                width="40" height="40"
+                                                                                class="object-fit-cover rounded-3 me-3 me-md-0" loading="lazy">
+
+                                                                        <div class="m-0 d-flex flex-column w-100 d-md-none">
+                                                                            <p class="m-0 mt-md-2 airline_name w-100 d-block d-md-none">{{ carrier_name }}</p>
+
+                                                                            <!-- {% with first_going_segment=itinerary.segments.0 %}
+
+                                                                            <div class="d-flex justify-content-between align-items-center">
+                                                                                {% for segment in itinerary.segments %}
+                                                                                {% if forloop.first %}
+                                                                                    {% with segment_id=segment.id %}
+                                                                                        {% for traveler in flight_price_data.travelerPricings %}
+                                                                                            {% if forloop.first %}
+                                                                                                {% for fareDetail in traveler.fareDetailsBySegment %}
+                                                                                                    {% if fareDetail.segmentId == segment_id %}
+                                                                                                            <span class="cabin_filter travelclass m-0">
+                                                                                                                {% if fareDetail.cabin == 'PREMIUM_ECONOMY' %}
+                                                                                                                    PREMIUM ({{ fareDetail.class }})
+                                                                                                                {% else %}
+                                                                                                                {{ fareDetail.cabin }} ({{ fareDetail.class }})
+                                                                                                                {% endif %}
+                                                                                                            </span>
+                                                                                                    {% endif %}
+                                                                                                {% endfor %}
+                                                                                            {% endif %}
+                                                                                        {% endfor %}
+                                                                                    {% endwith %}
+                                                                                    {% endif %}
+                                                                                {% endfor %}
+                                                                            </div>
+                                                                        {% endwith %} -->
+
+                                                                        </div>
+
+                                                                    </div>
+                                                                    
+
+                                                                    <img src="{% static 'img/v2/tail/'|add:image_path %}"
+                                                                    alt="{{ carrier_name }}"
+                                                                    width="40" height="40"
+                                                                    class="object-fit-cover rounded-3 d-none d-md-block m-auto mb-1" loading="lazy">
+
+                                                                    <p class="m-0 mt-md-2 small airline_name w-100 d-none d-md-block text-center mb-1">{{ carrier_name }}</p>
+
+                                                                </div>
+                                                                    {% endwith %}
+                                                                {% endwith %}
+                                                            {% endif %}
+
+                                                            <!-- Airline Name -->
+
+                                                            <!-- Airline Number and carbine -->
+                                                            <!-- <div class="d-none d-md-flex mt-1 w-100">
+
+                                                                {% if itinerary.segments %}
+                                                                    {% with first_going_segment=itinerary.segments.0 %}
+                                                                        <p class="m-0 small w-100 text-center">
+                                                                            {% for segment in itinerary.segments %}
+                                                                            {% if forloop.first %}
+                                                                                {% with segment_id=segment.id %}
+                                                                                    {% for traveler in flight_price_data.travelerPricings %}
+                                                                                        {% if forloop.first %}
+                                                                                            {% for fareDetail in traveler.fareDetailsBySegment %}
+                                                                                                {% if fareDetail.segmentId == segment_id %}
+                                                                                                        <span class="cabin_filter travelclass">
+                                                                                                            {% if fareDetail.cabin == 'PREMIUM_ECONOMY' %}
+                                                                                                                PREMIUM 
+                                                                                                            {% else %}
+                                                                                                            {{ fareDetail.cabin }} 
+                                                                                                            {% endif %}
+                                                                                                        </span>
+                                                                                                {% endif %}
+                                                                                            {% endfor %}
+                                                                                        {% endif %}
+                                                                                    {% endfor %}
+                                                                                {% endwith %}
+                                                                                {% endif %}
+                                                                            {% endfor %}
+                                                                        </p>
+                                                                    {% endwith %}
+                                                                {% endif %}
+
+                                                            </div> -->
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-5 col-md-3 mt-3">
+                                                        <div class="d-flex flex-column">
+
+                                                            <div>
+                                                                {% if itinerary.segments %}
+                                                                    {% with first_segment=itinerary.segments.0 %}
+                                                                            <span>{{ first_segment.departure.at|format_date  }}</span>
+                                                                            <input type="hidden" name="itinerary_date" id="itinerary_date" value="{{ first_segment.departure.at|format_date  }}">
+                                                                    {% endwith %}
+                                                                {% endif %}
+                                                            </div>
+
+
+                                                            <!-- Airport Depart from -->
+                                                            <div class="d-flex align-items-center my-1">
+                                                                {% if itinerary.segments %}
+                                                                    {% with first_segment=itinerary.segments.0 %}
+                                                                        <span class="d-flex align-items-center fs-6" style="white-space: nowrap;">{{ first_segment.departure.at|format_time_segment  }}</span>
+                                                                    {% endwith %}
+                                                                {% endif %}
+                                                            </div>
+
+                                                            <div class="d-flex flex-column">
+                                                                <div class="d-flex align-items-center" style="white-space: nowrap;">
+                                                                    <p class="m-0">{{ itinerary.origin_city_name }}</p>
+                                                                    {% if itinerary.segments %}
+                                                                        {% with first_segment=itinerary.segments.0 %}
+                                                                            <p class="m-0 ms-1">({{ first_segment.departure.iataCode }})</p>
+                                                                        {% endwith %}
+                                                                    {% endif %}
+                                                                </div>
+                                                              
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-2 col-md-3 mt-3">
+                                                        <div class="d-flex justify-content-center align-items-center">
+                                                            <div class="d-flex flex-column align-items-center">
+
+
+                                                                {% if itinerary.segments %}
+                                                                    {% with stops_list=itinerary.segments %}
+                                                                        {% if stops_list|length == 1 %}
+                                                                            <span class="stops_summary text-center">Non Stop</span>
+                                                                        {% elif stops_list|length == 2 %}
+                                                                            <span class="stops_summary text-center">1 Stop</span>
+                                                                        {% elif stops_list|length == 3 %}
+                                                                            <span class="stops_summary text-center">2 Stops</span>
+                                                                        {% elif stops_list|length > 3 %}
+                                                                            <span class="stops_summary text-center">2+ Stops</span>
+                                                                        {% endif %}
+                                                                    {% endwith %}
+                                                                {% endif %}
+
+                                                               
+
+                                                                <!-- <div class="my-2">
+                                                                    <img src="{% static 'img/forth.svg' %}" alt="" class="to_fro_svg to_fro_img" loading="lazy">
+                                                                </div> -->
+
+                                                                <div class="d-flex justify-content-between align-items-center" style="width: 10rem;">
+                                                                    <i class="fas fa-plane-departure float-start make_color_result"></i>
+                                                                    <div class="border w-100 mx-3"></div>
+                                                                    <i class="fas fa-plane-arrival float-end make_color_result"></i>
+                                                                </div>
+
+
+                                                                {% if flight.itineraries %}
+                                                                {% if flight.itineraries|length == 1 %}
+                                                                    <span class="text-center">{{ itinerary.readable_duration|safe }}</span>
+                                                                {% elif flight.itineraries|length == 2 %}
+                                                                    <span class="text-center">{{ itinerary.readable_duration|safe }}</span>
+                                                                {% else %}
+                                                                    <span class="text-center">{{ itinerary.readable_duration|safe }}</span>
+                                                                {% endif %}
+                                                                {% endif %}
+                                                            
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-5 col-md-3 mt-3">
+                                                        <div class="d-flex flex-column align-items-end">
+
+                                                            <div class="text-end">
+                                                                {% if itinerary.segments %}
+                                                                    {% with last_segment=itinerary.segments|last %}
+                                                                        <span>{{ last_segment.arrival.at|format_date }}</span>
+                                                                    {% endwith %}
+                                                                {% endif %}
+                                                            </div>
+
+                                                            <!-- Airport Depart from -->
+                                                            <div class="d-flex align-items-center text-end my-1">
+                                                                {% if itinerary.segments %}
+                                                                    {% with last_segment=itinerary.segments|last %}
+                                                                        <span class="d-flex align-items-center text-end fs-6" style="white-space: nowrap;">{{ last_segment.arrival.at|format_time_segment }}</span>
+                                                                    {% endwith %}
+                                                                {% endif %}
+                                                            </div>
+
+
+                                                            <div class="d-flex flex-column align-items-end">
+                                                                <div class="d-flex align-items-center text-end" style="white-space: nowrap;">
+                                                                    <p class="m-0 text-end">{{ itinerary.destination_city_name }}</p>
+                                                                    {% if itinerary.segments %}
+                                                                        {% with last_segment=itinerary.segments|last %}
+                                                                            <p class="m-0 text-end">({{ last_segment.arrival.iataCode }})</p>
+                                                                        {% endwith %}
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    {% if forloop.last %}
+                                                    <div class="col-12">
+                                                        <div class="row">
+                                                            <div class="col-3"></div>
+                                                            <div class="col-12 col-md-9">
+                                                                <div class="text-start details_rules pb-2">
+                                                                    <a class="py-1" data-mdb-collapse-init data-mdb-ripple-init href="#flight_details_2_{{ flight_price_data.id }}" role="button" aria-expanded="false" aria-controls="flight_details">View Segment</a>
+                    
+                                                                    <!-- <a class="make_hover d-inline d-md-none" data-mdb-collapse-init data-mdb-ripple-init href="#price_details" role="button" aria-expanded="false" aria-controls="price_details">Price Breakdown</a>  -->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                </div>
+                                            {% endfor %}
+
+                                        </div>
+
+                                    </div>
+
+                                    <!-- Price -->
+                                    <!-- <div class="col-sm-0 col-md-3 col-lg-3 d-none d-md-block">
+
+                                        {% if not price_changed %}
+                                            <p class="m-0 fw-bold fs-4 text-center flight_price main_flight_price">
+                                                {% if currency == "NGN" %}&#8358;{% else %}&#36;{% endif %} {{ converted_grand_total|floatformat:2|intcomma }}
+                                            </p>
+                                        
+                                        {% else %}
+                                            <span class="text-danger text-center d-block mb-3">* Price may have changed</span>
+
+                                            <p class="m-0 fw-bold fs-4 text-center flight_price main_flight_price">
+                                                {% if currency == "NGN" %}&#8358;{% else %}&#36;{% endif %} {{ converted_grand_total|floatformat:2|intcomma }}
+                                            </p>
+                                        
+                                        {% endif %}
+                                        
+
+                                    </div> -->
+
+                                </div>
+                                <!-- Summary Starts -->
+
+
+                                <!-- Collapse For View Details -->
+                                <div class="bg-light p-0 m-0">
+                                    <div class="collapse px-2 pb-1" id="flight_details_2_{{ flight_price_data.id }}">
+                                        <div class="row align-items-center px-1 pb-1">
+
+                                            <div class="col-sm-12 col-md-6 m-0 p-0 mt-1 border-end-logo">
+
+                                                <div class="row m-0 p-0 mt-1 parent_layover">
+                                                    <div class="text-center {% if travel_type == 'multiple' %} hide {% else %} show {% endif %} m-0 p-0">
+                                                        <span class="badge rounded make_bg_three badge_text">Outbound</span>
+                                                    </div>
+                                                    {% if travel_type == 'oneway' %}
+                                                        {% for itinerary in flight_price_data.itineraries %}
+                                                            <div class="row segment_parent p-0 m-0">
+
+                                                                {% for segment in itinerary.segments %}
+                                                                    {% for traveler in flight_price_data.travelerPricings %}
+                                                                        <!-- {% if forloop.first %} -->
+                                                                            {% for fareDetail in traveler.fareDetailsBySegment %}
+                                                                                {% if fareDetail.segmentId == segment.id %}
+
+                                                                                    <!-- Depart Starts -->
+
+                                                                                    <!-- First -->
+                                                                                    <div class="col-12 p-0 p-lg-2">
+                                                                                        <div class="shadow-1 p-3 bg-white rounded-3">
+
+                                                                                            <div class="d-flex justify-content-start align-items-center">
+                                                                                                <!-- Airline Image -->
+
+                                                                                                {% with carrier_code=segment.carrierCode|upper carrier_name=airline|get_item:segment.carrierCode|upper %}
+                                                                                                    {% with image_path=carrier_code|add:'_'|add:carrier_name|add:'.PNG' %}
+                                                                                                        <img src="{% static 'img/v2/tail/'|add:image_path %}"
+                                                                                                                alt="{{ carrier_name }}"
+                                                                                                                width="40"
+                                                                                                                height="40"
+                                                                                                                class="object-fit-cover rounded-3 me-2">
+                                                                                                    {% endwith %}
+                                                                                                {% endwith %}
+
+
+                                                                                                <div>
+                                                                                                    <p class="m-0 fw-bold">
+                                                                                                        {% with carrier_code=segment.carrierCode|upper carrier_name=airline|get_item:segment.carrierCode|upper %}
+                                                                                                            {{ carrier_name }}
+                                                                                                        {% endwith %} |
+                                                                                                        <span>{{ segment.number }}  <br>
+
+                                                                                                        </span>
+                                                                                                    </p>
+                                                                                                    <p class="m-0 text-muted">
+                                                                                                        <span>
+                                                                                                            <span class="travelclass"> 
+                                                                                                                {% if fareDetail.cabin == 'PREMIUM_ECONOMY'  %}
+                                                                                                                        PREMIUM
+                                                                                                                    {% else %}
+                                                                                                                    {{ fareDetail.cabin }}
+                                                                                                                {% endif %}
+                                                                                                            </span> <span>({{ fareDetail.class }})</span>
+                                                                                                        </span>
+
+                                                                                                        <br>
+
+                                                                                                        Operated by :
+                                                                                                        {% if segment.operating %}
+                                                                                                            {% with operating_carrier_code=segment.operating.carrierCode|upper %}
+                                                                                                                {% with operating_carrier_name=airline|get_item:operating_carrier_code %}
+                                                                                                                    {{ operating_carrier_name }}
+                                                                                                                {% endwith %}
+                                                                                                            {% endwith %}
+                                                                                                        {% else %}
+                                                                                                            {{ carrier_name }}
+                                                                                                        {% endif %}
+
+                                                                                                    </p>
+
+
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                            <div class="row align-items-end align-items-md-center mt-3 p-0">
+
+                                                                                                <div class="col-5">
+                                                                                                    <div class="d-flex flex-column">
+
+                                                                                                        <div class="me-2">
+                                                                                                            <span style="white-space: nowrap;">{{ segment.departure.at|format_date }}</span>
+                                                                                                        </div>
+
+
+                                                                                                        <div class="d-flex align-items-center fw-bold">
+                                                                                                            <span class="d-flex align-items-center fs-6" style="white-space: nowrap;">{{ segment.departure.at|format_time_segment }}</span>
+                                                                                                        </div>
+
+
+                                                                                                        <p class="m-0 fs-6 airport_name"></p>
+
+                                                                                                        <div class="d-flex align-items-start align-items-md-center flex-column flex-md-row">
+                                                                                                            <!-- Airport Depart from -->
+                                                                                                            <div class="d-flex align-items-center" style="white-space: nowrap;">
+                                                                                                                <p class="m-0 me-1" style="text-wrap: nowrap;">{{ segment.departure_city_name }}</p>
+                                                                                                                <p class="m-0 city_depart_iata_code_segment">
+                                                                                                                    ({{ segment.departure.iataCode }})</p>
+                                                                                                            </div>
+                                                                                                           
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                                <div class="col-2">
+                                                                                                    <div class="d-flex flex-column align-items-center justify-content-center">
+                                                                                                        
+                                                                                                        <span>
+                                                                                                            {% if segment.numberOfStops == 0 %}
+                                                                                                            Non&nbsp;Stop
+                                                                                                            {%  elif segment.numberOfStops == 1 %}
+                                                                                                                1&nbsp;Stop
+                                                                                                            {%  elif segment.numberOfStops == 2 %}
+                                                                                                                2&nbsp;Stops
+                                                                                                            {%  elif segment.numberOfStops >= 2 %}
+                                                                                                                2+&nbsp;Stops
+                                                                                                            {% endif %}
+                                                                                                        </span>
+
+                                                                                                          <div class="d-flex justify-content-between align-items-center" style="width: 10rem;">
+                                                                                                                    <i class="fas fa-plane-departure float-start make_color_result"></i>
+                                                                                                                    <div class="border w-100 mx-3"></div>
+                                                                                                                    <i class="fas fa-plane-arrival float-end make_color_result"></i>
+                                                                                                                </div>
+
+                                                                                                        <span>{{ segment.readable_duration|safe }}</span>
+
+                                                                                                     
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                                <div class="col-5">
+                                                                                                    <div class="d-flex flex-column align-items-end" style="white-space: nowrap;">
+
+                                                                                                        <div class="me-2">
+                                                                                                            <span style="white-space: nowrap;">{{ segment.arrival.at|format_date }}</span>
+                                                                                                        </div>
+
+                                                                                                        <div class="d-flex align-items-center fw-bold">
+                                                                                                            <span class="d-flex align-items-center fs-6" style="white-space: nowrap;">{{ segment.arrival.at|format_time_segment }}</span>
+                                                                                                        </div>
+
+
+                                                                                                        <p class="m-0 fs-6 airport_name"></p>
+
+                                                                                                        <div class="d-flex align-items-end align-items-md-center flex-column flex-md-row">
+                                                                                                        <!-- Airport Depart from -->
+                                                                                                        <div class="d-flex align-items-center">
+                                                                                                            <p class="m-0 me-1" style="text-wrap: nowrap;">{{ segment.arrival_city_name }}</p>
+                                                                                                            <p class="m-0 city_depart_iata_code_segment">
+                                                                                                                ({{ segment.arrival.iataCode }})</p>
+                                                                                                        </div>
+                                                                                                           
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                                <div class="col-12">
+                                                                                                    <div class="d-flex justify-content-between align-items-center">
+                                                                                                        <p class="m-0 text-muted">
+                                                                                                            Check-in:
+                                                                                                            <span class="baggages_filter text-dark">
+                                                                                                                {% if fareDetail.includedCheckedBags.quantity is not None %}
+                                                                                                                {{ fareDetail.includedCheckedBags.quantity|default_if_none:0 }} PC
+                                                                                                                {% else %}
+                                                                                                                {{ fareDetail.includedCheckedBags.weight }} {{ fareDetail.includedCheckedBags.weightUnit }}
+                                                                                                                {% endif %}
+                                                                                                            </span>
+                                                                                                        </p>
+
+                                                                                                        <p class="m-0 text-muted text-end">
+                                                                                                            Carry-on:
+                                                                                                            <span class="text-dark">
+                                                                                                                {{ fareDetail.includedCabinBags.quantity }} {{ fareDetail.includedCabinBags.weight }} {{ fareDetail.includedCabinBags.weightUnit }}</span>
+                                                                                                        </p>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <!-- Layover -->
+                                                                                    {% if segment.layover_time %}
+                                                                                    <div class="text-center d-flex justify-content-center m-0">
+                                                                                        <p class="badge make_bg_three text-uppercase m-0">{{ segment.layover_time }} &nbsp; (Layover)</p>
+                                                                                    </div>
+                                                                                    {% endif %}
+
+
+                                                                                    <!-- Depart Ends -->
+
+
+                                                                                {% endif %}
+                                                                            {% endfor %}
+                                                                            <!-- {% endif %} -->
+                                                                    {% endfor %}
+                                                                {% endfor %}
+                                                            </div>
+                                                        {% endfor %}
+
+                                                    {% elif travel_type == 'round_trip' %}
+                                                        {% for itinerary in flight_price_data.itineraries %}
+                                                            <div class="row segment_parent p-0 m-0">
+                                                                {% if forloop.first %}
+                                                                    {% for segment in itinerary.segments %}
+                                                                        {% for traveler in flight_price_data.travelerPricings %}
+                                                                            <!-- {% if forloop.first %} -->
+                                                                                {% for fareDetail in traveler.fareDetailsBySegment %}
+                                                                                    {% if fareDetail.segmentId == segment.id %}
+
+                                                                                        <!-- Depart Starts -->
+
+                                                                                        <!-- First -->
+                                                                                        <div class="col-12 p-0 p-lg-2">
+                                                                                            <div class="shadow-1 p-3 bg-white rounded-3">
+
+                                                                                                <div class="d-flex justify-content-start align-items-center">
+                                                                                                    <!-- Airline Image -->
+
+                                                                                                    {% with carrier_code=segment.carrierCode|upper carrier_name=airline|get_item:segment.carrierCode|upper %}
+                                                                                                        {% with image_path=carrier_code|add:'_'|add:carrier_name|add:'.PNG' %}
+                                                                                                            <img src="{% static 'img/v2/tail/'|add:image_path %}"
+                                                                                                                    alt="{{ carrier_name }}"
+                                                                                                                    width="40"
+                                                                                                                    height="40"
+                                                                                                                    class="object-fit-cover rounded-3 me-2">
+                                                                                                        {% endwith %}
+                                                                                                    {% endwith %}
+
+
+                                                                                                    <div>
+                                                                                                        <p class="m-0 fw-bold">
+                                                                                                            {% with carrier_code=segment.carrierCode|upper carrier_name=airline|get_item:segment.carrierCode|upper %}
+                                                                                                                {{ carrier_name }}
+                                                                                                            {% endwith %}
+                                                                                                            |
+                                                                                                            <span>{{ segment.number }}  <br>
+
+                                                                                                            </span>
+                                                                                                        </p>
+                                                                                                        <p class="m-0 text-muted">
+                                                                                                            <span>
+                                                                                                                <span class="travelclass"> 
+                                                                                                                    {% if fareDetail.cabin == 'PREMIUM_ECONOMY'  %}
+                                                                                                                            PREMIUM
+                                                                                                                        {% else %}
+                                                                                                                        {{ fareDetail.cabin }}
+                                                                                                                    {% endif %}
+                                                                                                                </span> <span>({{ fareDetail.class }})</span>
+                                                                                                            </span>
+
+                                                                                                            <br>
+
+                                                                                                            Operated by :
+                                                                                                            {% if segment.operating %}
+                                                                                                                {% with operating_carrier_code=segment.operating.carrierCode|upper %}
+                                                                                                                    {% with operating_carrier_name=airline|get_item:operating_carrier_code %}
+                                                                                                                        {{ operating_carrier_name }}
+                                                                                                                    {% endwith %}
+                                                                                                                {% endwith %}
+                                                                                                            {% else %}
+                                                                                                                {{ carrier_name }}
+                                                                                                            {% endif %}
+
+                                                                                                        </p>
+
+
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                                
+                                                                                                <div class="row align-items-end align-items-md-center mt-3 p-0">
+
+                                                                                                    <div class="col-5">
+                                                                                                        <div class="d-flex flex-column">
+
+                                                                                                            <div class="me-2">
+                                                                                                                <span style="white-space: nowrap;">{{ segment.departure.at|format_date }}</span>
+                                                                                                            </div>
+
+                                                                                                            <div class="d-flex align-items-center fw-bold">
+                                                                                                                <span class="d-flex align-items-center fs-6" style="white-space: nowrap;">{{ segment.departure.at|format_time_segment }}</span>
+                                                                                                            </div>
+
+                                                                                                            <p class="m-0 fs-6 airport_name"></p>
+
+                                                                                                            <div class="d-flex align-items-start align-items-md-center flex-column flex-md-row">
+                                                                                                                <!-- Airport Depart from -->
+                                                                                                                <div class="d-flex align-items-center" style="white-space: nowrap;">
+                                                                                                                    <p class="m-0 me-1" style="text-wrap: nowrap;">{{ segment.departure_city_name }}</p>
+                                                                                                                    <p class="m-0 city_depart_iata_code_segment">
+                                                                                                                        ({{ segment.departure.iataCode }})</p>
+                                                                                                                </div>
+                                                                                                                
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+
+                                                                                                    <div class="col-2">
+                                                                                                        <div class="d-flex flex-column align-items-center justify-content-center">
+
+
+                                                                                                            <span>
+                                                                                                                {% if segment.numberOfStops == 0 %}
+                                                                                                                Non&nbsp;Stop
+                                                                                                                {%  elif segment.numberOfStops == 1 %}
+                                                                                                                    1&nbsp;Stop
+                                                                                                                {%  elif segment.numberOfStops == 2 %}
+                                                                                                                    2&nbsp;Stops
+                                                                                                                {%  elif segment.numberOfStops >= 2 %}
+                                                                                                                    2+&nbsp;Stops
+                                                                                                                {% endif %}
+                                                                                                            </span>
+                                                                                                            
+
+                                                                                                              <div class="d-flex justify-content-between align-items-center" style="width: 10rem;">
+                                                                                                                    <i class="fas fa-plane-departure float-start make_color_result"></i>
+                                                                                                                    <div class="border w-100 mx-3"></div>
+                                                                                                                    <i class="fas fa-plane-arrival float-end make_color_result"></i>
+                                                                                                                </div>
+
+                                                                                                            <span>{{ segment.readable_duration|safe }}</span>
+
+                                                                                                        </div>
+                                                                                                    </div>
+
+                                                                                                    <div class="col-5">
+                                                                                                        <div class="d-flex flex-column align-items-end" style="white-space: nowrap;">
+
+                                                                                                            <div class="me-2">
+                                                                                                                <span style="white-space: nowrap;">{{ segment.arrival.at|format_date }}</span>
+                                                                                                            </div>
+
+                                                                                                            <div class="d-flex align-items-center fw-bold">
+                                                                                                                <span class="d-flex align-items-center fs-6" style="white-space: nowrap;">{{ segment.arrival.at|format_time_segment }}</span>
+                                                                                                            </div>
+
+
+                                                                                                            <p class="m-0 fs-6 airport_name"></p>
+
+                                                                                                            <div class="d-flex align-items-end align-items-md-center flex-column flex-md-row">
+                                                                                                                <!-- Airport Depart from -->
+                                                                                                                <div class="d-flex align-items-center">
+                                                                                                                    <p class="m-0 me-1" style="text-wrap: nowrap;">{{ segment.arrival_city_name }}</p>
+                                                                                                                    <p class="m-0 city_depart_iata_code_segment">
+                                                                                                                        ({{ segment.arrival.iataCode }})</p>
+                                                                                                                </div>
+                                                                                                                
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+
+                                                                                                    <div class="col-12">
+                                                                                                        <div class="d-flex justify-content-between align-items-center">
+                                                                                                            <p class="m-0 text-muted">
+                                                                                                                Check-in:
+                                                                                                                <span class="baggages_filter text-dark">
+                                                                                                                    {% if fareDetail.includedCheckedBags.quantity is not None %}
+                                                                                                                    {{ fareDetail.includedCheckedBags.quantity|default_if_none:0 }} PC
+                                                                                                                    {% else %}
+                                                                                                                    {{ fareDetail.includedCheckedBags.weight }} {{ fareDetail.includedCheckedBags.weightUnit }}
+                                                                                                                    {% endif %}
+                                                                                                                </span>
+                                                                                                            </p>
+
+                                                                                                            <p class="m-0 text-muted text-end">
+                                                                                                                Carry-on:
+                                                                                                                <span class="text-dark">
+                                                                                                                    {{ fareDetail.includedCabinBags.quantity }} {{ fareDetail.includedCabinBags.weight }} {{ fareDetail.includedCabinBags.weightUnit }}</span>
+                                                                                                            </p>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <!-- Depart Ends -->
+
+                                                                                        <!-- Layover -->
+                                                                                    {% if segment.layover_time %}
+                                                                                    <div class="text-center d-flex justify-content-center m-0">
+                                                                                        <p class="badge make_bg_three text-uppercase m-0">{{ segment.layover_time }} &nbsp; (Layover)</p>
+                                                                                    </div>
+                                                                                    {% endif %}
+
+                                                                                    {% endif %}
+                                                                                {% endfor %}
+                                                                                <!-- {% endif %} -->
+                                                                        {% endfor %}
+                                                                    {% endfor %}
+                                                                {% endif %}
+                                                            </div>
+                                                        {% endfor %}
+                                                    {% elif travel_type == 'multiple' %}
+
+                                                        {% for itinerary in flight_price_data.itineraries %}
+                                                            <div class="row segment_parent p-0 m-0">
+                                                                <div class="mt-3">
+                                                                    <span class="badge make_bg_three fs-6">Flight {{ forloop.counter }}</span>
+                                                                </div>
+                                                                {% for segment in itinerary.segments %}
+                                                                    {% for traveler in flight_price_data.travelerPricings %}
+                                                                        <!-- {% if forloop.first %} -->
+                                                                            {% for fareDetail in traveler.fareDetailsBySegment %}
+                                                                                {% if fareDetail.segmentId == segment.id %}
+
+                                                                                    <!-- Depart Starts -->
+                                                                                    <!-- First -->
+                                                                                    <div class="col-12 p-0 p-lg-2">
+                                                                                        <div class="shadow-1 p-3 bg-white rounded-3">
+                                                                                        
+
+                                                                                            <div class="d-flex justify-content-start align-items-center">
+                                                                                                <!-- Airline Image -->
+
+                                                                                                {% with carrier_code=segment.carrierCode|upper carrier_name=airline|get_item:segment.carrierCode|upper %}
+                                                                                                    {% with image_path=carrier_code|add:'_'|add:carrier_name|add:'.PNG' %}
+                                                                                                        <img src="{% static 'img/v2/tail/'|add:image_path %}"
+                                                                                                                alt="{{ carrier_name }}"
+                                                                                                                width="40"
+                                                                                                                height="40"
+                                                                                                                class="object-fit-cover rounded-3 me-2">
+                                                                                                    {% endwith %}
+                                                                                                {% endwith %}
+
+
+                                                                                                <div>
+                                                                                                    <p class="m-0 fw-bold">
+                                                                                                        {% with carrier_code=segment.carrierCode|upper carrier_name=airline|get_item:segment.carrierCode|upper %}
+                                                                                                            {{ carrier_name }}
+                                                                                                        {% endwith %} |
+                                                                                                        <span>{{ segment.number }}  <br>
+
+                                                                                                        </span>
+                                                                                                    </p>
+                                                                                                    <p class="m-0 text-muted">
+
+                                                                                                        <span>
+                                                                                                            <span class="travelclass"> 
+                                                                                                                {% if fareDetail.cabin == 'PREMIUM_ECONOMY'  %}
+                                                                                                                        PREMIUM
+                                                                                                                    {% else %}
+                                                                                                                    {{ fareDetail.cabin }}
+                                                                                                                {% endif %}
+                                                                                                            </span> <span>({{ fareDetail.class }})</span>
+                                                                                                        </span>
+
+                                                                                                        <br>
+
+                                                                                                        Operated by :
+                                                                                                        {% if segment.operating %}
+                                                                                                            {% with operating_carrier_code=segment.operating.carrierCode|upper %}
+                                                                                                                {% with operating_carrier_name=airline|get_item:operating_carrier_code %}
+                                                                                                                    {{ operating_carrier_name }}
+                                                                                                                {% endwith %}
+                                                                                                            {% endwith %}
+                                                                                                        {% else %}
+                                                                                                            {{ carrier_name }}
+                                                                                                        {% endif %}
+
+                                                                                                    </p>
+
+
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                            <div class="row align-items-end align-items-md-center mt-3 p-0">
+
+                                                                                                <div class="col-5">
+                                                                                                    <div class="d-flex flex-column" style="white-space: nowrap;">
+
+                                                                                                        <div class="me-2">
+                                                                                                            <span style="white-space: nowrap;">{{ segment.departure.at|format_date }}</span>
+                                                                                                        </div>
+
+                                                                                                        <div class="d-flex align-items-center fw-bold">
+                                                                                                            <span class="d-flex align-items-center fs-6" style="white-space: nowrap;">{{ segment.departure.at|format_time_segment }}</span>
+                                                                                                        </div>
+
+
+                                                                                                        <p class="m-0 fs-6 airport_name"></p>
+
+                                                                                                        <div class="d-flex align-items-start align-items-md-center flex-column flex-md-row">
+                                                                                                          <!-- Airport Depart from -->
+                                                                                                            <div class="d-flex align-items-center">
+                                                                                                                <p class="m-0 me-1" style="text-wrap: nowrap;">{{ segment.departure_city_name }}</p>
+                                                                                                                <p class="m-0 city_depart_iata_code_segment">
+                                                                                                                    ({{ segment.departure.iataCode }})</p>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                                <div class="col-2">
+                                                                                                    <div class="d-flex flex-column align-items-center justify-content-center">
+                                                                                                        
+
+                                                                                                        <span>
+                                                                                                            {% if segment.numberOfStops == 0 %}
+                                                                                                            Non&nbsp;Stop
+                                                                                                            {%  elif segment.numberOfStops == 1 %}
+                                                                                                                1&nbsp;Stop
+                                                                                                            {%  elif segment.numberOfStops == 2 %}
+                                                                                                                2&nbsp;Stops
+                                                                                                            {%  elif segment.numberOfStops >= 2 %}
+                                                                                                                2+&nbsp;Stops
+                                                                                                            {% endif %}
+                                                                                                        </span>
+
+                                                                                                          <div class="d-flex justify-content-between align-items-center" style="width: 10rem;">
+                                                                                                                    <i class="fas fa-plane-departure float-start make_color_result"></i>
+                                                                                                                    <div class="border w-100 mx-3"></div>
+                                                                                                                    <i class="fas fa-plane-arrival float-end make_color_result"></i>
+                                                                                                                </div>
+
+
+                                                                                                        <span>{{ segment.readable_duration|safe }}</span>
+
+                                                                                                     
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                                <div class="col-5">
+                                                                                                    <div class="d-flex flex-column align-items-end" style="white-space: nowrap;">
+
+                                                                                                        <div class="me-2">
+                                                                                                            <span style="white-space: nowrap;">{{ segment.arrival.at|format_date }}</span>
+                                                                                                        </div>
+
+                                                                                                        <div class="d-flex align-items-center fw-bold">
+                                                                                                            <span class="d-flex align-items-center fs-6" style="white-space: nowrap;">{{ segment.arrival.at|format_time_segment }}</span>
+                                                                                                        </div>
+
+
+                                                                                                        <p class="m-0 fs-6 airport_name"></p>
+
+                                                                                                        <div class="d-flex align-items-end align-items-md-center flex-column flex-md-row">
+                                                                                                            <!-- Airport Depart from -->
+                                                                                                            <div class="d-flex align-items-center">
+                                                                                                                <p class="m-0 me-1" style="text-wrap: nowrap;">{{ segment.arrival_city_name }}</p>
+                                                                                                                <p class="m-0 city_depart_iata_code_segment">
+                                                                                                                    {{ segment.arrival.iataCode }}</p>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                                <div class="col-12">
+                                                                                                    <div class="d-flex justify-content-between align-items-center">
+                                                                                                        <p class="m-0 text-muted">
+                                                                                                            Check-in:
+                                                                                                            <span class="baggages_filter text-dark">
+                                                                                                                {% if fareDetail.includedCheckedBags.quantity is not None %}
+                                                                                                                {{ fareDetail.includedCheckedBags.quantity|default_if_none:0 }} PC
+                                                                                                                {% else %}
+                                                                                                                {{ fareDetail.includedCheckedBags.weight }} {{ fareDetail.includedCheckedBags.weightUnit }}
+                                                                                                                {% endif %}
+                                                                                                            </span>
+                                                                                                        </p>
+
+                                                                                                        <p class="m-0 text-muted text-end">
+                                                                                                            Carry-on:
+                                                                                                            <span class="text-dark">
+                                                                                                                {{ fareDetail.includedCabinBags.quantity }} {{ fareDetail.includedCabinBags.weight }} {{ fareDetail.includedCabinBags.weightUnit }}</span>
+                                                                                                        </p>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <!-- Layover -->
+                                                                                    {% if segment.layover_time %}
+                                                                                    <div class="text-center d-flex justify-content-center m-0">
+                                                                                    <p class="badge make_bg_three text-uppercase m-0">{{ segment.layover_time }} &nbsp; (Layover)</p>
+                                                                                </div>
+                                                                                    {% endif %}
+
+
+                                                                                    <!-- Depart Ends -->
+
+
+                                                                                {% endif %}
+                                                                            {% endfor %}
+                                                                            <!-- {% endif %} -->
+                                                                    {% endfor %}
+                                                                {% endfor %}
+                                                            </div>
+                                                        {% endfor %}
+
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-sm-12 col-md-6 m-0 p-0 mt-1">
+
+                                                <div class="row m-0 p-0 mt-1 parent_layover {% if travel_type == 'oneway' %} d-none {% elif travel_type == 'multiple'  %} d-none {% else %} d-flex {% endif %}">
+
+                                                    <div class="text-center {% if travel_type == 'multiple' %} hide {% else %} show {% endif %} m-0 p-0">
+                                                        <span class="badge rounded make_bg_three badge_text">Inbound</span>
+                                                    </div>
+
+                                                    {% if travel_type == 'round_trip' %}
+                                                        {% for itinerary in flight_price_data.itineraries %}
+                                                            <div class="row segment_parent p-0 m-0">
+                                                                {% if forloop.last %}
+                                                                    {% for segment in itinerary.segments %}
+                                                                        {% for traveler in flight_price_data.travelerPricings %}
+                                                                            <!-- {% if forloop.first %} -->
+                                                                                {% for fareDetail in traveler.fareDetailsBySegment %}
+                                                                                    {% if fareDetail.segmentId == segment.id %}
+
+                                                                                        <!-- Return Starts -->
+
+                                                                                        <!-- First -->
+                                                                                        <div class="col-12 p-0 p-lg-2">
+                                                                                            <div class="shadow-1 p-3 bg-white rounded-3">
+
+                                                                                                <div class="d-flex justify-content-start align-items-center">
+                                                                                                    <!-- Airline Image -->
+                                                                                                    {% with carrier_code=segment.carrierCode|upper carrier_name=airline|get_item:segment.carrierCode|upper %}
+                                                                                                        {% with image_path=carrier_code|add:'_'|add:carrier_name|add:'.PNG' %}
+                                                                                                            <img src="{% static 'img/v2/tail/'|add:image_path %}"
+                                                                                                                    alt="{{ carrier_name }}"
+                                                                                                                    width="40"
+                                                                                                                    height="40"
+                                                                                                                    class="object-fit-cover rounded-3 me-2">
+                                                                                                        {% endwith %}
+                                                                                                    {% endwith %}
+
+                                                                                                    <div>
+                                                                                                        <p class="m-0 fw-bold">
+                                                                                                            {% with carrier_code=segment.carrierCode|upper carrier_name=airline|get_item:segment.carrierCode|upper %}
+                                                                                                                {{ carrier_name }}
+                                                                                                            {% endwith %}
+                                                                                                            |
+                                                                                                            <span>{{ segment.number }} <br>
+
+                                                                                                            </span>
+                                                                                                        </p>
+
+                                                                                                        <p class="m-0 text-muted">
+                                                                                                            <span>
+                                                                                                                <span class="travelclass"> 
+                                                                                                                    {% if fareDetail.cabin == 'PREMIUM_ECONOMY'  %}
+                                                                                                                            PREMIUM
+                                                                                                                        {% else %}
+                                                                                                                        {{ fareDetail.cabin }}
+                                                                                                                    {% endif %}
+                                                                                                                </span> <span>({{ fareDetail.class }})</span>
+                                                                                                            </span>
+                                                                                                            
+                                                                                                            <br>
+
+                                                                                                            Operated by :
+                                                                                                            {% if segment.operating %}
+                                                                                                                {% with operating_carrier_code=segment.operating.carrierCode|upper %}
+                                                                                                                    {% with operating_carrier_name=airline|get_item:operating_carrier_code %}
+                                                                                                                        {{ operating_carrier_name }}
+                                                                                                                    {% endwith %}
+                                                                                                                {% endwith %}
+                                                                                                            {% else %}
+                                                                                                                {{ carrier_name }}
+                                                                                                            {% endif %}
+
+                                                                                                        </p>
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                                <div class="row align-items-end align-items-md-center mt-3 p-0">
+
+                                                                                                    <div class="col-5">
+                                                                                                        <div class="d-flex flex-column">
+
+                                                                                                            <div class="me-2">
+                                                                                                                <span style="white-space: nowrap;">{{ segment.departure.at|format_date }}</span>
+                                                                                                            </div>
+
+                                                                                                            <div class="d-flex align-items-center fw-bold">
+                                                                                                                <span class="d-flex align-items-center fs-6" style="white-space: nowrap;">{{ segment.departure.at|format_time_segment }}</span>
+                                                                                                            </div>
+
+
+                                                                                                            <p class="m-0 fs-6 airport_name"></p>
+
+                                                                                                            <div class="d-flex align-items-start align-items-md-center flex-column flex-md-row">
+                                                                                                                <!-- Airport Depart from -->
+                                                                                                                <div class="d-flex align-items-center">
+                                                                                                                    <p class="m-0 me-1" style="text-wrap: nowrap;">{{ segment.departure_city_name }}</p>
+                                                                                                                    <p class="m-0 city_depart_iata_code_segment">
+                                                                                                                        ({{ segment.departure.iataCode }})</p>
+                                                                                                                </div>
+
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+
+                                                                                                    <div class="col-2">
+                                                                                                        <div class="d-flex flex-column align-items-center justify-content-center">
+
+                                                                                                            <span>
+                                                                                                                {% if segment.numberOfStops == 0 %}
+                                                                                                                Non&nbsp;Stop
+                                                                                                                {%  elif segment.numberOfStops == 1 %}
+                                                                                                                    1&nbsp;Stop
+                                                                                                                {%  elif segment.numberOfStops == 2 %}
+                                                                                                                    2&nbsp;Stops
+                                                                                                                {%  elif segment.numberOfStops >= 2 %}
+                                                                                                                    2+&nbsp;Stops
+                                                                                                                {% endif %}
+                                                                                                            </span>
+                                                                                                            
+                                                                                                              <div class="d-flex justify-content-between align-items-center" style="width: 10rem;">
+                                                                                                                    <i class="fas fa-plane-departure float-start make_color_result"></i>
+                                                                                                                    <div class="border w-100 mx-3"></div>
+                                                                                                                    <i class="fas fa-plane-arrival float-end make_color_result"></i>
+                                                                                                                </div>
+
+                                                                                                            <span>{{ segment.readable_duration|safe }}</span>
+
+                                                                                                        </div>
+                                                                                                    </div>
+
+                                                                                                    <div class="col-5">
+                                                                                                        <div class="d-flex flex-column align-items-end">
+
+                                                                                                            <div class="me-2">
+                                                                                                                <span style="white-space: nowrap;">{{ segment.arrival.at|format_date }}</span>
+                                                                                                            </div>
+
+                                                                                                            <div class="d-flex align-items-center fw-bold">
+                                                                                                                <span class="d-flex align-items-center fs-6" style="white-space: nowrap;">{{ segment.arrival.at|format_time_segment }}</span>
+                                                                                                            </div>
+
+
+                                                                                                            <p class="m-0 fs-6 airport_name"></p>
+
+                                                                                                            <div class="d-flex align-items-end align-items-md-center flex-column flex-md-row">
+                                                                                                                 <!-- Airport Depart from -->
+                                                                                                                <div class="d-flex align-items-center">
+                                                                                                                    <p class="m-0 me-1" style="text-wrap: nowrap;">{{ segment.arrival_city_name }}</p>
+                                                                                                                    <p class="m-0 city_depart_iata_code_segment">
+                                                                                                                        ({{ segment.arrival.iataCode }})</p>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+
+                                                                                                    <div class="col-12">
+                                                                                                        <div class="d-flex justify-content-between align-items-center">
+                                                                                                            <p class="m-0 text-muted">
+                                                                                                                Check-in:
+                                                                                                                <span class="baggages_filter text-dark">
+                                                                                                                    {% if fareDetail.includedCheckedBags.quantity is not None %}
+                                                                                                                    {{ fareDetail.includedCheckedBags.quantity|default_if_none:0 }} PC
+                                                                                                                    {% else %}
+                                                                                                                    {{ fareDetail.includedCheckedBags.weight }} {{ fareDetail.includedCheckedBags.weightUnit }}
+                                                                                                                    {% endif %}
+                                                                                                                </span>
+                                                                                                            </p>
+
+                                                                                                            <p class="m-0 text-muted text-end">
+                                                                                                                Carry-on:
+                                                                                                                <span class="text-dark">
+                                                                                                                    {{ fareDetail.includedCabinBags.quantity }} {{ fareDetail.includedCabinBags.weight }} {{ fareDetail.includedCabinBags.weightUnit }}</span>
+                                                                                                            </p>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <!-- Layover -->
+                                                                                    {% if segment.layover_time %}
+                                                                                    <div class="text-center d-flex justify-content-center m-0">
+                                                                                        <p class="badge make_bg_three text-uppercase m-0">{{ segment.layover_time }} &nbsp; (Layover)</p>
+                                                                                    </div>
+                                                                                    {% endif %}
+
+
+                                                                                    {% endif %}
+                                                                                {% endfor %}
+                                                                                <!-- {% endif %} -->
+                                                                        {% endfor %}
+                                                                    {% endfor %}
+                                                                {% endif %}
+                                                            </div>
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                    <!-- Return Ends -->
+
+                                                </div>
+
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Collapse For View Details -->
+                            </div>
+
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <!-- <div class="shadow-4 my-5" data-aos="fade-up" data-aos-duration="2000">
+                    <p class="m-0 top_text make_bg_new p-3 fs-6 text-dark fw-bold mb-1">Information</p>
+
+                  <div class="p-3">
+                    <div>
+                        <h6 class="mb-0 fw-bold">Cancellation Charges</h6>
+                        <p class="p-0 m-0">airline fee : $2012</p>
+                        <p class="p-0 m-0">This airline allows cancellation only before 2 hrs from departure time.</p>
+                    </div>
+
+                    <div class="mt-4">
+                        <h6 class="mb-0 fw-bold">Reschedule Charges</h6>
+                        <p class="p-0 m-0">airline fee : $2012</p>
+                        <p class="p-0 m-0">This airline allows cancellation only before 2 hrs from departure time.</p>
+                    </div>
+                  </div>
+
+                </div> -->
+
+
+                <div class="mb-5">
+                    <!-- Form Section -->
+                    <form action="{% url 'book_flight' %}" method="post" id="flight_booking_form">
+                        {% csrf_token %}
+                        <div class="row align-items-center">
+                            <!-- First Passenger -->
+                            <input name="flight_price_data" value="{{ flight_price_data }}" style="display: none;"/>
+                            <input name="flight" value="{{ flight }}" style="display: none;"/>
+                            <input name="guest_office_id" value="{{ guest_office_id }}" style="display: none;"/>
+                            <input name="airline_name" value="{{ airline }}" style="display: none;"/>
+                            <input name="pay_small_small" id="pay_small_small_form" value="" style="display: none;"/>
+
+                            <div class="col-12">
+                                <div class="bg-white pb-3 shadow-4" data-aos="fade-up" data-aos-duration="2000">
+                                    <p class="m-0 top_text make_bg_new p-3 text-dark fw-bold mb-3">Travellers Details</p>
+                                    
+                                    <p class="m-0 p-0 mt-2 px-3"> <span class="text-danger">***</span> Please note that any field marked <span class="text-danger">“*”</span> is mandatory.</p>
+                                    {% for passenger in flight.travelerPricings %}
+                                        <div class="col-sm-12 col-md-12 col-lg-12 px-3 {% if forloop.first %} mt-3 {% else %} mt-5 {% endif %}">
+                                            <div class="d-flex align-items-center">
+                                                <p class="m-0 me-3 fw-bold fs-6">Traveller {{ passenger.travelerId }} Information</p>
+                                                <span class="badge make_bg_three">
+                                                {% if passenger.travelerType == 'HELD_INFANT' %}
+                                                    INFANT
+                                                {% else %}
+                                                    {{ passenger.travelerType }}
+                                                {% endif %}
+                                                </span>
+                                            </div>
+                                    
+                                            <p class="m-0 p-0 mt-3 fw-bold text-muted">Personal Information</p>
+                                            <div class="row align-items-center">
+                                                <!-- Title -->
+                                                <div class="col-12 col-lg-4 mt-3">
+                                                    <div class="form-outline">
+                                                        <label class="form-label" for="booking_title">Title <small><span class="make_color_one fs-6">*</span> </small></label>
+                                                        <select class="form-select bg-white rounded outline-0"
+                                                                name="booking_title_{{ passenger.travelerId }}" id="booking_title" required>
+                                                            <option value="" disabled selected></option> 
+                                                            {% if passenger.travelerType == 'ADULT'  %}
+                                                            <option value="MR">Mr</option>
+                                                            <option value="MRS">Mrs</option>
+                                                            <option value="MS">Ms</option>
+                                                            <option value="MASTR">Master</option>
+                                                            <option value="MISS">Miss</option>
+                                                            {% endif %}
+                                                            {% if passenger.travelerType == 'CHILD' or passenger.travelerType == 'HELD_INFANT'  %}
+                                                            <option>Select Title</option>
+                                                            <option value="MASTR">Master</option>
+                                                            <option value="MISS">Miss</option>
+                                                            {% endif %}
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12"></div>
+
+                                                <!-- Surname -->
+                                                <div class="col-12 col-lg-6 mt-3">
+                                                    <div>
+                                                        <label class="form-label" for="booking_last_name">Last Name <small>(Surname) <span class="make_color_one fs-6">*</span> </small></label>
+                                                        <input type="text" id="booking_last_name" name="booking_last_name_{{ passenger.travelerId }}" class="form-control" required/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 col-lg-6 mt-3">
+                                                    <div>
+                                                        <label class="form-label" for="booking_given_name">Given Name <small>(First & Middle Name) <span class="make_color_one fs-6">*</span> </small></label>
+                                                        <input type="text" id="booking_given_name" name="booking_given_name_{{ passenger.travelerId }}" class="form-control" required/>
+                                                    
+                                                    </div>
+                                                </div>
+
+
+
+                                                <div class="col-12 col-lg-6 mt-3">
+                                                    <div>
+                                                        <label class="form-label" for="dob_booking_{{ passenger.travelerId }}">Date of Birth <small><span class="make_color_one fs-6">*</span> </small></label>
+                                                        <input type="date" id="dob_booking_{{ passenger.travelerId }}" name="dob_booking_{{ passenger.travelerId }}" class="form-control form-control-lg py-1 dob_booking" data-traveler-type="{{ passenger.travelerType }}" required/>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Gender -->
+                                                <div class="col-12 col-lg-6 mt-3">
+                                                    <div class="form-outline">
+                                                        <label class="form-label" for="booking_gender">Gender <small><span class="make_color_one fs-6">*</span> </small></label>
+                                                        <select class="form-select form-select-lg  bg-white rounded outline-0"
+                                                                name="booking_gender_{{ passenger.travelerId }}"
+                                                                id="booking_gender" required>
+                                                            <option value="" disabled selected></option>
+                                                            <option value="male">Male</option>
+                                                            <option value="female">Female</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <p class="m-0 p-0 mt-4 fw-bold text-muted">Contact Information</p>
+                                            {% if passenger.travelerType == 'ADULT' %}     
+                                            <div class="row align-items-center">
+
+
+                                                <div class="col-6 mt-3">
+                                                    <label class="form-label" for="booking_phone_number_{{ passenger.travelerId }}">Phone Number <small><span class="make_color_one fs-6">*</span></small></label>
+                                                    <div class="d-flex align-items-center">
+                                                        <select id="country_code_{{ passenger.travelerId }}" name="country_code_{{ passenger.travelerId }}" class="form-select dropdown-select" required style="width: 100%;">
+                                                            <option value="" disabled selected>Select</option>
+                                                        </select>
+        
+                                                        <input type="tel" id="booking_phone_number_{{ passenger.travelerId }}" name="booking_phone_number_{{ passenger.travelerId }}" class="form-control phone-input rounded ms-2" placeholder="Enter number" required/>
+                                                    </div>
+            
+                                                </div>
+    
+                                                
+                                                <!-- Email Address -->
+                                                <div class="col-6 mt-3">
+                                                    <div >
+                                                        <label class="form-label" for="booking_email_address">Email <small><span class="make_color_one fs-6">*</span></small></label>
+                                                        <input type="email" id="booking_email_address" name="booking_email_address_{{ passenger.travelerId }}" class="form-control" required/>
+                                                    </div>
+                                                </div>
+            
+                                        
+                                            </div>
+                                            {% endif %}
+
+                                            <p class="m-0 p-0 mt-4 fw-bold text-muted">Frequent Flyer Information</p>
+                                            <div class="row align-items-center">
+
+                                                <div class="col-12 col-lg-6 mt-3">
+                                                    <div>
+
+                                                        <label class="form-label" for="program_owner">Airline</label>
+                                                        <select name="program_owner_{{ passenger.travelerId }}" id="program_owner" class="form-control">
+                                                            <option value="" selected>Select airline</option>
+                                                            {% for airline in airlines %}
+                                                                <option value="{{ airline.code }}">{{ airline.name }} - ({{ airline.code }})</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                
+
+                                                <div class="col-12 col-lg-6 mt-3">
+                                                    <div>
+                                                        <label class="form-label" for="program_id">Frequent Flyer Number</label>
+                                                        <input type="text" id="program_id" name="program_id_{{ passenger.travelerId }}" class="form-control"/>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <p class="m-0 p-0 mt-4 fw-bold text-muted">Passport Information</p>
+                                            <div class="row align-items-center">
+                                                <!-- Airline -->
+                                                <div class="col-12 col-lg-6 mt-3">
+                                                    <div class="mt-1">
+                                                        <label class="form-label" for="airline">Document Type</label>
+                                                        <select id="airline" name="documentType_{{  passenger.travelerId }}" class="form-control form-control-lg py-2">
+                                                            <option value="P" selected>P - Passport</option>
+                                                            <option value="I">I - Identity Card</option>
+                                                            <option value="IP">IP - Passport Card</option>
+                                                            <option value="F">F - Approved Non-Standard Id</option>
+                                                            <!-- Add more options as needed -->
+                                                        </select>
+                                                    </div>
+                                                </div>
+                    
+                                                <!-- Nationality -->
+                                                <div class="col-12 col-lg-6">
+                                                <div class="mt-1">
+                                                    <label class="form-label" for="nationality">Nationality</label>
+                                                    
+                                                    <select name="nationality_{{  passenger.travelerId }}" id="issues_by_{{  passenger.travelerId }}" class="form-control form-control-lg py-2 countries">
+                                                        <option value="">Select</option>
+                                                    </select>
+                                                </div>
+                                                </div>
+                    
+
+                                                <!-- Passport Number -->
+                                                <div class="col-12 col-lg-6">
+                                                    <div class="mt-3">
+                                                        <label class="form-label" for="passportNumber">Document Number</label>
+                                                        <input type="text" id="passportNumber" name="passportNumber_{{  passenger.travelerId }}" value="{{ traveler.documents.0.number }}" class="form-control form-control-lg py-2" placeholder="Enter"/>
+                                                    </div>
+                                                </div>
+                    
+                                                <!-- Nationality -->
+                                                <div class="col-12 col-lg-6">
+                                                <div class="mt-3">
+                                                    <label class="form-label" for="nationality">Document Issued By</label>
+                                                    <!-- <input list="nationalities" id="nationality" name="issuanceCountry_{{  passenger.travelerId }}" class="form-control form-control-lg py-2" placeholder="Select Nationality" value="{{ traveler.documents.0.issuanceCountry }}"/> -->
+                                                
+                                                    <select name="issuanceCountry_{{  passenger.travelerId }}" id="nationality_{{  passenger.travelerId }}" class="form-control form-control-lg py-2 countries">
+                                                        <option value="">Select</option>
+                                                    </select>
+                                                </div>
+                                                </div>
+                    
+                                                <!-- Passport Expiry Date -->
+                                                <div class="col-12 col-lg-6">
+                                                    <div class="mt-3">
+                                                        <label class="form-label" for="passportExpiryDate">Document Expiry Date </label>
+                                                        <input type="date" id="passportExpiryDate" name="passportExpiryDate_{{  passenger.travelerId }}" value="{{ traveler.documents.0.expiryDate }}" class="form-control form-control-lg py-2"/>
+                                                    </div>
+                                                </div>
+                    
+                                            </div>
+                                                    
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                           <!-- <div class="col-12">
+                            <div class="shadow-4 my-5" data-aos="fade-up" data-aos-duration="2000">
+                                <p class="m-0 top_text make_bg_new p-3 fs-6 text-dark fw-bold mb-1">Travel Insurance</p>
+            
+                              <div class="p-3">
+                                <p class="p-0 m-0 fw-bold mb-2">Secure your travel with travel insurance for $25/person</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="travel_insurance" id="yes"/>
+                                    <label class="form-check-label" for="yes">Yes, i want to secure my travel with insurance </label>
+                                </div>
+                                
+                                <div class="form-check mt-1">
+                                    <input class="form-check-input" type="radio" name="travel_insurance" id="no"/>
+                                    <label class="form-check-label" for="no">No, i do not want to secure my travel with insurance </label>
+                                </div>
+                              </div>
+            
+                            </div>
+                           </div> -->
+
+                            <div class="col-sm-12 col-md-12 col-lg-12 mt-3">
+                                <div class="bg-white shadow-4" data-aos="fade-up" data-aos-duration="2000">
+                                    <p class="m-0 top_text make_bg_new p-3 text-dark mb-3 fw-bold">Payment Method</p>
+
+
+                                    <div class="accordion p-3" id="accordionPanelsStayOpenExample">
+
+                                        <div class="accordion-item border-0">
+                                            <h2 class="accordion-header" id="headingFive">
+                                                <button data-mdb-collapse-init class="accordion-button p-2 border-0 text-dark" type="button" data-mdb-target="#panelsStayOpen-collapseFive" aria-expanded="true" aria-controls="panelsStayOpen-collapseFive">Bank Transfer or Cash</button>
+                                            </h2>
+                    
+                                            <div id="panelsStayOpen-collapseFive" class="accordion-collapse collapse show border-0 mt-1" aria-labelledby="headingFive">
+                                                <div class="accordion-body p-2">
+                                                    <div class="form-check rounded">
+                                                        <label class="px-3 d-flex align-items-center" for="uba_bank">
+                                                            <input class="form-check-input me-2" type="radio" name="banks" id="uba_bank"/>
+                                                            <span class="form-check-label d-flex align-items-center fs-6"> <img src="{% static 'img/banks/united-bank-for-africa.svg' %}" alt="" width="20" class="me-2">United Bank For Africa</span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check rounded mt-3">
+                                                        <label class="px-3 d-flex align-items-center" for="zenith_bank">
+                                                            <input class="form-check-input me-2" type="radio" name="banks" id="zenith_bank"/>
+                                                            <span class="form-check-label d-flex align-items-center fs-6"> <img src="{% static 'img/banks/zenith-bank.svg' %}" alt="" width="20" class="me-2"> Zenith Bank PLC</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="accordion-item  mt-3 border-0">
+                                            <h2 class="accordion-header" id="headingSix">
+                                                <button data-mdb-collapse-init class="accordion-button p-2 border-0 text-dark" type="button" data-mdb-target="#panelsStayOpen-collapseSix" aria-expanded="true" aria-controls="panelsStayOpen-collapseSix">Instant Payment</button>
+                                            </h2>
+                    
+                                            <div id="panelsStayOpen-collapseSix" class="accordion-collapse collapse show border-0 mt-1" aria-labelledby="headingSix">
+                                                <div class="accordion-body p-2">
+                                                    <div class="form-check rounded mb-2">
+                                                        <label class="px-3 d-flex align-items-center" for="paystack">
+                                                            <input class="form-check-input me-2" type="radio" name="banks" value="paystack" id="paystack"/>
+                                                            <span class="form-check-label d-flex align-items-center fs-6"> <img src="{% static 'img/banks/paystack.svg' %}" alt="" width="20" class="me-2"> Paystack </span>
+                                                        </label>
+                                                    </div>
+                                                    
+                                                    <!-- <div class="form-check rounded mt-3 mb-2">
+                                                        <label class="px-3 d-flex align-items-center" for="flutterwave">
+                                                            <input class="form-check-input me-2" type="radio" name="banks" value="flutter_wave" id="flutterwave"/>
+                                                            <span class="form-check-label d-flex align-items-center fs-6"> <img src="{% static 'img/banks/flutterwave.svg' %}" alt="" width="20" class="me-2"> Flutter Wave </span>
+                                                        </label>
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                    
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <!-- Agreement and Book -->
+                                <div class="d-flex justify-content-between align-items-center" data-aos="fade-up" data-aos-duration="2000">
+                                    <!-- Default checkbox -->
+                                    <div class="form-check mt-3">
+                                        <input class="form-check-input" type="checkbox" value="" id="booking_agreement" required/>
+                                        <label class="form-check-label" for="booking_agreement">
+                                            I agree to the
+                                            <a href="{% url 'terms_and_conditions' %}" target="_blank">agency terms and conditions</a>
+                                            and
+                                            <a href="{% url 'refund_and_cancellation' %}" target="_blank">Refund and Cancellation Policy</a>
+                                        </label>
+                                    </div>
+
+                                    <div class="text-center mt-3">
+                                        <button type="submit" class="btn fw-normal back_btn px-5 rounded-0 fw-bold" id="book_now_btn" data-mdb-ripple-init data-mdb-modal-init data-mdb-target="#preloader_all">Continue Booking</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        
+                    </form>
+                </div>
+
+
+    
+            </div>
+
+
+            <div class="col-12 col-lg-3 order-1 order-md-2">
+                <div class="accordion" id="accordionPanelsStayOpenExample">
+
+                    <div class="accordion-item rounded-0 shadow-4 border-0" data-aos="fade-up" data-aos-duration="2000">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button data-mdb-collapse-init class="accordion-button make_bg_new text-dark fw-bold" type="button" data-mdb-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">Booking Summary</button>
+                        </h2>
+
+                        <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne">
+                            <div class="accordion-body">
+                                
+                            {% for itinerary in flight_price_data.itineraries %}
+                            {% if forloop.first %}
+                                {% if adult_count %} 
+                                    <h6 class="pb-2 border-bottom text-uppercase fw-bold">Adult</h6>
+                                    <div>
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <p class="m-0 p-0 small">Number of Travellers</p>
+                                            <p class="m-0 p-0">{{ adult_count }}</p>
+                                        </div>
+
+                                        <p class="small m-0 p-0 mt-2 make_color_result fw-bold">Price Per Person</p>
+
+                                        <div class="d-flex align-items-center justify-content-between mt-2">
+                                            <p class="m-0 p-0 small">Base Fare</p>
+                                            <p class="m-0 p-0 small"> {% if adult_count > 0 %}{% if currency == "NGN" %}&#8358;{% else %}&#36;{% endif %} {{ adult_base_fare|format_price }}{% endif %}
+                                            </p>
+                                        </div>
+
+                                        <div class="d-flex align-items-center justify-content-between mt-2">
+                                            <p class="m-0 p-0 small">Tax & Fees</p>
+                                            <p class="m-0 p-0 small"> {% if adult_count > 0 %}{% if currency == "NGN" %}&#8358;{% else %}&#36;{% endif %} {{ adult_tax_total|format_price }}{% endif %}
+                                            </p>
+                                        </div>
+
+                                        <div class="d-flex align-items-center justify-content-between mt-2">
+                                            <p class="m-0 p-0 small">Total Price</p>
+                                            <p class="m-0 p-0 small"> {% if adult_count > 0 %}{% if currency == "NGN" %}&#8358;{% else %}&#36;{% endif %} {{ adult_total_fare|format_price }}{% endif %}
+                                            </p>
+                                        </div>
+
+                                        <div class="d-flex align-items-center justify-content-between mt-2">
+                                            <p class="m-0 p-0 small">Total For All</p>
+                                            <p class="m-0 p-0 small"> {% if adult_count > 0 %}{% if currency == "NGN" %}&#8358;{% else %}&#36;{% endif %} {{ adult_total_fare|multiply:adult_count|format_price }}{% endif %}
+                                            </p>
+                                        </div>
+
+
+                                    </div>
+                                {% endif %}
+
+                                {% if child_count %} 
+                                    <h6 class="pb-2 border-bottom text-uppercase fw-bold mt-4">Child</h6>
+                                    <div>
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <p class="m-0 p-0 small">Number of Passanger</p>
+                                            <p class="m-0 p-0">{{ child_count }}</p>
+                                        </div>
+
+                                        <p class="small m-0 p-0 mt-2 make_color_one fw-bold">Price Per Person</p>
+
+                                        <div class="d-flex align-items-center justify-content-between mt-2">
+                                            <p class="m-0 p-0 small">Base Fare</p>
+                                            <p class="m-0 p-0 small"> {% if child_count > 0 %}{% if currency == "NGN" %}&#8358;{% else %}&#36;{% endif %} {{ child_base_fare|format_price }}{% endif %}
+                                            </p>
+                                        </div>
+
+                                        <div class="d-flex align-items-center justify-content-between mt-2">
+                                            <p class="m-0 p-0 small">Tax & Fees</p>
+                                            <p class="m-0 p-0 small"> {% if child_count > 0 %}{% if currency == "NGN" %}&#8358;{% else %}&#36;{% endif %} {{ child_tax_total|format_price }}{% endif %}
+                                            </p>
+                                        </div>
+
+                                        <div class="d-flex align-items-center justify-content-between mt-2">
+                                            <p class="m-0 p-0 small">Total Price</p>
+                                            <p class="m-0 p-0 small"> {% if child_count > 0 %}{% if currency == "NGN" %}&#8358;{% else %}&#36;{% endif %} {{ child_total_fare|format_price }}{% endif %}
+                                            </p>
+                                        </div>
+
+                                        <div class="d-flex align-items-center justify-content-between mt-2">
+                                            <p class="m-0 p-0 small">Total For All</p>
+                                            <p class="m-0 p-0 small"> {% if child_count > 0 %}{% if currency == "NGN" %}&#8358;{% else %}&#36;{% endif %} {{ child_total_fare|multiply:child_count|format_price }}{% endif %}
+                                            </p>
+                                        </div>
+
+
+                                    </div>
+                                {% endif %}
+
+                                {% if infant_count %} 
+                                    <h6 class="pb-2 border-bottom text-uppercase fw-bold mt-4">Infant</h6>
+                                    <div>
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <p class="m-0 p-0 small">Number of Passanger</p>
+                                            <p class="m-0 p-0">{{ infant_count }}</p>
+                                        </div>
+
+                                        <p class="small m-0 p-0 mt-2 make_color_one fw-bold">Price Per Person</p>
+
+                                        <div class="d-flex align-items-center justify-content-between mt-2">
+                                            <p class="m-0 p-0 small">Base Fare</p>
+                                            <p class="m-0 p-0 small"> {% if infant_count > 0 %}{% if currency == "NGN" %}&#8358;{% else %}&#36;{% endif %} {{ infant_base_fare|format_price }}{% endif %}
+                                            </p>
+                                        </div>
+
+                                        <div class="d-flex align-items-center justify-content-between mt-2">
+                                            <p class="m-0 p-0 small">Tax & Fees</p>
+                                            <p class="m-0 p-0 small"> {% if infant_count > 0 %}{% if currency == "NGN" %}&#8358;{% else %}&#36;{% endif %} {{ infant_tax_total|format_price }}{% endif %}
+                                            </p>
+                                        </div>
+
+                                        <div class="d-flex align-items-center justify-content-between mt-2">
+                                            <p class="m-0 p-0 small">Total Price</p>
+                                            <p class="m-0 p-0 small"> {% if infant_count > 0 %}{% if currency == "NGN" %}&#8358;{% else %}&#36;{% endif %} {{ infant_total_fare|format_price }}{% endif %}
+                                            </p>
+                                        </div>
+
+                                        <div class="d-flex align-items-center justify-content-between mt-2">
+                                            <p class="m-0 p-0 small">Total For All </p>
+                                            <p class="m-0 p-0 small"> {% if infant_count > 0 %}{% if currency == "NGN" %}&#8358;{% else %}&#36;{% endif %} {{ infant_total_fare|multiply:infant_count|format_price }}{% endif %}
+                                            </p>
+                                        </div>
+
+                                    </div>
+                                {% endif %}
+
+
+                            {% endif %}
+                            {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="mt-3 make_bg_new shadow-4 p-3 fs-6 text-dark mb-3 d-flex align-items-center justify-content-between w-100" data-aos="fade-up" data-aos-duration="2000">
+                    {% if not price_changed %}
+                        <p class="m-0 fw-bold fs-6 text-center flight_price main_flight_price d-flex align-items-center justify-content-between w-100">
+                          <span class="fw-normal d-block fs-6">Grand Total</span>  <span class="d-block payment_price_new">{% if currency == "NGN" %}&#8358;{% else %}&#36;{% endif %} {{ converted_grand_total|floatformat:2|intcomma }}</span>
+                        </p>
+                    {% else %}
+                        <span class="text-danger text-center d-block mb-3">* Price may have changed</span>
+                        <p class="m-0 fw-bold fs-6 text-center flight_price main_flight_price d-flex align-items-center justify-content-between w-100">
+                            <span class="fw-normal d-block fs-6">Grand Total</span>  <span class="d-block payment_price_new">{% if currency == "NGN" %}&#8358;{% else %}&#36;{% endif %} {{ converted_grand_total|floatformat:2|intcomma }}</span>
+                        </p>
+                    {% endif %}
+                </div>
+
+                <!-- <div class="mt-3 p-3 shadow-4 fs-6 text-dark mb-3 mt-3  w-100" data-aos="fade-up" data-aos-duration="2000">
+                    <p class="m-0 p-0 fw-bold mb-3" data-aos="fade-up" data-aos-duration="2000">Have a Coupon Code?</p>
+                    <div class="input-group mb-3" data-aos="fade-up" data-aos-duration="2000">
+                        <input type="text" class="form-control" placeholder="Promo Code" aria-label="Promo Code" aria-describedby="button-addon2"/>
+                        <button class="btn make_bg_new shadow-0 border" type="button" id="button-addon2" data-mdb-ripple-init data-mdb-ripple-color="dark">Apply</button>
+                    </div>
+
+                    <div class="form-check" data-aos="fade-up" data-aos-duration="2000">
+                        <input class="form-check-input" type="radio" name="coupon_code" id="RICA50"/>
+                        <label class="form-check-label small" for="RICA50"><b>RICA500</b> <br> Use RICA50, and get $50 off on first booking.</label>
+                    </div>
+                    
+                    <div class="form-check mt-1" data-aos="fade-up" data-aos-duration="2000">
+                        <input class="form-check-input" type="radio" name="coupon_code" id="FLY10"/>
+                        <label class="form-check-label small" for="FLY10"><b>FLY10</b> <br> Use FLY10, and get 10% off upto $50 on flight ticket bookings.</label>
+                    </div>
+
+                    <div class="form-check mt-1" data-aos="fade-up" data-aos-duration="2000">
+                        <input class="form-check-input" type="radio" name="coupon_code" id="FLIGHT80"/>
+                        <label class="form-check-label small" for="FLIGHT80"><b>FLIGHT80</b> <br> Upto 80% Off + Upto 40% Cashback on Flight booking & more + Extra 10% off via ICICI Cards (10th-13th Oct)  </label>
+                    </div>
+
+                </div> -->
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Modal for displaying Paystack link -->
+
+
+{% endblock content %}
+{% block jsfiles %}
+    <script src="{% static 'js/dashboard/fare_rule.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
+    <script>
+       
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get the button elements and collapse divs
+            const bookOnHoldBtn = document.getElementById('book_on_hold_btn');
+            const instantCashBtn = document.getElementById('instant_cash_btn');
+            const bookOnHoldCollapse = new mdb.Collapse(document.getElementById('book_on_hold'), { toggle: false });
+            const instantCashCollapse = new mdb.Collapse(document.getElementById('instant_cash'), { toggle: false });
+        
+            // Function to handle toggling between collapsibles
+            function handleCollapse(clickedBtn, otherCollapse, otherCollapseElem) {
+                // Check if the other collapsible is open
+                if (otherCollapseElem.classList.contains('show')) {
+                    // Close the other collapsible if it's open
+                    otherCollapse.hide();
+                }
+            }
+        
+            // Event listener for "Book on Hold" button
+            bookOnHoldBtn.addEventListener('click', function () {
+                handleCollapse(bookOnHoldBtn, instantCashCollapse, document.getElementById('instant_cash'));
+                document.getElementById('book_now_btn').textContent = 'Reserve';
+            });
+        
+            // Event listener for "Instant Payment" button
+            instantCashBtn.addEventListener('click', function () {
+                handleCollapse(instantCashBtn, bookOnHoldCollapse, document.getElementById('book_on_hold'));
+                document.getElementById('book_now_btn').textContent = 'Pay Now';
+            });
+        });
+         
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch('/all_countries')
+                .then(response => response.json())
+                .then(countries => {
+                    // Sort the countries alphabetically
+                    countries.sort((a, b) => {
+                        if (a.name.common < b.name.common) return -1;
+                        if (a.name.common > b.name.common) return 1;
+                        return 0;
+                    });
+                    
+                    const passengers = {{ flight.travelerPricings|safe }};
+        
+                    // Assuming flight.travelerPricings is available as `passengers`
+                    passengers.forEach(passenger => {
+                        const issuesBySelect = document.getElementById(`issues_by_${passenger.travelerId}`);
+                        const nationalitySelect = document.getElementById(`nationality_${passenger.travelerId}`);
+        
+                        if (issuesBySelect && nationalitySelect) {
+                            // Populate the dropdowns for each traveler
+                            countries.forEach(country => {
+                                const countryCode = country.cca2; // 2-letter country code
+                                const countryName = country.name.common;
+        
+                                // Create an option element for each country
+                                const option1 = document.createElement('option');
+                                option1.value = countryCode;
+                                option1.textContent = `${countryCode} - ${countryName}`;
+                                issuesBySelect.appendChild(option1);
+        
+                                const option2 = document.createElement('option');
+                                option2.value = countryCode;
+                                option2.textContent = `${countryCode} - ${countryName}`;
+                                nationalitySelect.appendChild(option2);
+                            });
+                        }
+                    });
+                })
+                .catch(error => console.error('Error fetching country data:', error));
+        });   
+    </script>
+
+    <script>
+        function setDateRestrictions() {
+            const today = new Date();
+            const elements = document.querySelectorAll('.dob_booking');
+    
+            elements.forEach(function(element) {
+                const travelerType = element.getAttribute('data-traveler-type');
+                let minDate = '';
+                let maxDate = '';
+    
+                if (travelerType === 'ADULT') {
+                    // ADULT: Age >= 12
+                    maxDate = new Date(today.getFullYear() - 12, today.getMonth(), today.getDate()).toISOString().split('T')[0];
+                } else if (travelerType === 'CHILD') {
+                    // CHILD: Age >= 2 and < 12
+                    maxDate = new Date(today.getFullYear() - 2, today.getMonth(), today.getDate()).toISOString().split('T')[0];
+                    minDate = new Date(today.getFullYear() - 12, today.getMonth(), today.getDate()).toISOString().split('T')[0];
+                } else if (travelerType === 'HELD_INFANT') {
+                    // INFANT: Age < 2
+                    minDate = new Date(today.getFullYear() - 2, today.getMonth(), today.getDate()).toISOString().split('T')[0];
+                    // Set maxDate to today, but not including tomorrow
+                    maxDate = today.toISOString().split('T')[0];
+                }
+    
+                if (minDate) {
+                    element.setAttribute('min', minDate);
+                }
+                if (maxDate) {
+                    element.setAttribute('max', maxDate);
+                }
+            });
+        }
+    
+        setDateRestrictions();
+    </script>
+
+    <script id="countries-data" type="application/json">
+        [
+  { "name": "Afghanistan", "dialCode": "+93" },
+  { "name": "Albania", "dialCode": "+355" },
+  { "name": "Algeria", "dialCode": "+213" },
+  { "name": "Andorra", "dialCode": "+376" },
+  { "name": "Angola", "dialCode": "+244" },
+  { "name": "Antigua and Barbuda", "dialCode": "+1-268" },
+  { "name": "Argentina", "dialCode": "+54" },
+  { "name": "Armenia", "dialCode": "+374" },
+  { "name": "Australia", "dialCode": "+61" },
+  { "name": "Austria", "dialCode": "+43" },
+  { "name": "Azerbaijan", "dialCode": "+994" },
+  { "name": "Bahamas", "dialCode": "+1-242" },
+  { "name": "Bahrain", "dialCode": "+973" },
+  { "name": "Bangladesh", "dialCode": "+880" },
+  { "name": "Barbados", "dialCode": "+1-246" },
+  { "name": "Belarus", "dialCode": "+375" },
+  { "name": "Belgium", "dialCode": "+32" },
+  { "name": "Belize", "dialCode": "+501" },
+  { "name": "Benin", "dialCode": "+229" },
+  { "name": "Bhutan", "dialCode": "+975" },
+  { "name": "Bolivia", "dialCode": "+591" },
+  { "name": "Bosnia and Herzegovina", "dialCode": "+387" },
+  { "name": "Botswana", "dialCode": "+267" },
+  { "name": "Brazil", "dialCode": "+55" },
+  { "name": "Brunei", "dialCode": "+673" },
+  { "name": "Bulgaria", "dialCode": "+359" },
+  { "name": "Burkina Faso", "dialCode": "+226" },
+  { "name": "Burundi", "dialCode": "+257" },
+  { "name": "Cambodia", "dialCode": "+855" },
+  { "name": "Cameroon", "dialCode": "+237" },
+  { "name": "Canada", "dialCode": "+1" },
+  { "name": "Cape Verde", "dialCode": "+238" },
+  { "name": "Central African Republic", "dialCode": "+236" },
+  { "name": "Chad", "dialCode": "+235" },
+  { "name": "Chile", "dialCode": "+56" },
+  { "name": "China", "dialCode": "+86" },
+  { "name": "Colombia", "dialCode": "+57" },
+  { "name": "Comoros", "dialCode": "+269" },
+  { "name": "Congo (Democratic Republic)", "dialCode": "+243" },
+  { "name": "Congo (Republic)", "dialCode": "+242" },
+  { "name": "Costa Rica", "dialCode": "+506" },
+  { "name": "Croatia", "dialCode": "+385" },
+  { "name": "Cuba", "dialCode": "+53" },
+  { "name": "Cyprus", "dialCode": "+357" },
+  { "name": "Czech Republic", "dialCode": "+420" },
+  { "name": "Denmark", "dialCode": "+45" },
+  { "name": "Djibouti", "dialCode": "+253" },
+  { "name": "Dominica", "dialCode": "+1-767" },
+  { "name": "Dominican Republic", "dialCode": "+1-809" },
+  { "name": "Ecuador", "dialCode": "+593" },
+  { "name": "Egypt", "dialCode": "+20" },
+  { "name": "El Salvador", "dialCode": "+503" },
+  { "name": "Equatorial Guinea", "dialCode": "+240" },
+  { "name": "Eritrea", "dialCode": "+291" },
+  { "name": "Estonia", "dialCode": "+372" },
+  { "name": "Eswatini", "dialCode": "+268" },
+  { "name": "Ethiopia", "dialCode": "+251" },
+  { "name": "Fiji", "dialCode": "+679" },
+  { "name": "Finland", "dialCode": "+358" },
+  { "name": "France", "dialCode": "+33" },
+  { "name": "Gabon", "dialCode": "+241" },
+  { "name": "Gambia", "dialCode": "+220" },
+  { "name": "Georgia", "dialCode": "+995" },
+  { "name": "Germany", "dialCode": "+49" },
+  { "name": "Ghana", "dialCode": "+233" },
+  { "name": "Greece", "dialCode": "+30" },
+  { "name": "Grenada", "dialCode": "+1-473" },
+  { "name": "Guatemala", "dialCode": "+502" },
+  { "name": "Guinea", "dialCode": "+224" },
+  { "name": "Guyana", "dialCode": "+592" },
+  { "name": "Haiti", "dialCode": "+509" },
+  { "name": "Honduras", "dialCode": "+504" },
+  { "name": "Hungary", "dialCode": "+36" },
+  { "name": "Iceland", "dialCode": "+354" },
+  { "name": "India", "dialCode": "+91" },
+  { "name": "Indonesia", "dialCode": "+62" },
+  { "name": "Iran", "dialCode": "+98" },
+  { "name": "Iraq", "dialCode": "+964" },
+  { "name": "Ireland", "dialCode": "+353" },
+  { "name": "Israel", "dialCode": "+972" },
+  { "name": "Italy", "dialCode": "+39" },
+  { "name": "Jamaica", "dialCode": "+1-876" },
+  { "name": "Japan", "dialCode": "+81" },
+  { "name": "Jordan", "dialCode": "+962" },
+  { "name": "Kazakhstan", "dialCode": "+7" },
+  { "name": "Kenya", "dialCode": "+254" },
+  { "name": "Kuwait", "dialCode": "+965" },
+  { "name": "Kyrgyzstan", "dialCode": "+996" },
+  { "name": "Laos", "dialCode": "+856" },
+  { "name": "Latvia", "dialCode": "+371" },
+  { "name": "Lebanon", "dialCode": "+961" },
+  { "name": "Liberia", "dialCode": "+231" },
+  { "name": "Libya", "dialCode": "+218" },
+  { "name": "Lithuania", "dialCode": "+370" },
+  { "name": "Luxembourg", "dialCode": "+352" },
+  { "name": "Madagascar", "dialCode": "+261" },
+  { "name": "Malawi", "dialCode": "+265" },
+  { "name": "Malaysia", "dialCode": "+60" },
+  { "name": "Maldives", "dialCode": "+960" },
+  { "name": "Mali", "dialCode": "+223" },
+  { "name": "Malta", "dialCode": "+356" },
+  { "name": "Mexico", "dialCode": "+52" },
+  { "name": "Moldova", "dialCode": "+373" },
+  { "name": "Monaco", "dialCode": "+377" },
+  { "name": "Mongolia", "dialCode": "+976" },
+  { "name": "Montenegro", "dialCode": "+382" },
+  { "name": "Morocco", "dialCode": "+212" },
+  { "name": "Mozambique", "dialCode": "+258" },
+  { "name": "Myanmar", "dialCode": "+95" },
+  { "name": "Namibia", "dialCode": "+264" },
+  { "name": "Nepal", "dialCode": "+977" },
+  { "name": "Netherlands", "dialCode": "+31" },
+  { "name": "New Zealand", "dialCode": "+64" },
+  { "name": "Nicaragua", "dialCode": "+505" },
+  { "name": "Nigeria", "dialCode": "+234" },
+  { "name": "Norway", "dialCode": "+47" },
+  { "name": "Oman", "dialCode": "+968" },
+  { "name": "Pakistan", "dialCode": "+92" },
+  { "name": "Panama", "dialCode": "+507" },
+  { "name": "Papua New Guinea", "dialCode": "+675" },
+  { "name": "Paraguay", "dialCode": "+595" },
+  { "name": "Peru", "dialCode": "+51" },
+  { "name": "Philippines", "dialCode": "+63" },
+  { "name": "Poland", "dialCode": "+48" },
+  { "name": "Portugal", "dialCode": "+351" },
+  { "name": "Qatar", "dialCode": "+974" },
+  { "name": "Romania", "dialCode": "+40" },
+  { "name": "Russia", "dialCode": "+7" },
+  { "name": "Rwanda", "dialCode": "+250" },
+  { "name": "Saudi Arabia", "dialCode": "+966" },
+  { "name": "Senegal", "dialCode": "+221" },
+  { "name": "Serbia", "dialCode": "+381" },
+  { "name": "Singapore", "dialCode": "+65" },
+  { "name": "South Africa", "dialCode": "+27" },
+  { "name": "South Korea", "dialCode": "+82" },
+  { "name": "Spain", "dialCode": "+34" },
+  { "name": "Sri Lanka", "dialCode": "+94" },
+  { "name": "Sudan", "dialCode": "+249" },
+  { "name": "Sweden", "dialCode": "+46" },
+  { "name": "Switzerland", "dialCode": "+41" },
+  { "name": "Syria", "dialCode": "+963" },
+  { "name": "Taiwan", "dialCode": "+886" },
+  { "name": "Tanzania", "dialCode": "+255" },
+  { "name": "Thailand", "dialCode": "+66" },
+  { "name": "Turkey", "dialCode": "+90" },
+  { "name": "Uganda", "dialCode": "+256" },
+  { "name": "Ukraine", "dialCode": "+380" },
+  { "name": "United Arab Emirates", "dialCode": "+971" },
+  { "name": "United Kingdom", "dialCode": "+44" },
+  { "name": "United States", "dialCode": "+1" },
+  { "name": "Uruguay", "dialCode": "+598" },
+  { "name": "Uzbekistan", "dialCode": "+998" },
+  { "name": "Venezuela", "dialCode": "+58" },
+  { "name": "Vietnam", "dialCode": "+84" },
+  { "name": "Zambia", "dialCode": "+260" },
+  { "name": "Zimbabwe", "dialCode": "+263" }
+]
+
+    </script>
+
+    <script>
+        async function fetchCountryCodes(passengerId) {
+            try {
+                const countriesData = document.getElementById('countries-data').textContent;
+                const countries = JSON.parse(countriesData);
+    
+                const countryCodeSelect = $(`#country_code_${passengerId}`);
+    
+                // Sort countries alphabetically by their name
+                countries.sort((a, b) => {
+                    const nameA = a.name.toUpperCase();
+                    const nameB = b.name.toUpperCase();
+                    return nameA.localeCompare(nameB);
+                });
+    
+                // Populate Select2 with country codes
+                const options = countries.map(country => {
+                    const dialCode = country.dialCode;
+    
+                    if (dialCode) {
+                        return {
+                            id: dialCode,
+                            text: `${country.name} (${dialCode})`
+                        };
+                    }
+                }).filter(option => option);
+    
+                countryCodeSelect.select2({
+                    data: options,
+                    templateResult: formatCountryOption,
+                    templateSelection: formatCountrySelection,
+                    escapeMarkup: function (markup) { return markup; }
+                });
+    
+                // Update the hidden input when a country is selected
+                countryCodeSelect.on('select2:select', function (e) {
+                    const selectedDialCode = e.params.data.id;
+    
+                    // Remove the '+' sign from the dial code
+                    const dialCodeWithoutPlus = selectedDialCode.replace('+', '');
+    
+                    // Check if the hidden input already exists
+                    let hiddenInput = $(`#hidden_dial_code_${passengerId}`);
+                    if (!hiddenInput.length) {
+                        // If it doesn't exist, create it
+                        hiddenInput = $(`<input>`, {
+                            type: 'hidden',
+                            id: `hidden_dial_code_${passengerId}`,
+                            name: `hidden_dial_code_${passengerId}`,
+                            value: dialCodeWithoutPlus
+                        });
+                        hiddenInput.insertAfter(countryCodeSelect);
+                    } else {
+                        // If it exists, update the value
+                        hiddenInput.val(dialCodeWithoutPlus);
+                    }
+                });
+    
+            } catch (error) {
+                console.error('Error fetching country codes:', error);
+            }
+        }
+    
+        function formatCountryOption(country) {
+            if (!country.id) {
+                return country.text; // Handle the "Select" option
+            }
+            return $(`<span class="small">${country.text}</span>`);
+        }
+    
+        function formatCountrySelection(country) {
+            if (!country.id) {
+                return country.text;
+            }
+            return $(`<span class="small">${country.text}</span>`);
+        }
+    
+        // Fetch country codes for each passenger
+        document.addEventListener('DOMContentLoaded', () => {
+            {% for passenger in flight.travelerPricings %}
+                fetchCountryCodes('{{ passenger.travelerId }}');
+            {% endfor %}
+        });
+    </script>
+    
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const preloader = document.getElementById('preloader');
+        
+            document.getElementById('flight_booking_form').addEventListener('submit', function(event) {
+                sessionStorage.setItem('preloaderVisible', 'true');
+                preloader.style.display = 'flex';
+            });
+        
+
+            function hidePreloader() {
+                preloader.style.display = 'none';
+                sessionStorage.removeItem('preloaderVisible');
+            }
+        
+            window.onload = function() {
+                if (sessionStorage.getItem('preloaderVisible') === 'false') {
+                    preloader.style.display = 'flex';
+                }
+            };
+        
+            document.addEventListener('filteringComplete', function() {
+                hidePreloader();
+            });
+        });
+    </script>
+
+
+
+{% endblock jsfiles %}
+

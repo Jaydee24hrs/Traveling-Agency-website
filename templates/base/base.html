@@ -1,0 +1,147 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{% endblock title %}</title>
+  <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- All Country -->
+  <link rel="icon" href="{% static 'img/favicon.png' %}">
+  <link rel="stylesheet" href="{% static 'css/iziToast.min.css' %}">
+  <link rel="stylesheet" href="{% static 'build/css/intlTelInput.css' %}">
+  <link rel="manifest" href="{% static 'pwa/manifest.json' %}">
+
+  <link rel="stylesheet" href="{% static 'aos-master/dist/aos.css' %}">
+  <script src="{% static 'aos-master/dist/aos.js' %}"></script>
+  {% block cssfiles %}{% endblock cssfiles %}
+
+  <style>
+
+    body{
+      background: #f9f9f9 !important;
+      font-family: Nunito, sans-serif;
+      font-style: normal;
+    }
+
+    #preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #fff;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  }
+
+  .make_bg_one{
+    background: #ef3f3e !important;
+}
+
+  </style>
+</head>
+
+<body>
+
+  <div class="cover_dashboard"></div>
+
+  <nav class="navbar navbar-expand-lg navbar-light sticky-top py-2 bg-white">
+    <div class="container align-items-center">
+      <a class="navbar-brand mt-2 mt-lg-0" href="{% url 'dashboard' %}">
+          <img src="{% static 'img/logo.png' %}" alt="" width="100">
+      </a>
+    </div>
+  </nav>
+
+  {% block content %}{% endblock content %}  
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="{% static 'js/jQuery.min.js' %}"></script>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+   <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+
+
+  <!-- For all country -->
+  <script src="{% static 'js/iziToast.min.js' %}"></script>
+  <script src="{% static 'js/country.js' %}"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const preloader = document.getElementById('preloader');
+        
+        // Show preloader immediately when page starts loading
+        preloader.style.display = 'flex';
+        
+        // Hide preloader after page is loaded AND minimum 3 seconds have passed
+        let pageLoaded = false;
+        let minTimeElapsed = false;
+        
+        // Set minimum time of 3 seconds
+        setTimeout(function() {
+            minTimeElapsed = true;
+            if (pageLoaded) {
+                preloader.style.display = 'none';
+            }
+        }, 2000);
+        
+        // Check when page is fully loaded
+        window.addEventListener('load', function() {
+            pageLoaded = true;
+            if (minTimeElapsed) {
+                preloader.style.display = 'none';
+            }
+        });
+    });
+</script>
+
+<script>
+  AOS.init();
+</script>
+
+  <script>
+    // Display iziToast messages if Django messages are present
+    {% if messages %}
+      {% for message in messages %}
+        {% if message.tags == 'error' %}
+          iziToast.error({
+            title: 'Error',
+            message: '{{ message }}',
+            position: 'topRight'
+          });
+        {% elif message.tags == 'success' %}
+          iziToast.success({
+            title: 'Success',
+            message: '{{ message }}',
+            position: 'topRight'
+          });
+        {% elif message.tags == 'warning' %}
+          iziToast.warning({
+            title: 'Warning',
+            message: '{{ message }}',
+            position: 'topRight'
+          });
+        {% elif message.tags == 'info' %}
+          iziToast.info({
+            title: 'Info',
+            message: '{{ message }}',
+            position: 'topRight'
+          });
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  </script>
+  {% block jsfiles %}{% endblock jsfiles %}
+</body>
+</html>

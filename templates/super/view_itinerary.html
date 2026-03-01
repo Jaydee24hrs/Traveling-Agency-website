@@ -1,0 +1,916 @@
+{% extends "base/base2.html" %}
+{% load static %}
+{% load custom_tags %}
+{% load humanize %}
+{% block title %} Booking Information {% endblock title %}
+
+{% block cssfiles %}
+    <link rel="stylesheet" href="{% static 'css/dashboard/bookinginfo.css' %}">
+    <style>
+        .hide {
+            display: none;
+        }
+
+        .show {
+            display: block;
+        }
+
+        .watermark_parent{
+            position: relative;
+            width: 100%;
+            height: 100%; 
+        }
+
+        .watermark {
+            position: absolute;
+            font-size: 50px;
+            transform: rotate(-45deg);
+            color: rgba(251, 0, 0, 0.335);
+            white-space: nowrap;
+            user-select: none;
+            opacity: 0.5;
+        }
+
+        .watermark.centered {
+            top: 50%;
+            left: 50%;
+            margin: auto;
+            transform: translate(-50%, -50%) rotate(-45deg);
+        }
+
+        .comapny_logo{
+            max-height: 80px;
+            position: relative;
+            left: -45px;
+        }
+
+        /* .lets_spin {
+            width: 10rem;
+            height: 10rem;
+        } */
+        
+        .preloader_img{
+            max-width: 300px;
+        }
+
+        .blink-red {
+            color: red;
+            animation: smooth-blink 1.5s ease-in-out infinite;
+          }
+          
+          
+        @keyframes smooth-blink {
+            0%, 100% {
+            opacity: 1;
+            }
+            50% {
+            opacity: 0;
+            }
+        }
+
+        .ticket_time_limit_table{
+            position: relative;
+        }
+
+        .ticket_time_limit_box{
+            position: absolute;
+        }
+
+        .ticket_time_limit{
+            cursor: pointer;
+        }
+
+
+        .small_menu:hover{
+            background-color: #eaeaea;
+        }
+
+
+        /*
+        .manage_btn,
+        .manage_btn:hover{
+          background: #0106A84b;
+          color: #fff;
+        }
+        */
+
+        .make_bg_one{
+            background: #0106A84b;
+        }
+
+        .make_color_one{
+            color: #0106A84b;
+        }
+        
+    </style>
+
+    <style>
+        /* Custom print styles */
+        @media print {
+            @page {
+                size: Letter;
+                margin-top: 0.05in;
+                margin-bottom: 0.5in;
+                margin-left: 0;
+                margin-right: 0;
+            }
+        
+            /* Ensure print contents fill the page width */
+            #booking_information {
+                width: 100%;
+                margin: 0;
+                padding: 0;
+            }
+        
+            /* Customize other print-related styles as needed */
+        }
+
+        body{
+            background: #f9f9f9 !important;
+        }
+
+        .make_bg_info{
+            background: #E8EEF3 !important;
+        }
+
+        .make_border_end{
+            border-left: 2px dashed gray;
+            border-right: 2px dashed gray;
+        }
+        
+      </style>
+    
+{% endblock cssfiles %}
+
+{% block content %}
+
+
+
+<div id="preloader">
+    <img src="{% static 'img/loader.gif' %}" alt="" width="20%">
+</div>
+    
+
+        <!-- Offcanvas for small Screen -->
+        <div class="offcanvas offcanvas-start w-75" tabindex="-1" id="managebookingsmall" aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header">
+            <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn-close text-reset" data-mdb-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+
+                <!-- Email  Itinerary -->
+                <!-- <div class="btns2 rounded d-flex align-items-center" data-mdb-ripple-init data-mdb-modal-init data-mdb-target="#email">
+                    <button class="btn bg-transparent shadow-0 d-flex align-items-center"><i class="fa-solid fa-envelope me-2 fs-5"></i> Email Itinerary</button>
+                </div> -->
+
+                <!-- Print  Itinerary -->
+                <!-- <div class="btns3 rounded d-flex align-items-center print_itinerary2 small_menu w-100 p-2 ps-0" id="print_itinerary2">
+                    <button class="btn bg-transparent shadow-0 d-flex align-items-center" style="white-space: nowrap;" data-mdb-dismiss="offcanvas"><i class="fa-solid fa-download me-2 fs-5"></i> Download Itinerary</button>
+                </div> -->
+
+                <!-- Print  Itinerary -->
+                <div class="btns3 rounded d-flex align-items-center print_itinerary small_menu w-100 p-2 ps-0" id="print_itinerary">
+                    <button class="btn bg-transparent shadow-0 d-flex align-items-center" style="white-space: nowrap;"><i class="fa-solid fa-print me-2 fs-5"></i> Print Itinerary</button>
+                </div>
+            </div>
+        </div>
+        <!-- Offcanvas for small Screen -->
+
+
+        <div class="rounded mt-3">
+
+            <div class="container mb-5">
+
+                <div class="">
+
+                    <!-- Modal For Email Itinerary -->
+                    <div class="modal fade" id="email" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+                        data-mdb-backdrop="static" data-mdb-keyboard="false">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Email Itinerary</h5>
+                                    <button type="button" class="btn-close" data-mdb-ripple-init data-mdb-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="emailForm" method="post" action="{% url 'send_pdf_via_email' booking.id %}"
+                                        enctype="multipart/form-data">
+
+                                        {% csrf_token %}
+                                        <div class="form-outline" data-mdb-input-init>
+                                            <input name="email" type="text" id="form12" class="form-control"/>
+                                            <label class="form-label" for="form12">Enter Email Address</label>
+                                        </div>
+
+                                        <div class="form-outline mt-3" data-mdb-input-init>
+                                            <textarea name="message" class="form-control" id="textAreaExample"
+                                                    rows="4"></textarea>
+                                            <label class="form-label" for="textAreaExample">Compose Message</label>
+                                        </div>
+
+                                        <!-- Attach Itinerary -->
+                                        <div class="form-check mt-3">
+                                            <input name="attach_itinerary" class="form-check-input" type="checkbox" value=""
+                                                id="flexCheckChecked"
+                                                checked required/>
+                                            <label class="form-check-label" for="flexCheckChecked">Attach itinerary as
+                                                PDF</label>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-mdb-ripple-init
+                                                    data-mdb-dismiss="modal">Close
+                                            </button>
+                                            <button type="submit" class="btn btn-primary" data-mdb-ripple-init>Send</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section For Itinerary -->
+                    <div class="container">
+                        <!-- Tab navs -->
+                        <div class="bg-white shadow-1 py-3 px-3 control d-block d-lg-none">
+                            <button data-mdb-button-init data-mdb-ripple-init class="btn btn-light justify-content-between align-items-center d-flex d-lg-none" type="button" data-mdb-toggle="offcanvas" data-mdb-target="#managebookingsmall"
+                            aria-controls="managebookingsmall">
+                            <i class="fa-solid fa-bars fs-5 text-black me-2"></i> Menu
+                            </button>
+                        </div>
+            
+                        <div class="mt-3 control justify-content-end align-items-center d-none d-lg-flex m-auto mt-4">
+                          <!-- Email  Itinerary -->
+                          <!-- <div class="btns2 rounded d-flex align-items-center border me-1" data-mdb-ripple-init data-mdb-modal-init data-mdb-target="#email">
+                              <button class="btn bg-transparent shadow-0 d-flex align-items-center"><i class="fa-solid fa-envelope fs-5"></i></button>
+                          </div> -->
+      
+                          <!-- Print  Itinerary -->
+                          <div class="btns3 rounded d-flex align-items-center print_itinerary border" id="print_itinerary">
+                              <button class="btn bg-transparent shadow-0 d-flex align-items-center" style="white-space: nowrap;"><i class="fa-solid fa-print fs-5"></i></button>
+                          </div>
+                        </div>
+                    </div>
+
+                    <!-- Booker Information  -->
+                    <!-- Itinerary Information -->
+                    <!-- <p class="m-0 text-uppercase fw-bolder make_color_one py-2">Itinerary Information</p> -->
+
+                    <section id="booking_information" class="mt-2">
+
+                        <div class="overflow-x-scroll">
+
+                            <div class="container p-0" style="min-width:700px;">
+
+                                <div class="container p-0 overflow-x-scroll bg-white border rounded-0 small" style="min-width: 700px;">
+                                    <div class="d-flex justify-content-between p-3">
+                                        <div class="ps-5">
+                                            <img src="{% static 'img/logo.png' %}" alt="logo" width="100" class="rounded object-fit-cover comapny_logo">
+                                        </div>
+    
+    
+                                        <div class="">
+                                            <div class="text-end">
+                                                <p class="m-0 text-uppercase" style="white-space: nowrap;">Jomivic Travels</p>
+                                                <p class="m-0 mt-1" style="white-space: nowrap;">Sheraton Hotel, 30, Mobolaji Bank Anthony, Ikeja,<br> Lagos Nigeria</p>
+                                                <p class="m-0 mt-1" style="white-space: nowrap;">Info@jomivictravels.com</p>
+                                                <p class="m-0 mt-1" style="white-space: nowrap;">012934120</p>
+                                                <a href="https://jomivictravels.com" target="_blank" class="m-0 make_color" style="white-space: nowrap;">www.jomivictravels.com</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mt-3 make_bg_three container overflow-x-scroll p-3 p-lg-4 rounded-0 d-flex justify-content-between text-white" style="min-width: 700px;">
+                                    <div class="">
+                                        <p class="m-0 p-0">Your Trip Summary</p>
+                                    </div>
+
+                                    <div class="text-end">
+                                        <p class="m-0 mt-1  fw-light">Booking Date: <Span class="text-uppercase fw-normal" style="white-space: nowrap;">{{ booking.booking_date }}</Span></p>
+                                        <p class="m-0 mt-1  fw-light" style="white-space: nowrap;">Trip ID: <Span class="text-uppercase fw-normal">{{ booking.formatted_id }}</Span></p>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- Passenger Information -->
+                            <div class="container p-0 mt-3 shadow-2 rounded" style="min-width: 700px;">
+
+                                <div class="make_bg_itinerary text-white p-3 rounded-0">
+                                    <p class="m-0 fs-6 ">Travellers</p>
+                                </div>
+                                
+                                <div class="d-flex justify-content-between align-items-start table-responsive">
+                                    <table class="table table-borderless table-sm table-striped border">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col" style="white-space: nowrap;" class="fw-bold">Name</th>
+                                            <th scope="col" class="text-center fw-bold">Type</th>
+
+                                            <th scope="col" class="text-center fw-bold" style="white-space: nowrap;">Date Of Birth</th>
+
+                                            {% if travelers_table.loyaltyPrograms  %}
+                                            <th scope="col" class="text-center fw-bold" style="white-space: nowrap;">Miles Number</th>
+                                            {% endif %}
+                                            {% if travelers_table.documents  %}
+                                            <th scope="col" class="text-center fw-bold" style="white-space: nowrap;">Passport Number</th>
+                                            {% endif %}
+                                            {% if travelers_table.tickets  %}
+                                            <th scope="col" class="text-end fw-bold" style="white-space: nowrap;">Ticket Number</th>
+                                            {% endif %}
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for traveller in booking.response.data.travelers %}
+                                            {% for pricing in booking.response.data.flightOffers.0.travelerPricings %}
+                                                {% if pricing.travelerId == traveller.id %}
+                                                    <tr>
+                                                        <td class="text-uppercase" style="white-space: nowrap;">{{ traveller.name.lastName }} {{ traveller.name.firstName }}</td>
+                                                        <td class="text-center" style="white-space: nowrap;">
+                                                            {% if pricing.travelerType == 'HELD_INFANT' %}
+                                                                INFANT
+                                                            {% else %}
+                                                                {{ pricing.travelerType }}
+                                                            {% endif %}
+                                                        </td>
+
+                                                        <td class="text-center" style="white-space: nowrap;">
+                                                            {% if traveller.dateOfBirth %}
+                                                                {{ traveller.dateOfBirth|format_dob }}
+                                                            {% else %}
+                                                            {% endif %}
+                                                        </td>
+
+                                                        {% if travelers_table.loyaltyPrograms  %}
+                                                        <td class="text-center" style="white-space: nowrap;">
+                                                            {% if traveller.loyaltyPrograms %}
+                                                                {% for program in traveller.loyaltyPrograms %}
+                                                                {{ program.programOwner }} - {{ program.id }}
+                                                                {% endfor %}
+                                                            {% else %}
+
+                                                            {% endif %}
+                                                        </td>
+                                                        {% endif %}
+                                                        {% if travelers_table.documents  %}
+                                                        <td class="text-center" style="white-space: nowrap;">
+                                                            {% if traveller.documents %}
+                                                                {% for document in traveller.documents %}
+                                                                    {% if document.documentType == 'PASSPORT' %}
+                                                                        {{ document.number }}
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                            {% endif %}
+                                                        </td>
+                                                        {% endif %}
+                                                        {% if travelers_table.tickets  %}
+                                                        <td class="text-end " style="white-space: nowrap;">
+                                                            {% for ticket in booking.response.data.tickets %}
+                                                                {% if ticket.travelerId == traveller.id %}
+                                                                    {{ ticket.documentNumber }}
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </td>
+                                                        {% endif %}
+                                                    </tr>
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endfor %}
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                         <!-- Itinerary -->
+                         <div class="overflow-x-scroll watermark_parent">
+
+                            {% if booking.status == "Cancelled" %}
+                            <div class="watermark centered">
+                                {{ booking.status }}
+                            </div>
+                            {% endif %}
+
+
+                            {% for  itinerary in booking.response.data.flightOffers.0.itineraries %}
+                                {% for segment in itinerary.segments %}
+                                    {% for fareDetail in booking.response.data.flightOffers.0.travelerPricings.0.fareDetailsBySegment %}
+                                        {% if fareDetail.segmentId == segment.id %}
+
+                                        <div class="container mt-3 bg-white p-3 rounded-0 border" style="min-width: 700px;">
+                                            <div class="row align-items-center">
+
+                                                <div class="col-3">
+                                                    <div class="d-flex flex-column justify-content-between align-items-center text-center h-100">
+                                                        {% with carrier_code=segment.carrierCode|upper carrier_name=booking.airlines|get_item:segment.carrierCode|upper %}
+                                                        {% with image_path=carrier_code|add:'_'|add:carrier_name|add:'.PNG' %}
+                                                           <div>
+                                                            <img src="{% static 'img/v2/tail/'|add:image_path %}"
+                                                            alt="{{ carrier_name }}" width="30" height="30"
+                                                            class="object-fit-cover rounded-3">
+                                                           </div>
+                            
+                                                            <div class="d-flex flex-column mt-2">
+                                                            <p class="m-0 fw-bold small">{{ carrier_name }}</p>
+
+                                                            <p class="m-0 p-0 small">
+                                                                {% if fareDetail.cabin == 'PREMIUM_ECONOMY'  %}
+                                                                    PREMIUM
+                                                                {% else %}
+                                                                    {{ fareDetail.cabin }}
+                                                                {% endif %} 
+                                                                <span>({{ fareDetail.class }})</span>
+                                                            </p>
+
+                                                            <p class="m-0 p-0 small">{{ segment.carrierCode }} {{ segment.number }}</p>
+                                                            <!-- <span>(BOEING 777-300ER)</span> -->
+                                                            </div>
+                                                        {% endwith %}
+                                                    {% endwith %}
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-9">
+                                                    <div class="row align-items-center">
+
+                                                        <div class="col-4">
+                                                            <div>
+                                                                <p class="m-0 small">{{ segment.departure.at|format_date_short }}</p>
+                                                                <p class="m-0 small">{{ segment.departure.at|format_time_segment }}</p>
+                                                                <p class="m-0 small">{{ segment.departure.iataCode|get_airport_name }} <span>({{ segment.departure.iataCode }})</span></p>
+                                                                <p class="m-0"><span>Terminal: <span>{{ segment.departure.terminal|default:"-" }}</span></span></p>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-4">
+                                                            <div class="text-center d-flex flex-column justify-content-center align-items-center">
+                                                                <p class="m-0 p-0 small">Duration: <span>{{ segment.duration|format_duration }}</span></p>
+                                                                <!-- <div class="mt-2">
+                                                                    <img src="{% static 'img/forth.svg' %}" alt="">
+                                                                </div> -->
+
+                                                                <div class="d-flex justify-content-between align-items-center to_fro_new_svg" style="width: 10rem">
+                                                                    <i class="fas fa-plane-departure float-start make_color_result"></i>
+                                                                    <div class="border w-100 mx-3"></div>
+                                                                    <i class="fas fa-plane-arrival float-end make_color_result"></i>
+                                                                </div>
+
+                                                                
+                                                                <p class="m-0 p-0 small mt-2">Stops: 
+                                                                <span>
+                                                                    {% if segment.numberOfStops == 0 %}
+                                                                        Non
+                                                                    {%  elif segment.numberOfStops == 1 %}
+                                                                        1
+                                                                    {%  elif segment.numberOfStops == 2 %}
+                                                                        2
+                                                                    {%  elif segment.numberOfStops >= 2 %}
+                                                                        2+
+                                                                    {% endif %}
+                                                                </span></p>
+
+                                                                <p class="m-0 p-0 small mt-2">
+                                                                    {% if segment.layover_time %}
+                                                                    Layover: <span class="text-black ps-1">{{ segment.layover_time }}</span>
+                                                                    {% endif %}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-4">
+                                                            <div class="text-start text-md-end">
+                                                                <p class="m-0 small">{{ segment.arrival.at|format_date_short }}</p>
+                                                                <p class="m-0 small">{{ segment.arrival.at|format_time_segment }}</p>
+                                                                <p class="m-0  small">{{ segment.arrival.iataCode|get_airport_name }} <span>({{ segment.arrival.iataCode }})</span></p>
+                                                                <p class="m-0"><span>Terminal: <span>{{ segment.arrival.terminal|default:"-" }}</span></span></p>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+
+                                        <div class="container mt-3 p-0" style="min-width: 700px;">
+                                            <p class="m-0 p-0 make_bg_itinerary text-white p-3 rounded-0">Travellers Service - {{ segment.carrierCode }} {{ segment.number }}</p>
+
+                                               <!-- Baggage -->
+                                                <div class="table-responsive">
+                                                    <table class="table table-borderless table-sm table-striped border">
+                                                        <thead>
+                                                        <tr>
+                                                            <!-- <th scope="col">Flight No.</th> -->
+                                                            <th scope="col" class="fw-bold">Name</th>
+                                                            <th scope="col" class="text-center fw-bold">Baggage</th>
+                                                            <th scope="col" class="text-center fw-bold" style="white-space: nowrap;">Seat</th>
+                                                            <th scope="col" class="text-center fw-bold">Meal</th>
+                                                            {% if booking.status == 'Issued' or booking.status == 'Exchanged' or booking.status == 'Refunded' %}
+                                                            <th scope="col" class="text-center fw-bold" style="white-space: nowrap;">Coupon Status</th>
+                                                            {% endif %}
+                                                            <!-- <th scope="col" class="text-end">Wheel Chair</th> -->
+                                                            <!-- <th scope="col">Duration</th> -->
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {% for traveler in booking.response.data.travelers %}
+                                                            {% for travelerPricing in booking.response.data.flightOffers.0.travelerPricings %}
+                                                                {% if traveler.id == travelerPricing.travelerId %}
+                                                                    {% for fareDetail in travelerPricing.fareDetailsBySegment %}
+                                                                        {% if fareDetail.segmentId == segment.id %}
+                                                                        <tr>
+                                                                            <td class="text-uppercase" style="white-space: nowrap;">{{ traveler.name.lastName }} {{ traveler.name.firstName }}</td>
+                                                                            <td class="text-center" style="white-space: nowrap;">
+                                                                                {% if fareDetail.includedCheckedBags %}
+                                                                                    {% if fareDetail.includedCheckedBags.quantity is not None %}
+                                                                                    {{ fareDetail.includedCheckedBags.quantity|default_if_none:0 }}
+                                                                                    {% else %}
+                                                                                        {{ fareDetail.includedCheckedBags.weight }} {{ fareDetail.includedCheckedBags.weightUnit }}
+                                                                                    {% endif %}
+                                                                                {% else %}
+                                                                                    No baggage included
+                                                                                {% endif %}
+                                                                            </td>
+
+                                                                            <td class="text-center" style="white-space: nowrap;">
+                                                                                {% if fareDetail.additionalServices.chargeableSeatNumber %}
+                                                                                    {{ fareDetail.additionalServices.chargeableSeatNumber }}
+                                                                                {% else %}
+                                                                                    
+                                                                                {% endif %}
+                                                                            </td>
+
+                                                                            <td class="text-center" style="white-space: nowrap;">
+                                                                                {% if fareDetail.mealServices %}
+                                                                                {% for meal in fareDetail.mealServices %}
+                                                                                        {{ meal.label }}
+                                                                                    {% endfor %}
+                                                                                {% else %}
+                                                                                    No meal service
+                                                                                {% endif %}
+                                                                            </td>
+
+
+                                                                        {% if booking.status == 'Issued' or booking.status == 'Exchanged' or booking.status == 'Refunded' %}
+                                                                        <td class="text-center" style="white-space: nowrap;">
+                                                                            {% if segment.isFlown %}
+                                                                                Flown
+                                                                            {% else %}
+                                                                                Open
+                                                                            {% endif %}
+                                                                        </td>
+                                                                        {% endif %}
+                                                                        </tr>
+
+                                                                        {% endif %}
+                                                                    {% endfor %}
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                        </div>
+
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endfor %}
+                            {% endfor %}
+
+
+                        </div>
+
+                        
+                        <div class="mt-3 container p-0" style="min-width: 700px;">
+                            <p class="m-0 p-3 make_bg_itinerary rounded-0 text-white">Payment Method</p>
+
+                            <div class="bg-white border p-2">
+                                <p class="m-0 mt-2">
+                                    Please note that the quoted flight price <b>{% if booking.currency == "NGN" %}&#8358; {% elif  booking.flight_data.is_converted %} &#8358;{% else %}&#36;{% endif %} {{ booking.converted_amount|floatformat:2|intcomma }}</b> is subject to change until payment is confirmed by Jomivic Travels.
+                                    <br>
+                                    To ensure prompt processing,kindly use your Trip ID <b>{{ booking.formatted_id }}</b> as the transaction reference or depositor’s name. This will help us quickly identify your transaction.
+
+                                    <br>
+                                    Below are the payment options available for your convenience:
+                                </p>
+
+                                <div class="row mt-3">
+                                    {% if booking.currency == "NGN" or booking.flight_data.is_converted %}
+                                    <div class="col-12 col-lg-6">
+                                        <div class="table-responsive">
+                                            <table class="table table-sm border">
+                                                <tbody>
+                                                <tr>
+                                                    <td>Bank Name:</td>
+                                                    <td>United Bank For Africa</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Account Number:</td>
+                                                    <td>1020904570</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Account name:</td>
+                                                    <td>JOMIVIC TRAVELS AGENCY </td>
+                                                </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-lg-6">
+                                        <div class="table-responsive">
+                                            <table class="table table-sm border">
+                                                <tbody>
+                                                <tr>
+                                                    <td>Bank Name:</td>
+                                                    <td>Zenith Bank PLC</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Account Number:</td>
+                                                    <td>1014149141</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Account name:</td>
+                                                    <td>JOMIVIC TRAVELS AGENCY </td>
+                                                </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    {% elif booking.currency == "USD" %}
+                                    <!-- <div class="col-12 col-lg-6">
+                                        <div class="table-responsive">
+                                            <table class="table table-sm border">
+                                                <tbody>
+                                                <tr>
+                                                    <td>Bank Name:</td>
+                                                    <td>Fidelity Bank PLC</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Account Number:</td>
+                                                    <td>0123456789</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Account name:</td>
+                                                    <td>Jomivic Travels</td>
+                                                </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div> -->
+                                    {% endif %}
+
+                                    <div class="col-12">
+    
+                                        <div class="table-responsive">
+                                            <table class="table table-sm border">
+                                                <tbody>
+                                                <tr>
+                                                    <td>Office:</td>
+                                                    <td>Cash</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Address:</td>
+                                                    <td>Sheraton Hotel, 30, Mobolaji Bank Anthony, Ikeja, Lagos Nigeria</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Phone Number:</td>
+                                                    <td>
+                                                        <a href="tel:+2348187170444" class="text-dark">012934120</a>,
+                                                    </td>
+                                                </tr>
+    
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        </div>
+
+                                </div>
+
+
+                                <p class="m-0 mb-3">
+                                    If you need further information about your itinerary, please don’t hesitate to contact us at <a href="mailto:Info@jomivictravels.com" class="text-dark text-decoration-underline">Info@jomivictravels.com</a>
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+        </div>
+
+
+{% endblock content %}
+
+{% block jsfiles %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+
+    <script>
+        document.querySelectorAll(".print_itinerary2").forEach(function(button) {
+            button.addEventListener("click", function() {
+                // Specify the element to convert to PDF
+                var element = document.getElementById('booking_information');
+    
+                // Use jsPDF library to generate PDF with text
+                var opt = {
+                    margin: 0.5, // Margin around the page
+                    filename: 'Itinerary.pdf', // The name of the PDF file
+                    jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' } // PDF format and orientation
+                };
+    
+                // Use html2pdf to convert HTML to PDF
+                html2pdf()
+                    .from(element)
+                    .set(opt)
+                    .toPdf()
+                    .get('pdf')
+                    .then(function(pdf) {
+                        // Check the user agent to determine the platform
+                        var isAndroid = /Android/i.test(navigator.userAgent);
+                        var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+    
+                        if (isAndroid) {
+                            // For Android devices, open the PDF in a new tab
+                            var pdfBlob = pdf.output('blob'); // Get PDF as a blob
+                            var url = URL.createObjectURL(pdfBlob); // Create a URL for the blob
+                            window.open(url); // Open the PDF in a new tab
+    
+                            // Optional: Release the object URL after use
+                            setTimeout(function() {
+                                URL.revokeObjectURL(url);
+                            }, 100);
+                        } else if (isIOS || /Macintosh/.test(navigator.userAgent)) {
+                            // For iOS devices and computers, download the PDF
+                            pdf.save('Itinerary.pdf'); // This will trigger the download of the PDF file
+                        } else {
+                            // Default action for other devices (e.g., Windows)
+                            pdf.save('Itinerary.pdf'); // Trigger download as a fallback
+                        }
+                    })
+                    .catch(function(error) {
+                        console.error('Error while generating PDF:', error);
+                    });
+            });
+        });
+    </script>
+    
+
+    <script>
+    
+
+        document.getElementById('emailForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent the default form submission
+        
+            // Reference the submit button
+            const submitButton = event.target.querySelector('button[type="submit"]');
+        
+            // Show loading icon and disable button
+            submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Sending...';
+            submitButton.disabled = true;
+        
+            // Capture the section to convert to PDF
+            let contentToCapture = document.getElementById('booking_information');
+        
+            // Use html2canvas to convert HTML to a canvas
+            html2canvas(contentToCapture, {
+                scale: 2, // Increase scale for better quality
+                scrollX: 0,
+                scrollY: 0,
+                windowWidth: document.documentElement.offsetWidth,
+                windowHeight: document.documentElement.offsetHeight
+            }).then(canvas => {
+                // Create a PDF document
+                const {jsPDF} = window.jspdf;
+                const pdf = new jsPDF('p', 'mm', 'a4'); // Portrait orientation, millimeters, A4 size
+        
+                // Define dimensions for the image to fit on the A4 page
+                const pageWidth = pdf.internal.pageSize.getWidth();
+                const pageHeight = pdf.internal.pageSize.getHeight();
+                const imgWidth = pageWidth;
+                const imgHeight = canvas.height * imgWidth / canvas.width;
+                const imgData = canvas.toDataURL('image/png');
+        
+                // Variables to manage PDF page breaks
+                let position = 0;
+                let pageCount = Math.ceil(imgHeight / pageHeight);
+        
+                for (let i = 0; i < pageCount; i++) {
+                    // Calculate the section of the image to print on this page
+                    const sourceX = 0;
+                    const sourceY = i * pageHeight * canvas.width / pageWidth; // Start point of this page slice on the canvas
+                    const sourceWidth = canvas.width;
+                    const sourceHeight = pageHeight * canvas.width / pageWidth;
+        
+                    // Create a new canvas for each page slice
+                    const pageCanvas = document.createElement('canvas');
+                    const pageCtx = pageCanvas.getContext('2d');
+                    pageCanvas.width = canvas.width;
+                    pageCanvas.height = sourceHeight;
+        
+                    // Copy the relevant slice from the original canvas to the new one
+                    pageCtx.drawImage(canvas, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, sourceWidth, sourceHeight);
+        
+                    // Convert the new canvas slice to image data
+                    const pageImgData = pageCanvas.toDataURL('image/png');
+        
+                    // Add the image to the PDF
+                    pdf.addImage(pageImgData, 'PNG', 0, 0, imgWidth, pageHeight);
+        
+                    if (i < pageCount - 1) {
+                        pdf.addPage(); // Add a new page if there are more pages
+                    }
+                }
+        
+                // Convert PDF to Blob
+                const pdfBlob = pdf.output('blob');
+        
+                // Create a FormData object and append the data
+                let formData = new FormData(event.target);
+                formData.append('html_content', contentToCapture.innerHTML);
+                formData.append('attach_itinerary', document.getElementById('flexCheckChecked').checked);
+                formData.append('pdf_file', pdfBlob, 'itinerary.pdf');
+        
+                // Send the form data via AJAX
+                fetch(event.target.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                    }
+                })
+                .then(response => response.text())
+                .then(data => {
+                    alert('Email sent successfully!');
+                    // Reset button text and state
+                    submitButton.innerHTML = 'Send';
+                    submitButton.disabled = false;
+                })
+                .catch(error => {
+                    alert('An error occurred.');
+                    // Reset button text and state
+                    submitButton.innerHTML = 'Send';
+                    submitButton.disabled = false;
+                });
+            });
+        });
+        
+
+        // JavaScript to handle selection and update display
+          document.getElementById('nationality').addEventListener('input', function() {
+            // Get the input element and the displayed element
+            var input = document.getElementById('nationality');
+            var display = document.getElementById('selectedNationality');
+        
+            // Get all options from the datalist
+            var options = document.getElementById('nationalities').options;
+            var selectedText = '';
+        
+            // Loop through options to find the matching value
+            for (var i = 0; i < options.length; i++) {
+              if (options[i].value === input.value) {
+                selectedText = options[i].text; // Get the full text (e.g., "AF - Afghanistan")
+                break;
+              }
+            }
+        
+            // Update the displayed element with the selected text
+            display.textContent = selectedText;
+        
+            // Clear the input field to hide the datalist options
+            input.value = '';
+          });
+    </script>
+
+
+    <script>
+        // Optional: Add JavaScript to handle the selected value
+        document.getElementById('airline_search').addEventListener('input', function() {
+            const input = this.value;
+            const options = document.querySelectorAll('#airlines_list option');
+            let selectedCode = '';
+    
+            options.forEach(option => {
+                if (option.value === input) {
+                    selectedCode = option.getAttribute('data-code');
+                }
+            });
+        });
+    </script>
+
+    <script src="{% static 'js/dashboard/bookinginfo.js' %}"></script>
+{% endblock jsfiles %}
+
+
+

@@ -1,0 +1,97 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block title %} Sign In {% endblock title %}
+
+{% block cssfiles %}
+  <style>
+
+
+    #password{
+      outline: none !important;
+    }
+
+    #preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #fff;
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column; 
+  }
+
+  .signin_box{
+    min-height: 83vh;
+    display: grid;
+    place-items: center;
+  }
+
+  .spinner-border {
+      width: 10rem;
+      height: 10rem;
+  }
+
+  .preloader_img{
+      position: absolute;
+      top: 45%;
+  }
+
+  .explain_box{
+    height: 470px;
+    overflow-y: scroll;
+  }
+
+  .back_btn,
+  .back_btn:hover{
+      background: #FF69B4;
+      color: #fff;
+  }
+  
+  body {
+    font-size: 14px;
+    font-family: "Moderat","Inter",sans-serif;
+    font-weight: 400;
+    color: #333;
+}
+
+#start-payment-button {
+    cursor: pointer;
+    position: relative;
+    background-color: #ff9b00;
+    color: #12122c;
+    max-width: 30%;
+    padding: 7.5px 16px;
+    font-weight: 500;
+    font-size: 14px;
+    border-radius: 4px;
+    border: none;
+    transition: all .1s ease-in;
+    vertical-align: middle;
+}
+
+  </style>
+{% endblock cssfiles %}
+
+{% block content %}
+    
+    <form method="POST" action="https://checkout.flutterwave.com/v3/hosted/pay">
+  <div>
+    Your order is N20,0000
+  </div>
+  <input type="hidden" name="public_key" value="FLWPUBK_TEST-aae48dce5431d77b667658cb2c8cf96e-X" />
+  <input type="hidden" name="customer[email]" value="test@mailnator.com" />
+  <input type="hidden" name="customer[name]" value="Ayomide Jimi-Oni" />
+  <input type="hidden" name="tx_ref" value="txref-81111" />
+  <input type="hidden" name="amount" value="20000000" />
+  <input type="hidden" name="currency" value="NGN" />
+  <input type="hidden" name="currency" value="NGN" />
+{#  <input type="hidden" name="redirect_url" value="https://example.com/payment-success" />#}
+  <br>
+  <button type="submit" id="start-payment-button">Pay Now</button>
+</form>
+
+{% endblock content %}

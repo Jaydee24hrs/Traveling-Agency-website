@@ -1,0 +1,102 @@
+
+.styled_border{
+  border: none;
+  border-bottom: 4px dashed #000; 
+  margin: 20px 0;
+}
+
+.company_logo{
+  width: 100px;
+  height: 50px;
+  object-fit: contain;
+}
+
+.styled{
+  background: #185286;
+}
+
+.logo_box{
+  padding-right: 50px;
+}
+
+.itinerary_foot{
+  margin-top: 100px;
+}
+
+
+
+aside {
+  position: fixed;
+  overflow: auto;
+  white-space: nowrap;
+  width: 250px;
+  height: 100vh;
+  top: 55px;
+  -ms-overflow-style: none;
+  scrollbar-width: 20px;
+  background: white;
+  z-index: 1;
+  display: none;
+  padding-bottom: 200px;
+}
+
+aside::-webkit-scrollbar {
+  background-color: transparent;
+  width: 8px;
+}
+
+aside::-webkit-scrollbar-thumb {
+  background-color: gray;
+  border-radius: 20px;
+}
+
+.aside-active {
+  display: block;
+}
+
+.close_btn{
+  position: absolute;
+  left: 30px;
+  top: 10px;
+}
+
+.btns0:hover,
+.btns1:hover,
+.btns2:hover,
+.btns3:hover,
+.btns4:hover,
+.btns5:hover,
+.btns6:hover,
+.btns7:hover,
+.btns8:hover,
+.btns9:hover{
+  background: #185286;
+  color: white;
+}
+
+
+small{
+  font-size: 10px;
+  color: #8080809e;
+}
+
+
+.file-input-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.file-input {
+  display: none;
+}
+
+#file-input-icon {
+  font-size: 20px;
+  cursor: pointer;
+  color: gray;
+  transition: color 0.3s ease;
+}
+
+#file-input-icon:hover {
+  color: gray;
+}

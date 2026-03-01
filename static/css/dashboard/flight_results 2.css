@@ -1,0 +1,38 @@
+.owl-carousel2 {
+  overflow-x: scroll !important;
+}
+
+#searchResult {
+  display: none;
+  width: 100%;
+}
+
+.custom-checkbox {
+  width: 24px; 
+  height: 24px; 
+}
+
+/* .form-check-label {
+  font-size: 1.2em;
+} */
+
+.parent_card_result{
+  position: relative;
+  width: 100%;
+}
+
+.sub_parent{
+  position: absolute;
+  z-index: 100;
+}
+
+
+#cardContainer {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.card-wrapper {
+  min-width: 130px;
+  margin: 0 1px;
+}

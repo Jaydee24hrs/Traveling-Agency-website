@@ -1,0 +1,1623 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock title %}</title>
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js"
+            integrity="sha512-u3fPA7V8qQmhBPNT5quvaXVa1mnnLSXUep5PS1qo5NRzHwG19aHmNJnj1Q8hpA/nBWZtZD4r4AX6YOt5ynLN2g=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,500;1,500&family=Vampiro+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Nunito:ital,wght@0,500;1,500&family=Vampiro+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Dancing+Script:wght@400..700&family=Nunito:ital,wght@0,500;1,500&family=Vampiro+One&display=swap" rel="stylesheet">
+    
+
+    <!-- Google Icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+
+
+    <!-- slider nav toggle -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/slide-nav.css' %}">
+
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.1.0/mdb.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="{% static 'mdb/css/mdb.min.css' %}">
+    
+    <link rel="icon" href="{% static 'img/favicon.png' %}">
+    
+    <!-- Bootstrap Icon -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Owl Carousel -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+          integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
+          integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+
+           <!-- Owl Carousel CSS -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"> -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"> -->
+
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+
+    <!-- Download To PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.6/purify.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+
+    <link rel="stylesheet" href="{% static 'css/iziToast.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base2.css' %}">
+
+    <link rel="stylesheet" href="{% static 'aos-master/dist/aos.css' %}">
+
+  <script src="{% static 'aos-master/dist/aos.js' %}"></script>
+    {% block cssfiles %}{% endblock cssfiles %}
+    <style>
+
+        button.btn-danger{
+            background: #ef3f3e !important;
+        }
+
+        body{
+            background: #f9f9f9 !important;
+            font-family: Nunito, sans-serif;
+            font-style: normal;
+        }
+
+        .make_vam_fonts{
+            
+            font-family: Vampiro One, cursive;
+            font-style: normal;
+        }
+
+        .make_dance_fonts{
+            font-family: Dancing Script, cursive;
+            font-style: normal;
+        }
+
+
+        .make_new_fonts{
+            font-family: Nunito, sans-serif;
+            font-style: normal;
+        }
+
+        .hide{
+            display: none;
+        }
+          
+        .show{
+        display: block;
+        }
+
+        .small_nav_li:hover,
+        .big_nav_li:hover{
+            background-color: #ef3f3e4b !important;
+            border-radius: 20px;
+        }
+
+        .offcanvas-body {
+            overflow-y: auto; /* Enable vertical scrolling */
+            max-height: 100vh; /* Ensure it doesn't exceed the viewport height */
+            padding-bottom: 1rem; /* Optional: Adds some padding at the bottom for better UX */
+        }
+
+        .give_color{
+            color: #ef3f3e;
+        }
+
+        .give_background{
+            background: #ef3f3e;
+        }
+
+
+        .nav_item{
+            color: #000;
+            font-weight: 500;
+            font-size: 30px !important;
+            line-height: 20px;
+            letter-spacing: 0.3px;
+        }
+
+
+
+        @media (max-width: 767.98px) { 
+            .nav_item{
+                font-size: 15px !important;
+            }
+    
+        }
+        
+        @media (max-width: 575.98px) {
+            .nav_item{
+                font-size: 15px !important;
+            }
+    
+        }
+
+        .make_bg_one{
+            background: #ef3f3e !important;
+        }
+        .make_bg_three{
+            background: #4291b8 !important;
+        }
+        .make_bg_itinerary{
+            background: #ED8525 !important;
+        }
+
+        .make_color_one{
+            color: #ef3f3e !important;
+        }
+
+        .make_bg_two{
+            background: #ef3f3e !important;
+        }
+
+        .make_color_two{
+            color: #ef3f3e !important;
+        }
+
+        .make_border{
+            border: 1px solid #ef3f3e;
+        }
+        .make_border_two{
+            border: 1px solid #ef3f3e;
+        }
+        .make_border_bottom{
+            border-bottom: 3px solid #ef3f3e;
+        }
+
+        .make_bg_result{
+            background-color: #4291b8 !important; /* Primary color */
+            color: #fff;
+        }
+
+        .make_color_result{
+            color: #4291b8 !important; /* Primary color */
+        }
+
+        .make_bg_new{
+            background: #f9f9f9;
+        }
+
+        .make_bg_base,
+        .foter_parent{
+            background: #1b1b1b;
+        }
+
+        .off_body{
+            background: #f0f0f0;
+        }
+
+        .select_bg{
+            background-color: #e3e3e3;
+        }
+
+        .position-relative {
+            position: relative;
+        }
+        
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .overlay-text {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+        }
+        
+        .position-relative:hover .overlay {
+            opacity: 1;
+        }
+
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+    </style>
+
+    <style>
+              
+                /* ---- TOP PLACES CARDS ---- */
+                .footer-place-card {
+                  position: relative;
+                  border-radius: 10px;
+                  overflow: hidden;
+                  aspect-ratio: 1 / 1;
+                  cursor: pointer;
+                }
+              
+                .footer-place-card img {
+                  width: 100%;
+                  height: 100%;
+                  object-fit: cover;
+                  display: block;
+                  transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                  filter: brightness(0.75);
+                }
+              
+                .footer-place-card:hover img {
+                  transform: scale(1.1);
+                  filter: brightness(0.5);
+                }
+              
+                .footer-place-overlay {
+                  position: absolute;
+                  inset: 0;
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  justify-content: flex-end;
+                  padding: 0 6px 10px;
+                  background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 55%);
+                }
+              
+                .footer-place-icon {
+                  color: #ef3f3e;
+                  font-size: 0.7rem;
+                  margin-bottom: 3px;
+                  opacity: 0;
+                  transform: translateY(6px);
+                  transition: all 0.3s ease 0.05s;
+                }
+              
+                .footer-place-card:hover .footer-place-icon {
+                  opacity: 1;
+                  transform: translateY(0);
+                }
+              
+                .footer-place-name {
+                  display: block;
+                  color: #fff;
+                  font-size: 0.75rem;
+                  font-weight: 700;
+                  text-align: center;
+                  letter-spacing: 0.04em;
+                  line-height: 1.2;
+                  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+                }
+              
+                /* ---- NEW TOPICS ARTICLES ---- */
+                .footer-article {
+                  display: flex;
+                  gap: 14px;
+                  align-items: flex-start;
+                }
+              
+                .footer-article-img {
+                  position: relative;
+                  flex-shrink: 0;
+                  width: 82px;
+                  height: 82px;
+                  border-radius: 10px;
+                  overflow: hidden;
+                }
+              
+                .footer-article-img img {
+                  width: 100%;
+                  height: 100%;
+                  object-fit: cover;
+                  display: block;
+                  transition: transform 0.4s ease;
+                  filter: brightness(0.85);
+                }
+              
+                .footer-article:hover .footer-article-img img {
+                  transform: scale(1.08);
+                  filter: brightness(0.65);
+                }
+              
+                .footer-article-tag {
+                  position: absolute;
+                  top: 6px;
+                  left: 6px;
+                  background: #ef3f3e;
+                  color: #fff;
+                  font-size: 0.6rem;
+                  font-weight: 700;
+                  letter-spacing: 0.06em;
+                  text-transform: uppercase;
+                  padding: 2px 7px;
+                  border-radius: 30px;
+                }
+              
+                .footer-article-body {
+                  flex: 1;
+                  min-width: 0;
+                }
+              
+                .footer-article-title {
+                  color: #fff;
+                  font-size: 0.875rem;
+                  font-weight: 700;
+                  margin: 0 0 6px;
+                  line-height: 1.4;
+                  display: -webkit-box;
+                  -webkit-line-clamp: 2;
+                  -webkit-box-orient: vertical;
+                  overflow: hidden;
+                  transition: color 0.25s ease;
+                }
+              
+                .footer-article:hover .footer-article-title {
+                  color: #ef3f3e;
+                }
+              
+                .footer-article-excerpt {
+                  color: rgba(255, 255, 255, 0.5);
+                  font-size: 0.775rem;
+                  line-height: 1.55;
+                  margin: 0 0 8px;
+                  display: -webkit-box;
+                  -webkit-line-clamp: 2;
+                  -webkit-box-orient: vertical;
+                  overflow: hidden;
+                }
+              
+                .footer-article-link {
+                  color: #ef3f3e;
+                  font-size: 0.775rem;
+                  font-weight: 600;
+                  text-decoration: none;
+                  display: inline-flex;
+                  align-items: center;
+                  gap: 4px;
+                  letter-spacing: 0.02em;
+                  transition: gap 0.25s ease, opacity 0.25s ease;
+                  opacity: 0.85;
+                }
+              
+                .footer-article-link:hover {
+                  opacity: 1;
+                  gap: 8px;
+                  color: #ef3f3e;
+                }
+              
+                /* Responsive */
+                @media (max-width: 575.98px) {
+                  .footer-place-name {
+                    font-size: 0.65rem;
+                  }
+              
+                  .footer-article-img {
+                    width: 70px;
+                    height: 70px;
+                  }
+              
+                  .footer-article-title {
+                    font-size: 0.82rem;
+                  }
+                }
+              
+    </style>
+</head>
+
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light sticky-top py-2 bg-light text-uppercase">
+    <!-- Container wrapper -->
+    <div class="container align-items-center">
+
+        <!-- Collapsible wrapper -->
+        <div class="collapse navbar-collapse d-none d-lg-block align-items-center" id="navbarSupportedContent">
+            <!-- Navbar brand -->
+                <div class="d-flex align-items-center w-100 justify-content-between">
+                    <a class="navbar-brand mt-2 mt-lg-0" href="{% url 'dashboard' %}">
+                        <img src="{% static 'img/logo.png' %}" alt="" width="100">
+                    </a>
+                    <button class="nav-trigger border-0 bg-transparent" id="navTrigger" aria-label="Open navigation">
+                        <i class="fa-solid fa-bars fs-5"></i>
+                    </button>
+                </div>
+            <!-- Left links -->
+            <ul class="navbar-nav ms-auto align-items-center">
+                {% if request.user.is_authenticated %}
+
+                    <li class="nav-item pe-3 nav_bar_user" id="nav_dashboard">
+                        <a class="nav-link nav_item d-flex align-items-center fw-bold" href="{% url 'dashboard' %}">
+                            Flight
+                        </a>
+                    </li>
+
+                    <li class="nav-item pe-3 nav_bar_user" id="nav_manage_bookings">
+                        <a class="nav-link nav_item d-flex align-items-center fw-bold" href="{% url 'manage-booking' %}">
+                            Manage Booking
+                        </a>
+                    </li>
+
+                    {% if user.is_superuser or user.position == 'Admin' or user.position == 'Manager' %}
+                    <li class="nav-item pe-3 nav_bar_user" id="nav_teams">
+                        <a class="nav-link nav_item d-flex align-items-center fw-bold" href="{% url 'teams' %}">
+                            Team
+                        </a>
+                    </li>
+                    {% endif %}
+                    
+
+                    {% if user.is_superuser or user.position == 'Admin'%}
+                    <li class="nav-item pe-3 nav_bar_user" id="nav_margin_manager">
+                        <a class="nav-link nav_item d-flex align-items-center fw-bold" href="{% url 'markup' %}">
+                            Staging
+                        </a>
+                    </li>
+                    {% endif %}
+
+
+                    <li class="nav-item pe-3 nav_bar_user" id="nav_crm">
+                        <a class="nav-link nav_item d-flex align-items-center fw-bold" href="{% url 'crm' %}">
+                            CRM
+                        </a>
+                    </li>
+
+                {% endif %}
+
+
+
+                <!-- <li class="pe-3 nav_bar_user {% if request.user.is_authenticated %} d-none {% else %} nav-item {% endif %}">
+                    <a class="fw-bold nav-link nav_item" href="{% url 'dashboard' %}">
+                        Home
+                    </a>
+                </li>
+
+                <li class="pe-3 nav_bar_user {% if request.user.is_authenticated %} d-none {% else %} nav-item {% endif %}">
+                    <a class="fw-bold nav-link nav_item" href="{% url 'about' %}">
+                        About Us
+                    </a>
+                </li>
+
+                <li class="pe-3 nav_bar_user {% if request.user.is_authenticated %} d-none {% else %} nav-item {% endif %}">
+                    <a class="fw-bold nav-link nav_item" href="{% url 'service' %}">
+                        Service
+                    </a>
+                </li>
+
+                <li class="pe-3 nav_bar_user {% if request.user.is_authenticated %} d-none {% else %} nav-item {% endif %}">
+                    <a class="fw-bold nav-link nav_item" href="{% url 'contact' %}">
+                        Contact Us
+                    </a>
+                </li> -->
+
+                <!-- <li class="pe-3 nav_bar_user {% if request.user.is_authenticated %} d-none {% else %} nav-item {% endif %}">
+                    <a class="fw-bold nav-link nav_item" href="{% url 'tour_page' %}">
+                        Tour
+                    </a>
+                </li>
+
+
+                <li class="pe-3  nav_bar_user {% if request.user.is_authenticated %} d-none {% else %} nav-item {% endif %}">
+                    <a class="fw-bold nav-link nav_item" href="{% url 'hotel_page' %}">
+                        Hotel
+                    </a>
+                </li>
+
+
+                <li class="pe-3  nav_bar_user {% if request.user.is_authenticated %} d-none {% else %} nav-item {% endif %}">
+                    <a class="fw-bold nav-link nav_item" href="{% url 'car_page' %}">
+                       car
+                    </a>
+                </li>
+
+                <li class="pe-3 nav_bar_user {% if request.user.is_authenticated %} d-none {% else %} nav-item {% endif %}">
+                    <a class="fw-bold nav-link nav_item" href="{% url 'resturant_page' %}">
+                        Resturant
+                    </a>
+                </li> -->
+                
+
+                
+                <!-- Trigger button - put it where it makes sense (e.g. in navbar) -->
+
+
+                <!-- The sliding panel + overlay -->
+
+            </ul>
+            <!-- Left links -->
+
+            <ul class="navbar-nav ms-auto align-items-center">
+
+                <!-- {% block nav_currency %}
+                <li class="nav-item"></li>
+                {% endblock nav_currency %} -->
+
+
+                <!-- <li class="nav-item me-2">
+                    <select name="language" id="language" class="language small px-3 py-2 select_bg fw-bold border-0">
+                        <option value="ENG">ENG</option>
+                        <option value="FRE">FRE</option>
+                        <option value="SPA">SPA</option>
+                        <option value="DUT">DUT</option>
+                    </select>
+                </li> -->
+
+
+                {% if request.user.is_authenticated %}
+                <li class="nav-item nav_bar_user" id="nav_logout">
+                    <a class="nav-link nav_item d-flex align-items-center" href="/signout">Logout</a>
+                </li>
+                {% endif %}
+
+            </ul>
+        </div>       
+         <!-- Collapsible wrapper -->
+        
+
+
+        <!-- Logo for small Screen -->
+        <div class="d-flex justify-content-between align-items-center d-lg-none w-100">
+            <a class="navbar-brand me-2" href="{% url 'dashboard' %}">
+                <img src="{% static 'img/logo.png' %}" alt="" width="100">
+            </a>
+            
+            <div class="d-flex align-items-center">
+                {% block nav_currency_small %}
+                <!-- The select tag is wrapped in a block -->
+                {% endblock nav_currency_small %}
+
+
+                <!-- <div class="">
+                    <select name="language" id="language" class="language small px-3 py-2 select_bg fw-bold border-0">
+                        <option value="ENG">ENG</option>
+                        <option value="FRE">FRE</option>
+                        <option value="SPA">SPA</option>
+                        <option value="DUT">DUT</option>
+                    </select>
+                </div> -->
+
+
+                <!-- Toggle button -->
+                <div class="d-flex d-lg-none align-items-center justify-content-end ms-3">
+                    <button class="bg-transparent border-0 me-3 m-0 text-blcak" type="button" data-mdb-button-init data-mdb-ripple-init data-mdb-toggle="offcanvas" data-mdb-target="#small_screen"
+                    aria-controls="small_screen">
+                        <i class="fas fa-bars fs-5"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Logo for small Screen -->
+
+        <!-- Right elements -->
+    </div>
+    <!-- Container wrapper -->
+</nav>
+<!-- Navbar -->
+{% include "base/sliding_nav.html" %}
+<!-- For small Screen -->
+<div class="offcanvas offcanvas-start off_body w-100" tabindex="-1" id="small_screen" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header mt-2">
+        <div></div>
+
+        <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn-close text-reset" data-mdb-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+
+    <div class="offcanvas-body">
+        <!-- Left links -->
+        <ul class="navbar-nav m-auto mb-5 mt-0 pb-5">
+            {% if request.user.is_authenticated %}
+            <li class="nav-item mt-3 p-2 fs-6 rounded w-100 small_nav_li" id="nav_dashboard">
+                <a class="nav-link d-flex align-items-center" href="{% url 'dashboard' %}">
+                    <!-- <i class="fa-solid fa-house me-2 fs-5"></i> -->
+                    Home
+                </a>
+            </li>
+
+            <li class="nav-item mt-3 p-2 fs-6 rounded w-100 small_nav_li" id="nav_manage_bookings">
+                <a class="nav-link d-flex align-items-center" href="{% url 'manage-booking' %}">
+                    <!-- <i class="fa-solid fa-layer-group me-2 fs-5"></i> -->
+                    Manage Booking
+                </a>
+            </li>
+
+          {% if user.is_superuser or user.position == 'Admin' or user.position == 'Manager' %}
+            <li class="nav-item mt-3 p-2 fs-6 rounded w-100 small_nav_li" id="nav_teams">
+                <a class="nav-link d-flex align-items-center" href="{% url 'teams' %}">
+                    <!-- <i class="fa-solid fa-people-group me-2 fs-5"></i> -->
+                    Team
+                </a>
+            </li>
+            {% endif %}
+            
+
+            {% if user.is_superuser or user.position == 'Admin' %}
+            <li class="nav-item mt-3 p-2 fs-6 rounded w-100 small_nav_li" id="nav_margin_manager">
+                <a class="nav-link d-flex align-items-center" href="{% url 'markup' %}">
+                    <!-- <i class="fa-solid fa-layer-group me-2 fs-5"></i>  -->
+                    Staging
+                </a>
+            </li>
+            {% endif %}
+
+            <li class="nav-item mt-3 p-2 fs-6 rounded w-100 small_nav_li" id="nav_crm">
+                <a class="nav-link d-flex align-items-center" href="{% url 'crm' %}">
+                    <!-- <i class="fa-solid fa-users me-2 fs-5"></i>  -->
+                    CRM
+                </a>
+            </li>
+
+
+            <li class="nav-item mt-3 p-2 fs-6 rounded w-100 small_nav_li mb-5">
+                <a class="nav-link d-flex align-items-center" href="/signout">Logout</a>
+                <!-- <a class="nav-link d-flex align-items-center" href="/signout"><i class="fa-solid fa-right-from-bracket me-2 fs-5"></i>Logout</a> -->
+            </li>
+            {% endif %}
+
+
+            <li class="pe-3 nav_bar_user_small mt-3 {% if request.user.is_authenticated %} d-none {% else %} nav-item {% endif %}">
+                <a class="nav-link nav_item" href="{% url 'dashboard' %}">
+                    Home
+                </a>
+            </li>
+
+
+            <li class="pe-3 nav_bar_user_small mt-3 {% if request.user.is_authenticated %} d-none {% else %} nav-item {% endif %}">
+                <a class="nav-link nav_item" href="{% url 'about' %}">
+                    About Us
+                </a>
+            </li>
+
+            <li class="pe-3 nav_bar_user_small mt-3 {% if request.user.is_authenticated %} d-none {% else %} nav-item {% endif %}">
+                <a class="nav-link nav_item" href="{% url 'service' %}">
+                    Services
+                </a>
+            </li>
+
+            <!-- <li class="pe-3 nav_bar_user_small mt-3 {% if request.user.is_authenticated %} d-none {% else %} nav-item {% endif %}">
+                <a class="nav-link nav_item" href="#">
+                    Booking Deals
+                </a>
+            </li> -->
+
+
+            <li class="nav_bar_user_small mt-3 {% if request.user.is_authenticated %} d-none {% else %} nav-item {% endif %}">
+                <a class="nav-link nav_item" href="{% url 'contact' %}">
+                    Contact Us
+                </a>
+            </li>
+
+
+        </ul>
+        <!-- Left links -->
+    </div>
+</div>
+<!-- For small Screen -->
+
+{% block content %}{% endblock content %}
+
+  <!-- Footer -->
+  <footer class="make_bg_base text-white text-center">
+    <!-- Grid container -->
+    <div class="container py-5">
+      
+      <!-- Section: Links -->
+      <section class="py-4" data-aos="fade-up" data-aos-duration="2000">
+        <!--Grid row-->
+        <div class="row">
+        
+            <div class="col-12 col-lg-6">
+                <div class="text-start">
+                    <div class="mb-5">
+                        <img src="{% static 'img/logo.png' %}" alt="" width="150">
+                    </div>
+
+                    <p class="m-0 p-0 mt-3 opacity-75 fw-bold">Our mission is to offer quality travel products and exceptional customer service, ensuring a seamless and enjoyable travel experience for all our...</p>
+
+                    <p class="p-0 m-0 mt-3 opacity-75 small"> <i class="fa-solid fa-location-dot me-2"></i> Sheraton Hotel, 30, Mobolaji Bank Anthony, Ikeja, Lagos</p> 
+                    <p class="p-0 m-0 mt-3 opacity-75 small"> <i class="fa-solid fa-phone me-2"></i> 012934120</p> 
+                    <p class="p-0 m-0 mt-3 opacity-75 small"> <i class="fa-solid fa-envelope me-2"></i> Info@jomivictravels.com</p> 
+                </div>
+            </div>
+
+
+            <div class="col-12 col-lg-6 mt-5 mt-lg-0">
+                <div class="row text-start">
+                    <!--Grid column-->
+                    <div class="col-6 mb-4 mb-lg-0">
+                        <h5 class="mb-5">Useful Links</h5>
+            
+                        <ul class="list-unstyled mb-0 opacity-75">
+
+                            <li class="mb-1">
+                                <a href="{% url 'portfolio' %}" class="text-light small fw-bold">Portfolio</a>
+                            </li>
+
+                            <li class="mb-1">
+                                <a href="{% url 'blog' %}" class="text-light small fw-bold">Blog</a>
+                            </li>
+
+                            <!-- <li class="mb-1">
+                                <a href="{% url 'contact' %}" class="text-light small fw-bold">Contact Us</a>
+                            </li> -->
+
+                            <!-- <li class="mb-1">
+                                <a href="#" class="text-light small fw-bold">Services</a>
+                            </li> -->
+
+                            <li class="mb-1">
+                                <a href="#" class="text-light small fw-bold">Booking Deals</a>
+                            </li>
+
+                            <li class="mb-1">
+                                <a href="#" class="text-light small fw-bold">Aviation Training</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <!--Grid column-->
+            
+            
+                    <!--Grid column-->
+                    <div class="col-6  mb-4 mb-lg-0 mt-4">
+            
+                        <ul class="list-unstyled mb-0 opacity-75 mt-5">
+
+                            <!-- <li class="mb-1">
+                                <a href="{% url 'about' %}" class="text-light small fw-bold">About Us</a>
+                            </li> -->
+
+                            <li class="mb-1">
+                                <a href="#faq" class="text-light small fw-bold">FAQ</a>
+                            </li>
+
+                            <li class="mb-1" >
+                                <a href="#about" class="text-light small fw-bold">About Us</a>
+                            </li>
+
+                            <li class="mb-1">
+                                <a href="#" class="text-light small fw-bold">Services</a>
+                            </li>
+
+                            <li class="mb-1">
+                                <a href="{% url 'terms_and_conditions' %}" class="text-light small fw-bold">Terms and Conditions</a>
+                            </li>
+
+                            <li class="mb-1">
+                                <a href="{% url 'privacy_legal' %}" class="text-light small fw-bold">Policies</a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                    <!--Grid column-->
+                </div>
+            </div>
+
+            <div class="col-12 mt-5 mt-lg-4" data-aos="fade-up" data-aos-duration="2000">
+                <div class="row text-start g-5">
+              
+                  <!-- ===== TOP PLACES ===== -->
+                  <div class="col-12 col-lg-6">
+                    <div class="d-flex align-items-center gap-2 mb-4">
+                      <span style="display:inline-block; width:22px; height:3px; background:#ef3f3e; border-radius:2px;"></span>
+                      <h5 class="m-0 text-white fw-bold" style="letter-spacing:0.05em; font-size:0.95rem; text-transform:uppercase;">Top Places</h5>
+                    </div>
+              
+                    <div class="row g-2">
+              
+                      <div class="col-3">
+                        <div class="footer-place-card" data-aos="zoom-in" data-aos-duration="1600">
+                          <img src="{% static 'img/footer/1.jpg' %}" alt="Dubai" loading="lazy">
+                          <div class="footer-place-overlay">
+                            <i class="fas fa-map-marker-alt footer-place-icon"></i>
+                            <span class="footer-place-name">Dubai</span>
+                          </div>
+                        </div>
+                      </div>
+              
+                      <div class="col-3">
+                        <div class="footer-place-card" data-aos="zoom-in" data-aos-duration="1700">
+                          <img src="{% static 'img/footer/2.jpg' %}" alt="Canada" loading="lazy">
+                          <div class="footer-place-overlay">
+                            <i class="fas fa-map-marker-alt footer-place-icon"></i>
+                            <span class="footer-place-name">Canada</span>
+                          </div>
+                        </div>
+                      </div>
+              
+                      <div class="col-3">
+                        <div class="footer-place-card" data-aos="zoom-in" data-aos-duration="1800">
+                          <img src="{% static 'img/footer/3.jpg' %}" alt="Caribbean" loading="lazy">
+                          <div class="footer-place-overlay">
+                            <i class="fas fa-map-marker-alt footer-place-icon"></i>
+                            <span class="footer-place-name">Caribbean</span>
+                          </div>
+                        </div>
+                      </div>
+              
+                      <div class="col-3">
+                        <div class="footer-place-card" data-aos="zoom-in" data-aos-duration="1900">
+                          <img src="{% static 'img/footer/4.jpg' %}" alt="South Africa" loading="lazy">
+                          <div class="footer-place-overlay">
+                            <i class="fas fa-map-marker-alt footer-place-icon"></i>
+                            <span class="footer-place-name">South Africa</span>
+                          </div>
+                        </div>
+                      </div>
+              
+                      <div class="col-3">
+                        <div class="footer-place-card" data-aos="zoom-in" data-aos-duration="2000">
+                          <img src="{% static 'img/footer/5.jpg' %}" alt="Australia" loading="lazy">
+                          <div class="footer-place-overlay">
+                            <i class="fas fa-map-marker-alt footer-place-icon"></i>
+                            <span class="footer-place-name">Australia</span>
+                          </div>
+                        </div>
+                      </div>
+              
+                      <div class="col-3">
+                        <div class="footer-place-card" data-aos="zoom-in" data-aos-duration="2100">
+                          <img src="{% static 'img/footer/6.jpg' %}" alt="Nigeria" loading="lazy">
+                          <div class="footer-place-overlay">
+                            <i class="fas fa-map-marker-alt footer-place-icon"></i>
+                            <span class="footer-place-name">Nigeria</span>
+                          </div>
+                        </div>
+                      </div>
+              
+                    </div>
+                  </div>
+                  <!-- ===== END TOP PLACES ===== -->
+              
+              
+                  <!-- ===== NEW TOPICS ===== -->
+                  <div class="col-12 col-lg-6">
+                    <div class="d-flex align-items-center gap-2 mb-4">
+                      <span style="display:inline-block; width:22px; height:3px; background:#ef3f3e; border-radius:2px;"></span>
+                      <h5 class="m-0 text-white fw-bold" style="letter-spacing:0.05em; font-size:0.95rem; text-transform:uppercase;">New Topics</h5>
+                    </div>
+              
+                    <div class="d-flex flex-column gap-3">
+              
+                      <!-- Article 1 -->
+                      <div class="footer-article" data-aos="fade-left" data-aos-duration="1800">
+                        <div class="footer-article-img">
+                          <img src="{% static 'img/blog-footer/1.jpg' %}" alt="Dubai Tour Packages">
+                          <span class="footer-article-tag">Tour</span>
+                        </div>
+                        <div class="footer-article-body">
+                          <h6 class="footer-article-title">New Tour Packages to Dubai Now Available</h6>
+                          <p class="footer-article-excerpt">Explore the wonders of Dubai with our new customized tour packages. Enjoy luxury accommodations, city tours, and more.</p>
+                          <a href="#" class="footer-article-link">
+                            Read More <i class="fas fa-arrow-right ms-1" style="font-size:0.65rem;"></i>
+                          </a>
+                        </div>
+                      </div>
+              
+                      <!-- Divider -->
+                      <div style="height:1px; background: rgba(255,255,255,0.07);"></div>
+              
+                      <!-- Article 2 -->
+                      <div class="footer-article" data-aos="fade-left" data-aos-duration="2000">
+                        <div class="footer-article-img">
+                          <img src="{% static 'img/blog-footer/2.jpg' %}" alt="Aviation School">
+                          <span class="footer-article-tag">Training</span>
+                        </div>
+                        <div class="footer-article-body">
+                          <h6 class="footer-article-title">Enroll at Jomivic Aviation Business School</h6>
+                          <p class="footer-article-excerpt">Join our aviation training programs and kickstart your career in the aviation industry. Enrollment is now open.</p>
+                          <a href="#" class="footer-article-link">
+                            Read More <i class="fas fa-arrow-right ms-1" style="font-size:0.65rem;"></i>
+                          </a>
+                        </div>
+                      </div>
+              
+                    </div>
+                  </div>
+                  <!-- ===== END NEW TOPICS ===== -->
+              
+                </div>
+              </div>
+              
+             
+        </div>
+        <!--Grid row-->
+      </section>
+      <!-- Section: Links -->
+  
+    </div>
+
+
+    <div class="bg-dark px-3 px-lg-5 ">
+        <div class="col-12 mt-5">
+            <!-- Copyright -->
+            <div class="row align-items-center">
+
+                <div class="col-12 opacity-50">
+                    <div class="d-flex justify-content-center justify-content-lg-between align-items-center flex-wrap">
+
+                        <section class="mt-3 mt-md-0">
+                            <!-- Facebook -->
+                            <a class="me-3" href="#!" role="button"><i class="fa-brands fa-facebook-f fs-5 text-light opacity-75"></i></a>
+
+                            <!-- Instagram -->
+                            <a class="me-3" href="#" target="_blank" role="button"><i class="fa-brands fa-instagram fs-5 text-light opacity-75"></i></a>
+                        
+                            <!-- Twitter -->
+                            <a class="me-3" href="#!" role="button"><i class="fab fa-twitter fs-5 text-light opacity-75"></i></a>
+                        
+                            <!-- Youtube -->
+                            <a class="me-3"  href="#!" role="button"><i class="fa-brands fa-google fs-5 text-light opacity-75"></i></a>
+                        
+                            
+                        </section>
+
+
+                        <div class="text-center p-3 ">
+                            <span>©</span>
+                            <span id="year"></span>
+                            <span class="">Jomivic Travel Agency. All rights reserved.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-3 mt-md-0">
+                    <div class="d-flex justify-content-center align-items-center flex-wrap gap-2">
+                  
+                      <!-- Powered by -->
+                      <div class="d-flex align-items-center gap-2">
+                        <span class="text-white text-opacity-50 small">Powered by</span>
+                        <a href="{% url 'dashboard' %}" class="d-flex align-items-center gap-2 text-white text-decoration-none fw-semibold small">
+                          <span class="d-flex align-items-center justify-content-center rounded-2 p-1" style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.12);">
+                            <img src="{% static 'img/logo.png' %}" alt="Jomivic Travel Agency logo" width="18" class="opacity-75">
+                          </span>
+                          Jomivic Travel Agency
+                        </a>
+                      </div>
+                  
+                      <!-- Separator -->
+                      <span class="text-white text-opacity-25 mx-1">•</span>
+                  
+                      <!-- Designed by -->
+                      <div class="d-flex align-items-center gap-2">
+                        <span class="text-white text-opacity-50 small">Designed by</span>
+                        <a href="https://quickwavetech.com/" target="_blank" rel="noopener" class="d-flex align-items-center gap-2 text-white text-decoration-none fw-semibold small">
+                          <span class="d-flex align-items-center justify-content-center rounded-2 p-1" style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.12);">
+                            <img src="{% static 'img/quickwave.png' %}" alt="Quickwave Tech logo" width="18" class="opacity-75">
+                          </span>
+                          Quickwave Tech
+                        </a>
+                      </div>
+                  
+                    </div>
+                  </div>
+            </div>
+              
+            <!-- Copyright -->
+        </div>
+    </div>
+    <!-- Grid container -->
+  
+  
+</footer>
+
+
+<script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'js/jQuery.min.js' %}"></script>
+
+
+
+<!-- Owl Carousel -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+        integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<!-- MDB -->
+<!-- <script type=" text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.1.0/mdb.umd.min.js"></script> -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.0/mdb.min.js"></script>
+<script src="{% static 'mdb/js/mdb.umd.min.js' %}"></script>
+<script src="{% static 'mdb/js/mdb.es.min.js' %}" type="module"></script>
+
+<!-- For Airport Pop Up -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+
+
+<script src="{% static 'js/iziToast.min.js' %}"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const preloader = document.getElementById('preloader');
+        
+        // Show preloader immediately when page starts loading
+        preloader.style.display = 'flex';
+        
+        // Hide preloader after page is loaded AND minimum 3 seconds have passed
+        let pageLoaded = false;
+        let minTimeElapsed = false;
+        
+        // Set minimum time of 3 seconds
+        setTimeout(function() {
+            minTimeElapsed = true;
+            if (pageLoaded) {
+                preloader.style.display = 'none';
+            }
+        }, 2000);
+        
+        // Check when page is fully loaded
+        window.addEventListener('load', function() {
+            pageLoaded = true;
+            if (minTimeElapsed) {
+                preloader.style.display = 'none';
+            }
+        });
+    });
+</script>
+  
+<script>
+    // Display iziToast messages if Django messages are present
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'error' %}
+                iziToast.error({
+                    title: 'Error',
+                    message: '{{ message }}',
+                    position: 'topRight'
+                });
+            {% elif message.tags == 'success' %}
+                iziToast.success({
+                    title: 'Success',
+                    message: '{{ message }}',
+                    position: 'topRight'
+                });
+            {% elif message.tags == 'warning' %}
+                iziToast.warning({
+                    title: 'Warning',
+                    message: '{{ message }}',
+                    position: 'topRight'
+                });
+            {% elif message.tags == 'info' %}
+                iziToast.info({
+                    title: 'Info',
+                    message: '{{ message }}',
+                    position: 'topRight'
+                });
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</script>
+
+
+    <script>
+      // Full list of world currency codes
+      const currencies = [
+          'AED', 'AFN', 'ALL', 'AMD', 'ANG', 'AOA', 'ARS', 'AUD', 'AWG', 'AZN', 'BAM', 'BBD', 'BDT', 'BGN', 'BHD', 'BIF', 'BMD', 'BND', 'BOB', 'BRL', 'BSD', 'BTN', 'BWP', 'BYN', 'BZD', 'CAD', 'CDF', 'CHF', 'CLP', 'CNY', 'COP', 'CRC', 'CUC', 'CUP', 'CVE', 'CZK', 'DJF', 'DKK', 'DOP', 'DZD', 'EGP', 'ERN', 'ETB', 'EUR', 'FJD', 'FKP', 'GBP', 'GEL', 'GHS', 'GIP', 'GMD', 'GNF', 'GTQ', 'GYD', 'HKD', 'HNL', 'HRK', 'HTG', 'HUF', 'IDR', 'ILS', 'INR', 'IQD', 'IRR', 'ISK', 'JMD', 'JOD', 'JPY', 'KES', 'KGS', 'KHR', 'KMF', 'KPW', 'KRW', 'KWD', 'KYD', 'KZT', 'LAK', 'LBP', 'LKR', 'LRD', 'LSL', 'LYD', 'MAD', 'MDL', 'MGA', 'MKD', 'MMK', 'MNT', 'MOP', 'MRU', 'MUR', 'MVR', 'MWK', 'MXN', 'MYR', 'MZN', 'NAD', 'NGN', 'NIO', 'NOK', 'NPR', 'NZD', 'OMR', 'PAB', 'PEN', 'PGK', 'PHP', 'PKR', 'PLN', 'PYG', 'QAR', 'RON', 'RSD', 'RUB', 'RWF', 'SAR', 'SBD', 'SCR', 'SDG', 'SEK', 'SGD', 'SHP', 'SLL', 'SOS', 'SRD', 'SSP', 'STN', 'SVC', 'SYP', 'SZL', 'THB', 'TJS', 'TMT', 'TND', 'TOP', 'TRY', 'TTD', 'TWD', 'TZS', 'UAH', 'UGX', 'USD', 'UYU', 'UZS', 'VES', 'VND', 'VUV', 'WST', 'XAF', 'XCD', 'XDR', 'XOF', 'XPF', 'YER', 'ZAR', 'ZMW', 'ZWL'
+      ];
+      
+      // Function to populate all select elements with the class '.call_currency'
+      function populateCurrencySelect() {
+          const selectElements = document.querySelectorAll('.call_currency');
+          
+          selectElements.forEach(selectElement => {
+              currencies.forEach(currency => {
+                  const option = document.createElement('option');
+                  option.value = currency;
+                  option.textContent = currency;
+                  selectElement.appendChild(option);
+              });
+          });
+      }
+      
+      // Call the function to populate the selects
+      populateCurrencySelect();
+    </script>
+      
+  
+    <script>
+        // Your country data
+        const countries = [
+            { "name": "Afghanistan", "code": "AF" },
+            { "name": "Albania", "code": "AL" },
+            { "name": "Algeria", "code": "DZ" },
+            { "name": "Andorra", "code": "AD" },
+            { "name": "Angola", "code": "AO" },
+            { "name": "Antigua and Barbuda", "code": "AG" },
+            { "name": "Argentina", "code": "AR" },
+            { "name": "Armenia", "code": "AM" },
+            { "name": "Australia", "code": "AU" },
+            { "name": "Austria", "code": "AT" },
+            { "name": "Azerbaijan", "code": "AZ" },
+            { "name": "Bahamas", "code": "BS" },
+            { "name": "Bahrain", "code": "BH" },
+            { "name": "Bangladesh", "code": "BD" },
+            { "name": "Barbados", "code": "BB" },
+            { "name": "Belarus", "code": "BY" },
+            { "name": "Belgium", "code": "BE" },
+            { "name": "Belize", "code": "BZ" },
+            { "name": "Benin", "code": "BJ" },
+            { "name": "Bhutan", "code": "BT" },
+            { "name": "Bolivia", "code": "BO" },
+            { "name": "Bosnia and Herzegovina", "code": "BA" },
+            { "name": "Botswana", "code": "BW" },
+            { "name": "Brazil", "code": "BR" },
+            { "name": "Brunei", "code": "BN" },
+            { "name": "Bulgaria", "code": "BG" },
+            { "name": "Burkina Faso", "code": "BF" },
+            { "name": "Burundi", "code": "BI" },
+            { "name": "Cabo Verde", "code": "CV" },
+            { "name": "Cambodia", "code": "KH" },
+            { "name": "Cameroon", "code": "CM" },
+            { "name": "Canada", "code": "CA" },
+            { "name": "Central African Republic", "code": "CF" },
+            { "name": "Chad", "code": "TD" },
+            { "name": "Chile", "code": "CL" },
+            { "name": "China", "code": "CN" },
+            { "name": "Colombia", "code": "CO" },
+            { "name": "Comoros", "code": "KM" },
+            { "name": "Congo (Congo-Brazzaville)", "code": "CG" },
+            { "name": "Costa Rica", "code": "CR" },
+            { "name": "Croatia", "code": "HR" },
+            { "name": "Cuba", "code": "CU" },
+            { "name": "Cyprus", "code": "CY" },
+            { "name": "Czechia (Czech Republic)", "code": "CZ" },
+            { "name": "Denmark", "code": "DK" },
+            { "name": "Djibouti", "code": "DJ" },
+            { "name": "Dominica", "code": "DM" },
+            { "name": "Dominican Republic", "code": "DO" },
+            { "name": "Ecuador", "code": "EC" },
+            { "name": "Egypt", "code": "EG" },
+            { "name": "El Salvador", "code": "SV" },
+            { "name": "Equatorial Guinea", "code": "GQ" },
+            { "name": "Eritrea", "code": "ER" },
+            { "name": "Estonia", "code": "EE" },
+            { "name": "Eswatini (fmr. Swaziland)", "code": "SZ" },
+            { "name": "Ethiopia", "code": "ET" },
+            { "name": "Fiji", "code": "FJ" },
+            { "name": "Finland", "code": "FI" },
+            { "name": "France", "code": "FR" },
+            { "name": "Gabon", "code": "GA" },
+            { "name": "Gambia", "code": "GM" },
+            { "name": "Georgia", "code": "GE" },
+            { "name": "Germany", "code": "DE" },
+            { "name": "Ghana", "code": "GH" },
+            { "name": "Greece", "code": "GR" },
+            { "name": "Grenada", "code": "GD" },
+            { "name": "Guatemala", "code": "GT" },
+            { "name": "Guinea", "code": "GN" },
+            { "name": "Guinea-Bissau", "code": "GW" },
+            { "name": "Guyana", "code": "GY" },
+            { "name": "Haiti", "code": "HT" },
+            { "name": "Holy See", "code": "VA" },
+            { "name": "Honduras", "code": "HN" },
+            { "name": "Hungary", "code": "HU" },
+            { "name": "Iceland", "code": "IS" },
+            { "name": "India", "code": "IN" },
+            { "name": "Indonesia", "code": "ID" },
+            { "name": "Iran", "code": "IR" },
+            { "name": "Iraq", "code": "IQ" },
+            { "name": "Ireland", "code": "IE" },
+            { "name": "Israel", "code": "IL" },
+            { "name": "Italy", "code": "IT" },
+            { "name": "Jamaica", "code": "JM" },
+            { "name": "Japan", "code": "JP" },
+            { "name": "Jordan", "code": "JO" },
+            { "name": "Kazakhstan", "code": "KZ" },
+            { "name": "Kenya", "code": "KE" },
+            { "name": "Kiribati", "code": "KI" },
+            { "name": "Korea (North)", "code": "KP" },
+            { "name": "Korea (South)", "code": "KR" },
+            { "name": "Kosovo", "code": "XK" },
+            { "name": "Kuwait", "code": "KW" },
+            { "name": "Kyrgyzstan", "code": "KG" },
+            { "name": "Laos", "code": "LA" },
+            { "name": "Latvia", "code": "LV" },
+            { "name": "Lebanon", "code": "LB" },
+            { "name": "Lesotho", "code": "LS" },
+            { "name": "Liberia", "code": "LR" },
+            { "name": "Libya", "code": "LY" },
+            { "name": "Liechtenstein", "code": "LI" },
+            { "name": "Lithuania", "code": "LT" },
+            { "name": "Luxembourg", "code": "LU" },
+            { "name": "Madagascar", "code": "MG" },
+            { "name": "Malawi", "code": "MW" },
+            { "name": "Malaysia", "code": "MY" },
+            { "name": "Maldives", "code": "MV" },
+            { "name": "Mali", "code": "ML" },
+            { "name": "Malta", "code": "MT" },
+            { "name": "Marshall Islands", "code": "MH" },
+            { "name": "Mauritania", "code": "MR" },
+            { "name": "Mauritius", "code": "MU" },
+            { "name": "Mexico", "code": "MX" },
+            { "name": "Micronesia", "code": "FM" },
+            { "name": "Moldova", "code": "MD" },
+            { "name": "Monaco", "code": "MC" },
+            { "name": "Mongolia", "code": "MN" },
+            { "name": "Montenegro", "code": "ME" },
+            { "name": "Morocco", "code": "MA" },
+            { "name": "Mozambique", "code": "MZ" },
+            { "name": "Myanmar (formerly Burma)", "code": "MM" },
+            { "name": "Namibia", "code": "NA" },
+            { "name": "Nauru", "code": "NR" },
+            { "name": "Nepal", "code": "NP" },
+            { "name": "Netherlands", "code": "NL" },
+            { "name": "New Zealand", "code": "NZ" },
+            { "name": "Nicaragua", "code": "NI" },
+            { "name": "Niger", "code": "NE" },
+            { "name": "Nigeria", "code": "NG" },
+            { "name": "North Macedonia", "code": "MK" },
+            { "name": "Norway", "code": "NO" },
+            { "name": "Oman", "code": "OM" },
+            { "name": "Pakistan", "code": "PK" },
+            { "name": "Palau", "code": "PW" },
+            { "name": "Palestine State", "code": "PS" },
+            { "name": "Panama", "code": "PA" },
+            { "name": "Papua New Guinea", "code": "PG" },
+            { "name": "Paraguay", "code": "PY" },
+            { "name": "Peru", "code": "PE" },
+            { "name": "Philippines", "code": "PH" },
+            { "name": "Poland", "code": "PL" },
+            { "name": "Portugal", "code": "PT" },
+            { "name": "Qatar", "code": "QA" },
+            { "name": "Romania", "code": "RO" },
+            { "name": "Russia", "code": "RU" },
+            { "name": "Rwanda", "code": "RW" },
+            { "name": "Saint Kitts and Nevis", "code": "KN" },
+            { "name": "Saint Lucia", "code": "LC" },
+            { "name": "Saint Vincent and the Grenadines", "code": "VC" },
+            { "name": "Samoa", "code": "WS" },
+            { "name": "San Marino", "code": "SM" },
+            { "name": "Sao Tome and Principe", "code": "ST" },
+            { "name": "Saudi Arabia", "code": "SA" },
+            { "name": "Senegal", "code": "SN" },
+            { "name": "Serbia", "code": "RS" },
+            { "name": "Seychelles", "code": "SC" },
+            { "name": "Sierra Leone", "code": "SL" },
+            { "name": "Singapore", "code": "SG" },
+            { "name": "Slovakia", "code": "SK" },
+            { "name": "Slovenia", "code": "SI" },
+            { "name": "Solomon Islands", "code": "SB" },
+            { "name": "Somalia", "code": "SO" },
+            { "name": "South Africa", "code": "ZA" },
+            { "name": "South Sudan", "code": "SS" },
+            { "name": "Spain", "code": "ES" },
+            { "name": "Sri Lanka", "code": "LK" },
+            { "name": "Sudan", "code": "SD" },
+            { "name": "Suriname", "code": "SR" },
+            { "name": "Sweden", "code": "SE" },
+            { "name": "Switzerland", "code": "CH" },
+            { "name": "Syria", "code": "SY" },
+            { "name": "Taiwan", "code": "TW" },
+            { "name": "Tajikistan", "code": "TJ" },
+            { "name": "Tanzania", "code": "TZ" },
+            { "name": "Thailand", "code": "TH" },
+            { "name": "Timor-Leste", "code": "TL" },
+            { "name": "Togo", "code": "TG" },
+            { "name": "Tonga", "code": "TO" },
+            { "name": "Trinidad and Tobago", "code": "TT" },
+            { "name": "Tunisia", "code": "TN" },
+            { "name": "Turkey", "code": "TR" },
+            { "name": "Turkmenistan", "code": "TM" },
+            { "name": "Tuvalu", "code": "TV" },
+            { "name": "Uganda", "code": "UG" },
+            { "name": "Ukraine", "code": "UA" },
+            { "name": "United Arab Emirates", "code": "AE" },
+            { "name": "United Kingdom", "code": "GB" },
+            { "name": "United States of America", "code": "US" },
+            { "name": "Uruguay", "code": "UY" },
+            { "name": "Uzbekistan", "code": "UZ" },
+            { "name": "Vanuatu", "code": "VU" },
+            { "name": "Venezuela", "code": "VE" },
+            { "name": "Vietnam", "code": "VN" },
+            { "name": "Yemen", "code": "YE" },
+            { "name": "Zambia", "code": "ZM" },
+            { "name": "Zimbabwe", "code": "ZW" }
+        ];
+    
+        // Select the country dropdown element
+        const countrySelect = document.querySelector('.call_country_with_code');
+      
+        // Loop through the countries and create options
+        countrySelect.forEach(countrySelect => {
+            countries.forEach(country => {
+                const option = document.createElement('option');
+                option.value = country.code;
+                option.textContent = country.name;
+                countrySelect.appendChild(option);
+            });
+        });
+    
+    </script>
+    
+    <script>
+        // Your country data
+        const countriesNew = [
+            { "name": "Afghanistan", "code": "AF" },
+            { "name": "Albania", "code": "AL" },
+            { "name": "Algeria", "code": "DZ" },
+            { "name": "Andorra", "code": "AD" },
+            { "name": "Angola", "code": "AO" },
+            { "name": "Antigua and Barbuda", "code": "AG" },
+            { "name": "Argentina", "code": "AR" },
+            { "name": "Armenia", "code": "AM" },
+            { "name": "Australia", "code": "AU" },
+            { "name": "Austria", "code": "AT" },
+            { "name": "Azerbaijan", "code": "AZ" },
+            { "name": "Bahamas", "code": "BS" },
+            { "name": "Bahrain", "code": "BH" },
+            { "name": "Bangladesh", "code": "BD" },
+            { "name": "Barbados", "code": "BB" },
+            { "name": "Belarus", "code": "BY" },
+            { "name": "Belgium", "code": "BE" },
+            { "name": "Belize", "code": "BZ" },
+            { "name": "Benin", "code": "BJ" },
+            { "name": "Bhutan", "code": "BT" },
+            { "name": "Bolivia", "code": "BO" },
+            { "name": "Bosnia and Herzegovina", "code": "BA" },
+            { "name": "Botswana", "code": "BW" },
+            { "name": "Brazil", "code": "BR" },
+            { "name": "Brunei", "code": "BN" },
+            { "name": "Bulgaria", "code": "BG" },
+            { "name": "Burkina Faso", "code": "BF" },
+            { "name": "Burundi", "code": "BI" },
+            { "name": "Cabo Verde", "code": "CV" },
+            { "name": "Cambodia", "code": "KH" },
+            { "name": "Cameroon", "code": "CM" },
+            { "name": "Canada", "code": "CA" },
+            { "name": "Central African Republic", "code": "CF" },
+            { "name": "Chad", "code": "TD" },
+            { "name": "Chile", "code": "CL" },
+            { "name": "China", "code": "CN" },
+            { "name": "Colombia", "code": "CO" },
+            { "name": "Comoros", "code": "KM" },
+            { "name": "Congo (Congo-Brazzaville)", "code": "CG" },
+            { "name": "Costa Rica", "code": "CR" },
+            { "name": "Croatia", "code": "HR" },
+            { "name": "Cuba", "code": "CU" },
+            { "name": "Cyprus", "code": "CY" },
+            { "name": "Czechia (Czech Republic)", "code": "CZ" },
+            { "name": "Denmark", "code": "DK" },
+            { "name": "Djibouti", "code": "DJ" },
+            { "name": "Dominica", "code": "DM" },
+            { "name": "Dominican Republic", "code": "DO" },
+            { "name": "Ecuador", "code": "EC" },
+            { "name": "Egypt", "code": "EG" },
+            { "name": "El Salvador", "code": "SV" },
+            { "name": "Equatorial Guinea", "code": "GQ" },
+            { "name": "Eritrea", "code": "ER" },
+            { "name": "Estonia", "code": "EE" },
+            { "name": "Eswatini (fmr. Swaziland)", "code": "SZ" },
+            { "name": "Ethiopia", "code": "ET" },
+            { "name": "Fiji", "code": "FJ" },
+            { "name": "Finland", "code": "FI" },
+            { "name": "France", "code": "FR" },
+            { "name": "Gabon", "code": "GA" },
+            { "name": "Gambia", "code": "GM" },
+            { "name": "Georgia", "code": "GE" },
+            { "name": "Germany", "code": "DE" },
+            { "name": "Ghana", "code": "GH" },
+            { "name": "Greece", "code": "GR" },
+            { "name": "Grenada", "code": "GD" },
+            { "name": "Guatemala", "code": "GT" },
+            { "name": "Guinea", "code": "GN" },
+            { "name": "Guinea-Bissau", "code": "GW" },
+            { "name": "Guyana", "code": "GY" },
+            { "name": "Haiti", "code": "HT" },
+            { "name": "Holy See", "code": "VA" },
+            { "name": "Honduras", "code": "HN" },
+            { "name": "Hungary", "code": "HU" },
+            { "name": "Iceland", "code": "IS" },
+            { "name": "India", "code": "IN" },
+            { "name": "Indonesia", "code": "ID" },
+            { "name": "Iran", "code": "IR" },
+            { "name": "Iraq", "code": "IQ" },
+            { "name": "Ireland", "code": "IE" },
+            { "name": "Israel", "code": "IL" },
+            { "name": "Italy", "code": "IT" },
+            { "name": "Jamaica", "code": "JM" },
+            { "name": "Japan", "code": "JP" },
+            { "name": "Jordan", "code": "JO" },
+            { "name": "Kazakhstan", "code": "KZ" },
+            { "name": "Kenya", "code": "KE" },
+            { "name": "Kiribati", "code": "KI" },
+            { "name": "Korea (North)", "code": "KP" },
+            { "name": "Korea (South)", "code": "KR" },
+            { "name": "Kosovo", "code": "XK" },
+            { "name": "Kuwait", "code": "KW" },
+            { "name": "Kyrgyzstan", "code": "KG" },
+            { "name": "Laos", "code": "LA" },
+            { "name": "Latvia", "code": "LV" },
+            { "name": "Lebanon", "code": "LB" },
+            { "name": "Lesotho", "code": "LS" },
+            { "name": "Liberia", "code": "LR" },
+            { "name": "Libya", "code": "LY" },
+            { "name": "Liechtenstein", "code": "LI" },
+            { "name": "Lithuania", "code": "LT" },
+            { "name": "Luxembourg", "code": "LU" },
+            { "name": "Madagascar", "code": "MG" },
+            { "name": "Malawi", "code": "MW" },
+            { "name": "Malaysia", "code": "MY" },
+            { "name": "Maldives", "code": "MV" },
+            { "name": "Mali", "code": "ML" },
+            { "name": "Malta", "code": "MT" },
+            { "name": "Marshall Islands", "code": "MH" },
+            { "name": "Mauritania", "code": "MR" },
+            { "name": "Mauritius", "code": "MU" },
+            { "name": "Mexico", "code": "MX" },
+            { "name": "Micronesia", "code": "FM" },
+            { "name": "Moldova", "code": "MD" },
+            { "name": "Monaco", "code": "MC" },
+            { "name": "Mongolia", "code": "MN" },
+            { "name": "Montenegro", "code": "ME" },
+            { "name": "Morocco", "code": "MA" },
+            { "name": "Mozambique", "code": "MZ" },
+            { "name": "Myanmar (formerly Burma)", "code": "MM" },
+            { "name": "Namibia", "code": "NA" },
+            { "name": "Nauru", "code": "NR" },
+            { "name": "Nepal", "code": "NP" },
+            { "name": "Netherlands", "code": "NL" },
+            { "name": "New Zealand", "code": "NZ" },
+            { "name": "Nicaragua", "code": "NI" },
+            { "name": "Niger", "code": "NE" },
+            { "name": "Nigeria", "code": "NG" },
+            { "name": "North Macedonia", "code": "MK" },
+            { "name": "Norway", "code": "NO" },
+            { "name": "Oman", "code": "OM" },
+            { "name": "Pakistan", "code": "PK" },
+            { "name": "Palau", "code": "PW" },
+            { "name": "Palestine State", "code": "PS" },
+            { "name": "Panama", "code": "PA" },
+            { "name": "Papua New Guinea", "code": "PG" },
+            { "name": "Paraguay", "code": "PY" },
+            { "name": "Peru", "code": "PE" },
+            { "name": "Philippines", "code": "PH" },
+            { "name": "Poland", "code": "PL" },
+            { "name": "Portugal", "code": "PT" },
+            { "name": "Qatar", "code": "QA" },
+            { "name": "Romania", "code": "RO" },
+            { "name": "Russia", "code": "RU" },
+            { "name": "Rwanda", "code": "RW" },
+            { "name": "Saint Kitts and Nevis", "code": "KN" },
+            { "name": "Saint Lucia", "code": "LC" },
+            { "name": "Saint Vincent and the Grenadines", "code": "VC" },
+            { "name": "Samoa", "code": "WS" },
+            { "name": "San Marino", "code": "SM" },
+            { "name": "Sao Tome and Principe", "code": "ST" },
+            { "name": "Saudi Arabia", "code": "SA" },
+            { "name": "Senegal", "code": "SN" },
+            { "name": "Serbia", "code": "RS" },
+            { "name": "Seychelles", "code": "SC" },
+            { "name": "Sierra Leone", "code": "SL" },
+            { "name": "Singapore", "code": "SG" },
+            { "name": "Slovakia", "code": "SK" },
+            { "name": "Slovenia", "code": "SI" },
+            { "name": "Solomon Islands", "code": "SB" },
+            { "name": "Somalia", "code": "SO" },
+            { "name": "South Africa", "code": "ZA" },
+            { "name": "South Sudan", "code": "SS" },
+            { "name": "Spain", "code": "ES" },
+            { "name": "Sri Lanka", "code": "LK" },
+            { "name": "Sudan", "code": "SD" },
+            { "name": "Suriname", "code": "SR" },
+            { "name": "Sweden", "code": "SE" },
+            { "name": "Switzerland", "code": "CH" },
+            { "name": "Syria", "code": "SY" },
+            { "name": "Taiwan", "code": "TW" },
+            { "name": "Tajikistan", "code": "TJ" },
+            { "name": "Tanzania", "code": "TZ" },
+            { "name": "Thailand", "code": "TH" },
+            { "name": "Timor-Leste", "code": "TL" },
+            { "name": "Togo", "code": "TG" },
+            { "name": "Tonga", "code": "TO" },
+            { "name": "Trinidad and Tobago", "code": "TT" },
+            { "name": "Tunisia", "code": "TN" },
+            { "name": "Turkey", "code": "TR" },
+            { "name": "Turkmenistan", "code": "TM" },
+            { "name": "Tuvalu", "code": "TV" },
+            { "name": "Uganda", "code": "UG" },
+            { "name": "Ukraine", "code": "UA" },
+            { "name": "United Arab Emirates", "code": "AE" },
+            { "name": "United Kingdom", "code": "GB" },
+            { "name": "United States of America", "code": "US" },
+            { "name": "Uruguay", "code": "UY" },
+            { "name": "Uzbekistan", "code": "UZ" },
+            { "name": "Vanuatu", "code": "VU" },
+            { "name": "Venezuela", "code": "VE" },
+            { "name": "Vietnam", "code": "VN" },
+            { "name": "Yemen", "code": "YE" },
+            { "name": "Zambia", "code": "ZM" },
+            { "name": "Zimbabwe", "code": "ZW" }
+        ];
+    
+        // Select the country dropdown element
+        const callCountry = document.querySelectorAll('.call_country_only');
+      
+        // Loop through the countriesNew and create options
+        callCountry.forEach(callCountry => {
+            countriesNew.forEach(country => {
+                const option = document.createElement('option');
+                option.value = country.name;
+                option.textContent = country.name;
+                callCountry.appendChild(option);
+            });
+        });
+    
+    </script>
+    
+    <script>
+        // Alphabetically sorted list of banks in Nigeria
+        const banks = [
+            'Access Bank Plc', 'Access Holdings PLC', 'Accion Microfinance Bank', 'Advans La Fayette Microfinance Bank', 
+            'Alternative Bank Limited', 'Bank of Agriculture', 'Bank of Industry', 'CashX', 'Citibank Nigeria Ltd', 
+            'Covenant Microfinance Bank Ltd', 'Development Bank of Nigeria PLC', 'Dot Microfinance Bank', 
+            'Ecobank Nigeria Plc', 'Empire Trust Microfinance Bank', 'FairMoney Microfinance Bank', 
+            'FCMB Group PLC', 'Federal Mortgage Bank of Nigeria', 'Fidelity Bank Plc', 'Finca Microfinance Bank Limited', 
+            'First Bank Nigeria Ltd', 'First City Monument Bank Plc', 'FSDH Holding Company', 'Globus Bank Ltd', 
+            'GTB Holding Company', 'Guaranty Trust Bank Plc', 'Infinity Microfinance Bank', 'Jaiz Bank Plc', 
+            'Keystone Bank Ltd', 'Kuda Bank', 'Lotus Bank Ltd', 'Mint Finex MFB', 'Mkobo MFB', 'Moniepoint Microfinance Bank', 
+            'Moneyfield Microfinance Bank', 'Mutual Trust Microfinance Bank', 'Nigerian Export-Import Bank', 
+            'Nova Commercial Bank Ltd', 'Opay', 'Optimus Bank', 'Palmpay', 'Parallex Bank Ltd', 'Peace Microfinance Bank', 
+            'Polaris Bank Plc', 'Premium Trust Bank', 'Providus Bank Ltd', 'Pryme App', 'Raven Bank', 'Rephidim Microfinance Bank', 
+            'Rex Microfinance Bank', 'Rubies Bank', 'Shepherd Trust Microfinance Bank', 'Signature Bank Ltd', 
+            'Solid Allianze Microfinance Bank', 'Sparkle Bank', 'Stanbic IBTC Bank Plc', 'Stanbic IBTC Holdings PLC', 
+            'Standard Chartered Bank Nigeria Ltd', 'Sterling Bank Plc', 'Sterling Financial Holdings Ltd', 'SunTrust Bank Nigeria Ltd', 
+            'TAJBank', 'The Infrastructure Bank', 'Titan Trust Bank Ltd', 'Union Bank of Nigeria Plc', 'United Bank For Africa Plc', 
+            'Unity Bank Plc', 'VFD Microfinance Bank', 'Wema Bank Plc', 'Zenith Bank Plc'
+        ];
+        
+        // Function to populate all select elements with the class '.call_bank'
+        function populateBankSelect() {
+            const selectElements = document.querySelectorAll('.call_bank');
+            
+            selectElements.forEach(selectElement => {
+                banks.forEach(bank => {
+                    const option = document.createElement('option');
+                    option.value = bank;
+                    option.textContent = bank;
+                    selectElement.appendChild(option);
+                });
+            });
+        }
+        
+        // Call the function to populate the selects
+        populateBankSelect();
+    </script>
+
+    <script>
+        AOS.init();
+    </script>
+
+<script src="{% static 'js/slide-nav.js' %}"></script>
+{% block jsfiles %}{% endblock jsfiles %}
+</body>
+</html>

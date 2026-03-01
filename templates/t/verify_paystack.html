@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment Verification Status</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f3f4f6;
+      }
+      .container {
+        max-width: 500px;
+        padding: 2rem;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      .status {
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
+      }
+      .status.success {
+        color: green;
+      }
+      .status.failed {
+        color: red;
+      }
+      .details {
+        font-size: 0.95rem;
+        color: #333;
+      }
+      .details dt {
+        font-weight: bold;
+        margin-top: 0.5rem;
+      }
+      .details dd {
+        margin: 0 0 1rem 0;
+      }
+      .back-link {
+        display: block;
+        margin-top: 2rem;
+        text-align: center;
+        color: #0066cc;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Payment Verification Status</h1>
+
+      <p
+        class="status {% if transaction.status == 'Successful' %}success{% else %}failed{% endif %}"
+      >
+        {% if transaction.status == 'Successful' %} Payment was successful! 🎉
+        {% else %} Payment failed. 😞 {% endif %}
+      </p>
+
+      <dl class="details">
+        <dt>Transaction ID:</dt>
+        <dd>{{ transaction.id }}</dd>
+        <dt>Reference:</dt>
+        <dd>{{ transaction.reference }}</dd>
+        <dt>Amount:</dt>
+        <dd>₦{{ transaction.amount|floatformat:2 }}</dd>
+        <dt>Status:</dt>
+        <dd>{{ transaction.status }}</dd>
+        <dt>Date Created:</dt>
+        <dd>{{ transaction.date_created|date:"F j, Y, g:i a" }}</dd>
+        <dt>Last Updated:</dt>
+        <dd>{{ transaction.time_updated|date:"F j, Y, g:i a" }}</dd>
+      </dl>
+
+      <a href="/" class="back-link">Return to Home</a>
+    </div>
+  </body>
+</html>

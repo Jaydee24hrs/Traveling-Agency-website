@@ -1,0 +1,388 @@
+{% extends "base/base2.html" %}
+{% load static %}
+{% block title %} Car Checkout | Jomivic Travels {% endblock title %}
+
+{% block cssfiles %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"/>
+
+
+<style>
+
+  .faq_bg{
+    background-image: url("{% static 'img/breadcrumb_car.jpg' %}");
+    display: flex;
+    justify-content: end;
+    background-position:center;
+    background-size:cover;
+    height: 45vh;
+  }
+
+  .breadcrumb-item+.breadcrumb-item::before{
+    color: white !important;
+    content: ">>";
+  }
+  .make_bg{
+    background: #ffffff28;
+  }
+
+
+</style>
+
+{% endblock cssfiles %}
+
+{% block content %}
+
+<div id="preloader">
+  <img src="{% static 'img/loader.gif' %}" alt="" width="20%">
+</div>
+
+<div class="faq_bg">
+  <div class="text-white d-flex flex-column justify-content-center align-items-center shadow-5 p-3 p-md-5 ">
+    <h2 class="fw-bolder" data-aos="fade-up" data-aos-duration="2000">Cab Payment</h2>
+    <nav aria-label="breadcrumb" class="container justify-content-center d-flex align-items-center" data-aos="fade-up" data-aos-duration="2000">
+      <ol class="breadcrumb m-0">
+        <li class="breadcrumb-item"><a href="{% url 'dashboard' %}" class="text-white fw-bolder">Home</a></li>
+        <li class="breadcrumb-item active text-white fw-bolder" aria-current="page">Cab Payment</li>
+      </ol>
+  </nav>
+  </div>
+</div>
+
+<section class="section-b-space bg-inner animated-section my-3 my-md-5">
+  <div class="container text-capitalize">
+      <div class="row">
+          <div class="col-12 col-md-8">
+            <div class="summery-box bg-white p-3 shadow-3" data-aos="fade-up" data-aos-duration="2000">
+              <h4 class="fw-bold text-black">payment option</h4>
+              <div class="review-section">
+                  <div class="review_box shadow-none">
+                      <div class="flight_detail payment-gateway p-0">
+                        <div class="accordion" id="accordionExample">
+                          <!-- Debit Card -->
+                          <div class="accordion-item">
+                              <h2 class="accordion-header" id="h_one">
+                                  <button class="accordion-button" type="button" data-mdb-toggle="collapse" data-mdb-target="#one" aria-expanded="true" aria-controls="one">
+                                      <input type='radio' class="form-check-input me-2" id='r_one' name='occupation' value='Working' checked required />
+                                      <label for='r_one' class="mb-0">Debit Card</label>
+                                  </button>
+                              </h2>
+                              <div id="one" class="accordion-collapse collapse show" aria-labelledby="h_one" data-mdb-parent="#accordionExample">
+                                  <div class="accordion-body">
+                                      <form>
+                                          <div class="form-outline mb-3">
+                                              <input type="text" id="name" class="form-control" />
+                                              <label class="form-label" for="name">Name on card</label>
+                                          </div>
+                                          <div class="form-outline mb-3">
+                                              <input type="text" id="number" class="form-control" />
+                                              <label class="form-label" for="number">Card number</label>
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-12 col-md-4 mb-3">
+                                                  <select class="form-select" id="month">
+                                                      <option selected>Month...</option>
+                                                      <option>January</option>
+                                                      <option>February</option>
+                                                      <option>March</option>
+                                                      <option>April</option>
+                                                      <option>May</option>
+                                                      <option>June</option>
+                                                      <option>July</option>
+                                                      <option>August</option>
+                                                      <option>September</option>
+                                                      <option>October</option>
+                                                      <option>November</option>
+                                                      <option>December</option>
+                                                  </select>
+                                              </div>
+                                              <div class="col-12 col-md-4 mb-3">
+                                                  <select class="form-select" id="year">
+                                                      <option>Year...</option>
+                                                  </select>
+                                              </div>
+                                              <div class="col-12 col-md-4 mb-3">
+                                                  <input type="password" maxlength="4" id="cvv" class="form-control" placeholder="CVV"/>
+                                              </div>
+                                          </div>
+                                          <div class="text-end">
+                                            <button type="button" class="btn btn-danger rounded-0 shadow-0">Make Payment</button>
+                                          </div>
+                                      </form>
+                                  </div>
+                              </div>
+                          </div>
+                      
+                          <!-- Credit Card -->
+                          <div class="accordion-item">
+                              <h2 class="accordion-header" id="h_two">
+                                  <button class="accordion-button collapsed" type="button" data-mdb-toggle="collapse" data-mdb-target="#two" aria-expanded="false" aria-controls="two">
+                                      <input type='radio' class="form-check-input me-2" id='r_two' name='occupation' value='Working' required />
+                                      <label for='r_two' class="mb-0">Credit Card</label>
+                                  </button>
+                              </h2>
+                              <div id="two" class="accordion-collapse collapse" aria-labelledby="h_two" data-mdb-parent="#accordionExample">
+                                  <div class="accordion-body">
+                                    <form>
+                                      <div class="form-outline mb-3">
+                                          <input type="text" id="name" class="form-control" />
+                                          <label class="form-label" for="name">Name on card</label>
+                                      </div>
+                                      <div class="form-outline mb-3">
+                                          <input type="text" id="number" class="form-control" />
+                                          <label class="form-label" for="number">Card number</label>
+                                      </div>
+                                      <div class="row">
+                                          <div class="col-12 col-md-4 mb-3">
+                                              <select class="form-select" id="month">
+                                                  <option selected>Month...</option>
+                                                  <option>January</option>
+                                                  <option>February</option>
+                                                  <option>March</option>
+                                                  <option>April</option>
+                                                  <option>May</option>
+                                                  <option>June</option>
+                                                  <option>July</option>
+                                                  <option>August</option>
+                                                  <option>September</option>
+                                                  <option>October</option>
+                                                  <option>November</option>
+                                                  <option>December</option>
+                                              </select>
+                                          </div>
+                                          <div class="col-12 col-md-4 mb-3">
+                                              <select class="form-select" id="year">
+                                                  <option>Year...</option>
+                                              </select>
+                                          </div>
+                                          <div class="col-12 col-md-4 mb-3">
+                                              <input type="password" maxlength="4" id="cvv" class="form-control" placeholder="CVV"/>
+                                          </div>
+                                      </div>
+                                      <div class="text-end">
+                                        <button type="button" class="btn btn-danger rounded-0 shadow-0">Make Payment</button>
+                                      </div>
+                                  </form>
+                                  </div>
+                              </div>
+                          </div>
+                      
+                          <!-- Net Banking -->
+                          <div class="accordion-item">
+                              <h2 class="accordion-header" id="h_three">
+                                  <button class="accordion-button collapsed" type="button" data-mdb-toggle="collapse" data-mdb-target="#three" aria-expanded="false" aria-controls="three">
+                                      <input type='radio' class="form-check-input me-2" id='r_three' name='occupation' value='Working' required />
+                                      <label for='r_three' class="mb-0">Net Banking</label>
+                                  </button>
+                              </h2>
+                              <div id="three" class="accordion-collapse collapse" aria-labelledby="h_three" data-mdb-parent="#accordionExample">
+                                  <div class="accordion-body">
+                                      <form>
+                                          <h6>Select popular banks</h6>
+                                          <div class="row p-3">
+                                              <div class="form-check col-md-6 mb-2">
+                                                  <input class="form-check-input" type="radio" name="exampleRadios1" id="Radios1" value="option1" checked>
+                                                  <label class="form-check-label" for="Radios1">Industrial & Commercial Bank</label>
+                                              </div>
+
+                                              <div class="form-check col-md-6 mb-2">
+                                                  <input class="form-check-input" type="radio" name="exampleRadios1" id="Radios2" value="option2" checked>
+                                                  <label class="form-check-label" for="Radios2">Construction Bank Corp.</label>
+                                              </div>
+
+                                              <div class="form-check col-md-6 mb-2">
+                                                  <input class="form-check-input" type="radio" name="exampleRadios1" id="Radios3" value="option3" checked>
+                                                  <label class="form-check-label" for="Radios3">Agricultural Bank </label>
+                                              </div>
+
+                                              <div class="form-check col-md-6 mb-2">
+                                                  <input class="form-check-input" type="radio" name="exampleRadios1" id="Radios4" value="option4" checked>
+                                                  <label class="form-check-label" for="Radios4">HSBC Holdings </label>
+                                              </div>
+
+                                              <div class="form-check col-md-6 mb-2">
+                                                  <input class="form-check-input" type="radio" name="exampleRadios1" id="Radios5" value="option5" checked>
+                                                  <label class="form-check-label" for="Radios5">Bank of America</label>
+                                              </div>
+
+                                              <div class="form-check col-md-6 mb-2">
+                                                  <input class="form-check-input" type="radio" name="exampleRadios1" id="Radios6" value="option6" checked>
+                                                  <label class="form-check-label" for="Radios6">JPMorgan Chase & Co.</label>
+                                              </div>
+                                              <!-- Add other banks following same pattern -->
+                                          </div>
+                                          <div class="form-outline mt-3">
+                                              <label class="form-label select-label" for="net-b">Select Bank</label>
+                                              <select class="form-select" id="net-b">
+                                                  <option selected>Choose Bank...</option>
+                                                  <option>...</option>
+                                              </select>
+                                          </div>
+                                          <div class="text-end">
+                                            <button type="button" class="btn btn-danger rounded-0 mt-3">Make Payment</button>
+                                          </div>
+                                      </form>
+                                  </div>
+                              </div>
+                          </div>
+                      
+                          <!-- My Wallet -->
+                          <div class="accordion-item">
+                              <h2 class="accordion-header" id="h_four">
+                                  <button class="accordion-button collapsed" type="button" data-mdb-toggle="collapse" data-mdb-target="#four" aria-expanded="false" aria-controls="four">
+                                      <input type='radio' class="form-check-input me-2" id='r_four' name='occupation' value='Working' required />
+                                      <label for='r_four' class="mb-0">My Wallet</label>
+                                  </button>
+                              </h2>
+                              <div id="four" class="accordion-collapse collapse" aria-labelledby="h_four" data-mdb-parent="#accordionExample">
+                                  <div class="accordion-body">
+                                      <form>
+                                          <h6>Select your wallet</h6>
+                                          <div class="row p-3">
+                                              <div class="form-check col-md-6 mb-2">
+                                                  <input class="form-check-input" type="radio" name="exampleRadios2" id="exampleRadios1" value="option1" checked>
+                                                  <label class="form-check-label" for="exampleRadios1">Adyen</label>
+                                              </div>
+
+                                              <div class="form-check col-md-6 mb-2">
+                                                  <input class="form-check-input" type="radio" name="exampleRadios2" id="exampleRadios2" value="option2" checked>
+                                                  <label class="form-check-label" for="exampleRadios2">Airtel Money </label>
+                                              </div>
+
+                                              <div class="form-check col-md-6 mb-2">
+                                                  <input class="form-check-input" type="radio" name="exampleRadios2" id="exampleRadios3" value="option3" checked>
+                                                  <label class="form-check-label" for="exampleRadios3">AlliedWallet </label>
+                                              </div>
+
+                                              <div class="form-check col-md-6 mb-2">
+                                                  <input class="form-check-input" type="radio" name="exampleRadios2" id="exampleRadios4" value="option4" checked>
+                                                  <label class="form-check-label" for="exampleRadios4">Apple Pay  </label>
+                                              </div>
+
+                                              <div class="form-check col-md-6 mb-2">
+                                                  <input class="form-check-input" type="radio" name="exampleRadios2" id="exampleRadios5" value="option5" checked>
+                                                  <label class="form-check-label" for="exampleRadios5">Brinks </label>
+                                              </div>
+
+                                              <div class="form-check col-md-6 mb-2">
+                                                  <input class="form-check-input" type="radio" name="exampleRadios2" id="exampleRadios6" value="option6" checked>
+                                                  <label class="form-check-label" for="exampleRadios6">CardFree</label>
+                                              </div>
+                                              <!-- Add other wallets following same pattern -->
+                                          </div>
+                                          <div class="text-end">
+                                            <button type="button" class="btn btn-danger rounded-0 shadow-0 mt-3">Make Payment</button>
+                                          </div>
+                                      </form>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      
+                      </div>
+                  </div>
+              </div>
+          </div>
+          </div>
+
+          <div class="col-12 col-md-4 mt-3 mt-md-0 booking-order">
+              <div class="summery-box bg-white p-3 shadow-3" data-aos="fade-up" data-aos-duration="2000">
+                  <h6 class="fw-bold text-black">booking summery</h6>
+
+                  <div class="summery-section mt-3">
+
+                    <div class="d-flex justify-content-between align-items-center">
+                      <span>Itinerary :</span>
+                      <span>Paris > Toulouse</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center">
+                      <span>Pickup Date:</span>
+                      <span>10/01/2019, 11.35pm</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center">
+                      <span>Return Date::</span>
+                      <span>14/01/2019</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center">
+                      <span>Car Type</span>
+                      <span>Fiat Chrysler</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center mt-3 fw-bold text-black">
+                      <span class="fs-6">Total Fare:</span>
+                      <span class="fs-6">$1250</span>
+                    </div>
+
+                  </div>
+
+              </div>
+
+              <div class="summery-box bg-white p-3 shadow-3 mt-3" data-aos="fade-up" data-aos-duration="2000">
+                <div class="promo-section">
+                  <div class="form-group mb-0">
+                      <label class="text-black fw-bold">have a coupon code?</label>
+                      <div class="input-group">
+                          <input type="text" class="form-control" placeholder="Promo Code">
+                          <div class="input-group-prepend">
+                              <span class="input-group-text">apply</span>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="promos mt-3">
+                      <form>
+                          <div class="form-check">
+                              <input class="form-check-input radio_animated" type="radio"
+                                  name="radiocls2" id="radio1" value="option1" checked>
+                              <div>
+                                  <label class="form-check-label title text-black fw-bold" for="radio1">
+                                      RICA500
+                                  </label>
+                                  <label class="form-check-label" for="radio1">
+                                      Use RICA50, and get $50 off on first booking
+                                  </label>
+                              </div>
+                          </div>
+                          <div class="form-check">
+                              <input class="form-check-input radio_animated" type="radio"
+                                  name="radiocls2" id="radio2" value="option2">
+                              <div>
+                                  <label class="form-check-label title text-black fw-bold" for="radio2">
+                                      CAB10
+                                  </label>
+                                  <label class="form-check-label" for="radio2">
+                                      Use FLY10, and get 10% off upto $50 on cab ticket bookings.
+                                  </label>
+                              </div>
+                          </div>
+                          <div class="form-check">
+                              <input class="form-check-input radio_animated" type="radio"
+                                  name="radiocls2" id="radio3" value="option3">
+                              <div>
+                                  <label class="form-check-label title text-black fw-bold" for="radio3">
+                                      CAB80
+                                  </label>
+                                  <label class="form-check-label" for="radio3">
+                                      Upto 80% Off + Upto 40% Cashback on Cab booking & more + Extra
+                                      10% off via ICICI Cards
+                                  </label>
+                              </div>
+                          </div>
+                      </form>
+                  </div>
+              </div>
+
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+
+{% endblock content %}
+
+{% block jsfiles %}
+
+{% endblock jsfiles %}

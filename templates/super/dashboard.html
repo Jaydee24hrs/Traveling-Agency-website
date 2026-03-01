@@ -1,0 +1,2876 @@
+{% extends "base/base2.html" %}
+{% load static %}
+{% block title %} Homepage | Jomivic Travels {% endblock title %}
+
+{% block cssfiles %}
+
+    <!-- Owl Carousel CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
+
+    <style>
+
+        .make_bg_hurry{
+            background-color: #ffffff2a;
+            color: white;
+        }
+        
+        .about_bg{
+            height: 68vh;
+        }
+
+        .slide_one{
+            position: relative;
+            top: -4rem;
+            z-index: 0;
+        }
+
+
+        input::placeholder{
+            color: #000000b3 !important;
+        }
+
+
+        .nav-link{
+            border: none !important;
+        }
+
+        .nav-link:hover{
+            background-color: transparent !important;
+        }
+
+        .nav-link.active{
+            background-color: #ef3f3e !important;
+            color: #ffffff !important;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+    
+        .flight_btn,
+        .multi_flights {
+            background-color: #ef3f3e !important; 
+            color: #fff; 
+        }
+
+        .mulity_border {
+            border-color: #ef3f3e !important;
+        }
+
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        .autocomplete-suggestions {
+            border: 1px solid #ccc;
+            background: #fff;
+            color: black;
+            position: absolute;
+            left: -20px;
+            z-index: 1000;
+            width: 260px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .autocomplete-suggestions_return {
+            border: 1px solid #ccc;
+            background: #fff;
+            color: black;
+            position: absolute;
+            z-index: 1000;
+            left: 150px;
+            width: 280px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .autocomplete-suggestion {
+            padding: 8px;
+            cursor: pointer;
+        }
+
+        .autocomplete-suggestion:hover {
+            background: #ef3f3e;
+            color: white;
+        }
+
+        .suggestion-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* .spinner-border {
+            width: 10rem;
+            height: 10rem;
+        } */
+
+        .preloader_img{
+            max-width: 300px;
+        }
+        
+        #dashboard_section2{
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .hero_cover{
+            position: relative;
+            width: 100%;
+            min-height: 80vh;
+        }
+
+        .video-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+
+        .big_div{
+            position: relative;
+            z-index: 1;
+            height: 100%;
+            color: white;
+            margin-top: 5rem;
+        }
+
+
+        .owl-prev, .owl-next, .owl-back, .owl-front, .owl-start, .owl-end {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .owl-prev,
+        .owl-back,
+        .owl-start { left: -20px; }
+
+        .owl-next,
+        .owl-front,
+        .owl-end { right: -20px; }
+        
+
+
+        @media (max-width: 991.98px) { 
+            .autocomplete-suggestions_return{
+                width: 83vw;
+                left: 0;
+            }
+
+        
+
+            .passenger-category{
+                top: 120px !important;
+                left: 20rem !important;
+            }
+        }
+        
+        @media (max-width: 767.98px) { 
+
+
+            .make_width{
+                max-width: 60%;
+            }
+
+            .autocomplete-suggestions_return{
+                width: 83vw;
+                left: 0;
+            }
+
+            .passenger-category{
+                top: 200px !important;
+                left: 10rem !important;
+            }
+
+            .owl-prev { left: -10px; }
+            .owl-next { right: -10px; }
+
+        }
+        
+        @media (max-width: 575.98px) {
+
+
+            .big_div{
+                margin-top: 1rem !important;
+            }
+
+            .autocomplete-suggestions{
+                width: 83vw;
+            }
+
+            .autocomplete-suggestions_return{
+                width: 83vw;
+                left: 0;
+            }
+
+            .make_width{
+                max-width: 100%;
+            }
+
+            .passenger-category{
+                top: 200px !important;
+                left: 10rem !important;
+            }
+
+            .owl-prev { left: -10px; }
+            .owl-next { right: -10px; }
+        }
+        
+        @media (max-width: 360px) {
+
+            .big_div{
+                margin-top: 1rem !important;
+            }
+
+
+            .make_width{
+                max-width: 100%;
+            }
+
+
+            .passanger_control,
+            .class_control{
+                padding: 10px !important;
+            }
+
+            .passenger-category{
+                top: 200px !important;
+                left: 10rem !important;
+            }
+
+            .owl-prev { left: -10px; }
+            .owl-next { right: -10px; }
+
+        }
+
+        .determine,
+        .passanger_control_box,
+        .class_control_box{
+            z-index: 1000;
+            width: 120px;
+        }
+
+        .determine .active,
+        .class_control_box .active{
+            background: #ef3f3e;
+            color: #fff;
+        }
+
+        .dashboard_checkinput:checked {
+            background: #ef3f3e !important;
+            border-color: #ef3f3e;
+            outline-color: #ef3f3e;
+        }
+
+        /* Rotated div */
+        .logo-slider {
+            display: flex;
+            overflow: hidden;
+            width: 100%;
+            position: relative;
+        }
+        
+        .logo-track {
+            display: flex;
+            animation: slide 40s linear infinite; /* Auto-slide animation */
+        }
+        
+        .logo-track img {
+            margin: 20px;
+        }
+        
+        @keyframes slide {
+            from {
+                transform: translateX(0);
+            }
+            to {
+                transform: translateX(-100%);
+            }
+        }
+
+        .hide_outline{
+            outline: none !important;
+            box-shadow: none !important;
+            border: none !important;
+        }
+
+        .swap_parent{
+            position: relative;
+        }
+
+        .swap_btn{
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: -1.3rem;
+            right: 0;
+            margin: auto;
+        }
+
+        .grayscale {
+            filter: grayscale(100%);
+        }
+        
+        #extraReviews {
+            transition: height 1s ease-in-out;
+        }
+
+        .autocomplete_box_origin,
+        .autocomplete_box_destination{
+            bottom: -60px;
+            display: none;
+            z-index: 1000;
+        }
+        
+        /* Calender section */
+        .date-picker-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            width: 300px;
+        }
+        .calendar-popup {
+            display: none;
+            position: absolute;
+            top: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 20px;
+            z-index: 1000;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+        }
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            text-align: center;
+            margin-top: 10px;
+        }
+        .calendar div {
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .calendar div:hover {
+            background: #ddd;
+        }
+        .disabled {
+            color: #ccc;
+            pointer-events: none;
+        }
+        .selected {
+            background: #ef3f3e;
+            color: white;
+        }
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
+        .days-of-week {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        /* Passanger */
+        .passenger-category{
+            position: absolute;
+            top: 50px;
+            left: 50rem;
+            transform: translateX(-50%);
+            background: white;
+            padding: 20px;
+            z-index: 1000;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .passenger-category .options span {
+            padding: 3px 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .passanger-category2{
+            position: absolute;
+            top: 40px;
+            left: 55%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 20px;
+            z-index: 1000;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .passanger-category2 .options span {
+            padding: 3px 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .selected_number {
+            background-color: #ef3f3e;
+            color: white;
+        }
+
+        .disabled_number {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .progress-bar-animated-custom {
+            animation: loadProgress 30s linear infinite;
+          }
+        
+          @keyframes loadProgress {
+          0% {
+              width: 0%;
+          }
+          100% {
+              width: 100%;
+          }
+          }
+
+          .video_section{
+            background-image: url("{% static 'img/video-bg.jpg' %}");
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed; /* This is the key */
+            display: block;
+          }
+
+          .video-section{
+            background-image: url("{% static 'img/backgroundVideo.jpg' %}");
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed; /* This is the key */
+            display: block;
+          }
+          
+
+          .full-banner{
+            background-image: url("{% static 'img/background.jpg' %}");
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            display: block;
+          }
+
+        
+        /* Shared shadow styles */
+        .shadow-img {
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-image: url("{% static 'img/video-image.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            z-index: 1;
+            opacity: 0.2;
+            border-radius: 20px;
+        }
+        
+        /* First shadow offset */
+        .shadow-one {
+            transform: translate(20px, 20px);
+            z-index: 1;
+        }
+        
+        /* Second shadow offset */
+        .shadow-two {
+            transform: translate(40px, 40px);
+            z-index: 0;
+        }
+        
+        /* Main image */
+        .main-video-img {
+            z-index: 2;
+            position: relative;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        /* Optional: Video icon */
+        .video-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 3;
+        }
+        .video-icon2 {
+            position: absolute;
+            top: 50% !important;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 3;
+        }
+
+        .play-button {
+            width: 70px;
+            height: 50px;
+            background-color: #ff0000;
+            border-radius: 12px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .play-button:hover {
+            transform: scale(1.1);
+        }
+        
+        .play-triangle {
+            width: 0;
+            height: 0;
+            border-left: 18px solid white;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            margin-left: 4px;
+        }
+
+        .limited-text {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem; /* adjust as needed */
+            font-weight: 600;
+            letter-spacing: 0.5rem;
+            color: white;
+            text-transform: uppercase;
+        }
+        
+        .limited-text span {
+            display: inline-block;
+            position: relative;
+            color: #fff;
+            text-shadow: 0 0 6px rgba(255, 0, 0, 0.6); /* red glow effect */
+            font-weight: bold;
+        }
+        
+        .limited-text .spacer {
+            width: 40px; /* space between "D" and "T" */
+            height: 2px;
+            background: linear-gradient(to right, #fff, rgba(255, 255, 255, 0.3));
+            display: inline-block;
+            margin: 0 10px;
+            align-self: center;
+        }
+
+        .tour-card-1{
+            background-image: url("{% static 'img/dishes/1.jpg' %}");
+            object-fit: contain;
+        }
+
+        .tour-card-2{
+            background-image: url("{% static 'img/dishes/2.jpg' %}");
+            object-fit: contain
+        }
+
+        .tour-card-3{
+            background-image: url("{% static 'img/dishes/3.jpg' %}");
+            object-fit: contain
+        }
+
+        .tour-card .card-overlay {
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+        
+        .gallery_img_one,
+        .gallery_img_two,
+        .gallery_img_three,
+        .gallery_img_four,
+        .gallery_img_five{
+            background-position:center;
+            background-size:cover;
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+            height: 13rem;
+            background-color: rgba(0, 0, 0, 0.50); /* adjust the opacity to control darkness */
+            background-blend-mode: darken;
+        }
+
+        .gallery_img_one{
+            background-image: url("{% static 'img/gallery/1.jpg' %}");
+        }
+
+        .gallery_img_two{
+            background-image: url("{% static 'img/gallery/2.jpg' %}");
+        }
+
+        .gallery_img_three{
+            background-image: url("{% static 'img/gallery/3.jpg' %}");
+        }
+
+        .gallery_img_four{
+            background-image: url("{% static 'img/gallery/4.jpg' %}");
+        }
+
+        .gallery_img_five{
+            background-image: url("{% static 'img/gallery/5.jpg' %}");
+        }
+
+        .gallery_content{
+            display: flex;
+            flex-direction: column;
+            justify-content:end;
+            align-items: center;
+            height: 100%;
+        }
+
+        .make_position{
+            font-size: 14px !important;
+            position: absolute;
+            left: -4.5rem;
+            top: 0.5rem;
+            line-height: 1;
+        }
+
+        .email_subscribe_input{
+            border: none !important;
+            outline: none !important;
+        }
+
+
+
+
+        /* Make nav buttons vertical */
+        .dashboard_nav_link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 12px !important;
+            position: relative;
+            font-size: 16px !important;
+        }
+
+        /* Base icon */
+        .dashboard_nav_link::before {
+            content: "";
+            width: 26px;
+            height: 26px;
+            display: block;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            margin-bottom: 2px;
+            transition: transform 0.3s ease;
+        }
+        @media (max-width: 768px) {
+
+            #myTab0 {
+                flex-wrap: nowrap !important;
+                overflow-x: auto;
+                white-space: nowrap;
+                gap: 0px !important;
+            }
+
+            #myTab0 .nav-item {
+                flex: 0 0 auto;
+            }
+
+            #myTab0::-webkit-scrollbar {
+                display: none;
+            }
+
+            #myTab0 {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+
+        }
+
+        /* Hover */
+        .dashboard_nav_link:hover::before {
+            transform: scale(1.3);
+        }
+
+        /* Active */
+        .dashboard_nav_link.active::before {
+            transform: scale(1.35);
+        }
+
+        /* FLIGHT */
+        #book_flight0::before {
+            background-image: url("data:image/svg+xml,%3Csvg fill='white' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M21 16v-2l-8-5V3.5a1.5 1.5 0 10-3 0V9L2 14v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5L21 16z'/%3E%3C/svg%3E");
+        }
+
+        /* HOTEL */
+        #book_hotel0::before {
+            background-image: url("data:image/svg+xml,%3Csvg fill='white' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 21V3h16v18h-2v-2H6v2H4zm2-4h12V5H6v12zm2-10h2v2H8V7zm4 0h2v2h-2V7zm-4 4h2v2H8v-2zm4 0h2v2h-2v-2z'/%3E%3C/svg%3E");
+        }
+
+        /* TOUR */
+        #book_tour0::before {
+            background-image: url("data:image/svg+xml,%3Csvg fill='white' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 2a7 7 0 017 7c0 5-7 13-7 13S5 14 5 9a7 7 0 017-7zm0 9.5A2.5 2.5 0 1012 6a2.5 2.5 0 000 5.5z'/%3E%3C/svg%3E");
+        }
+
+        /* CAB */
+        #book_car0::before {
+            background-image: url("data:image/svg+xml,%3Csvg fill='white' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M18 11l-1.5-4.5A2 2 0 0014.6 5H9.4a2 2 0 00-1.9 1.5L6 11H4v6h2v2h2v-2h8v2h2v-2h2v-6h-2zM8 7h8l1 3H7l1-3zm-1 8a1 1 0 110-2 1 1 0 010 2zm10 0a1 1 0 110-2 1 1 0 010 2z'/%3E%3C/svg%3E");
+        }
+
+        /* RESTAURANT */
+        #book_resturant0::before {
+            background-image: url("data:image/svg+xml,%3Csvg fill='white' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 2v9a3 3 0 003 3v8h2v-8a3 3 0 003-3V2h-2v9h-2V2H6zM17 2v20h2V2h-2z'/%3E%3C/svg%3E");
+        }
+
+
+
+        /* ===========================
+        MODERN DASHBOARD REDESIGN
+        =========================== */
+
+        #dashboard_section3 {
+            background: rgba(255, 255, 255, 0.15) !important;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 20px !important;
+            border: 1px solid rgba(255,255,255,0.3) !important;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+            padding: 2rem !important;
+        }
+
+
+        /* Flight search boxes */
+        .search-box,
+        .flight-field,
+        .input-field {
+            padding: 14px 8px; /* Top-Bottom unchanged, Left-Right reduced */
+        }
+
+
+        .search-box,
+        .flight-field,
+        .input-field {
+            min-width: 0;
+            flex: 1;
+        }
+
+        /* FROM & TO boxes */
+        .from-box,
+        .to-box {
+            padding: 14px 8px;   /* Top-Bottom stays 14px, Left-Right reduced */
+        }
+
+
+        /* Departure & Return boxes */
+        .departure-box,
+        .return-box {
+            padding: 14px 8px;   /* Only horizontal reduced */
+        }
+
+
+        
+        /* Tabs */
+        .dashboard_nav_link {
+            transition: 0.3s ease;
+            border-radius: 37px !important;
+        }
+
+        .dashboard_nav_link.active {
+            background: #ef3f3e !important;
+            color: #fff !important;
+            box-shadow: 0 8px 20px rgba(239,63,62,0.4);
+        }
+
+        /* Travel Type Select */
+        #travel_type {
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        /* Currency select */
+        #nav_currency {
+            border-radius: 8px !important;
+            font-weight: 600;
+        }
+
+        /* Input containers */
+        .origin_col,
+        .destination_col,
+        .border-end {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 12px 15px !important;
+            margin: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: none !important;
+        }
+
+        #datePickerContainer .border-end {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+
+        /* Remove hard borders */
+        .border-end {
+            border-right: none !important;
+        }
+
+        /* Labels */
+        .form-label {
+            font-size: 11px;
+            letter-spacing: 1px;
+            color: #888 !important;
+        }
+
+        /* Main input text */
+        .origin,
+        .destination,
+        .passenger-summary,
+        #departureSpan,
+        #returnSpan {
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        /* Date section */
+        #datePickerContainer .border-end {
+            min-width: 160px;
+        }
+
+        /* Passenger + Class sections */
+        .down_multiple,
+        .passenger-category,
+        .passanger-category2 {
+            border-radius: 15px !important;
+        }
+
+        /* Search Button */
+        .submit_btn {
+            background: linear-gradient(135deg, #ef3f3e, #c62828) !important;
+            border: none !important;
+            border-radius: 12px !important;
+            padding: 14px 35px !important;
+            font-size: 15px;
+            letter-spacing: 1px;
+            transition: 0.3s ease;
+            box-shadow: 0 10px 25px rgba(239,63,62,0.4);
+        }
+
+        .submit_btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(239,63,62,0.6);
+        }
+
+        /* Swap button styling */
+        .swap_btn {
+            border-radius: 50% !important;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            transition: 0.3s ease;
+        }
+
+        .swap_btn:hover {
+            transform: rotate(180deg);
+        }
+
+        /* Flexible checkbox */
+        .flexible_col {
+            margin-top: 20px !important;
+        }
+
+        .dashboard_checkinput {
+            border-radius: 5px;
+        }
+
+        label[for="flexible"] {
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+        }
+
+
+        
+        /* Make layout cleaner on desktop */
+        @media (min-width: 992px) {
+
+            .origin_col,
+            .destination_col,
+            #datePickerContainer .border-end,
+            .down_multiple,
+            .border-end.px-3 {
+                min-height: 75px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .normal_submit {
+                display: flex;
+                align-items: center;
+            }
+        }
+
+        /* Mobile Improvements */
+        @media (max-width: 768px) {
+
+            #dashboard_section3 {
+                padding: 1.2rem !important;
+            }
+
+            .origin_col,
+            .destination_col,
+            .border-end {
+                margin-bottom: 10px;
+            }
+
+            .submit_btn {
+                width: 100%;
+            }
+
+            .normal_submit {
+                width: 100%;
+            }
+        }
+
+        /* =========================
+        SEARCH BUTTON WIDTH FIX
+        ========================= */
+
+        .submit_btn {
+            padding-top: 14px !important;
+            padding-bottom: 14px !important;
+            padding-left: 20px !important;
+            padding-right: 20px !important;
+        }
+
+
+        /* =========================
+        DEPARTURE WIDTH REDUCE
+        ========================= */
+
+        #datePickerContainer .border-end:first-child {
+            padding-left: 8px !important;
+            padding-right: 8px !important;
+        }
+
+
+        /* =========================
+        RETURN WIDTH REDUCE
+        ========================= */
+
+        .return_col{
+            padding-left: 8px !important;
+            padding-right: 8px !important;
+        }
+
+
+        /* =========================
+        CLASS ABOVE ECONOMY
+        ========================= */
+
+        .border-end select#flight_type {
+            display:block;
+            margin:auto;
+        }
+
+        .border-end select#flight_type::before{
+            content:"";
+        }
+
+
+        /* =========================
+        FROM & TO VISIBILITY FIX
+        ========================= */
+
+        .origin,
+        .destination {
+            font-size:18px !important;
+            font-weight:700 !important;
+        }
+
+
+
+
+        /* Improve label visibility */
+
+        .origin_col label,
+        .destination_col label{
+            font-size:12px !important;
+            letter-spacing:1px;
+        }
+
+
+        /* Center better */
+
+        .origin_col,
+        .destination_col{
+            padding-left:12px !important;
+            padding-right:12px !important;
+        }
+
+
+
+        .departure_col label {
+            margin-bottom: 1px !important;
+        }
+
+        #departureSpan {
+            /* display: block; */
+            margin-top: 0;
+        }
+
+        .date-box span,
+        .date-box label {
+            color: #000 !important;
+        }
+
+
+
+        .date-row {
+            display: flex;
+            justify-content: center;
+        }
+
+        .date-box {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 100px;
+        }
+
+        .date-input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+            z-index: 10;   /* VERY IMPORTANT */
+        }
+
+
+
+    </style>
+
+{% endblock cssfiles %}
+
+
+
+{% block content %}
+
+    <div class="dashboard_box">
+        
+        <div class="hero_cover py-3" id="hero_cover">
+
+            <video autoplay muted loop playsinline class="video-bg" width="100%">
+                <source src="{% static 'video/city.mp4' %}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+
+            <div class="big_div container">
+                <div class="text-center">
+                    <h1 class="mb-3 make_dance_fonts display-3" data-aos="fade-up" data-aos-duration="2000">Let’s Take You Around The World</h1>
+                </div>
+
+                <div id="dashboard_section2" class="mainselect pt-3  ">
+                    <div class="d-flex justify-content-center align-items-center gap-3 flex-wrap">
+                        <ul class="nav nav-tabs mb-3 justify-content-center gap-3 mt-n3 pb-1" id="myTab0" role="tablist" data-aos="fade-up" data-aos-duration="2000">
+                            
+                            <li class="nav-item me-3 " role="presentation">
+                                <button data-mdb-tab-init data-mdb-toggle="tab" class="nav-link py-2 dashboard_nav_link active nav_round text-capitalize fw-bold px-1 px-md-3 text-white " id="book_flight0" data-mdb-target="#book_flight" type="button" role="tab" aria-controls="book_flight" aria-selected="true">Flight</button>
+                            </li>
+
+                            <li class="nav-item me-3  px-2" role="presentation">
+                                <button data-mdb-tab-init data-mdb-toggle="tab" class="nav-link py-2 text-white dashboard_nav_link nav_round text-capitalize fw-bold px-1 px-md-3" id="book_hotel0" data-mdb-target="#book_hotel" type="button" role="tab" aria-controls="book_hotel" aria-selected="false">Hotel</button>
+                            </li>
+
+                            <li class="nav-item me-3  px-2" role="presentation">
+                                <button data-mdb-tab-init data-mdb-toggle="tab" class="nav-link py-2 text-white dashboard_nav_link nav_round text-capitalize fw-bold px-1 px-md-3" id="book_tour0" data-mdb-target="#book_tour" type="button" role="tab" aria-controls="book_tour" aria-selected="false">Tour</button>
+                            </li>
+
+                            <li class="nav-item me-3  px-2" role="presentation">
+                                <button data-mdb-tab-init data-mdb-toggle="tab" class="nav-link py-2 text-white dashboard_nav_link nav_round text-capitalize fw-bold px-1 px-md-3" id="book_car0" data-mdb-target="#book_car" type="button" role="tab" aria-controls="book_car" aria-selected="false">Cab</button>
+                            </li>
+
+                            <li class="nav-item" role="presentation">
+                                <button data-mdb-tab-init data-mdb-toggle="tab" class="nav-link py-2 text-white dashboard_nav_link nav_round text-capitalize fw-bold px-1 px-md-3" id="book_resturant0" data-mdb-target="#book_resturant" type="button" role="tab" aria-controls="book_resturant" aria-selected="false">Resturant</button>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="p-3 p-lg-4 bg-danger border border-2 border-white rounded-3" id="dashboard_section3" data-aos="fade-up" data-aos-duration="2000">
+
+                        <div class="tab-content" id="myTabContent0">
+
+                            <div class="tab-pane fade show active" id="book_flight" role="tabpanel" aria-labelledby="book_flight0">
+                                <div class="">
+                                    <form action="{% url 'flight_search' %}" method="post" id="form_id">
+                                        {% csrf_token %}
+
+                                        <div class="d-flex w-100 justify-content-between align-items-center flex-wrap">
+                                         <div class="d-flex w-100 justify-content-between align-items-center flex-wrap">    
+                                            <div class="p-1">
+                                                <select name="travel_type" id="travel_type" class="bg-white border-0" required>
+                                                    <option value="oneway">One Way</option>
+                                                    <option value="round_trip" selected>Round Trip</option>
+                                                    <option value="multiple">Multiple</option>
+                                                </select>
+                                            </div>
+                                            <div>
+                                                        <label class="form-check-label text-white" for="flexible">Change currency</label>
+                                                        {% block nav_currency %}
+                                                            <select name="nav_currency" id="nav_currency" class="nav-currency border-0 small px-3 py-2 select_bg fw-bold border me-3 ms-2 ">
+                                                                <option value="NGN" selected>NGN</option>
+                                                                <option value="USD">USD</option>
+                                                            </select>
+                                                        {% endblock nav_currency %} 
+                                            </div>  
+                                         </div>
+
+                                            <div class="align-items-center up_multiple hide position-relative text-dark">
+                                                <div class="me-2">
+                                                    <button class="btn shadow-0 d-flex align-items-center passanger_control2 text-capitalize fs-6 fw-normal text-white" type="button">1 Passenger <i class="fa-solid fa-angle-down ms-2 "></i></button>
+                                                    <div class="passanger-category2 bg-white shadow-3 p-3 rounded d-none text-black">
+                                                        <span class="small">Adults(>12y)</span>
+                                                        <div class="d-flex options adults mt-1 mb-3 gap-1">
+                                                            <span>1</span>
+                                                            <span>2</span>
+                                                            <span>3</span>
+                                                            <span>4</span>
+                                                            <span>5</span>
+                                                            <span>6</span>
+                                                            <span>7</span>
+                                                            <span>8</span>
+                                                            <span>9</span>
+                                                        </div>
+
+                                                        <span class="small">Child(2y - 12y)</span>
+                                                        <div class="d-flex options children mt-1 mb-3 gap-1">
+                                                            <span>0</span>
+                                                            <span>1</span>
+                                                            <span>2</span>
+                                                            <span>3</span>
+                                                            <span>4</span>
+                                                            <span>5</span>
+                                                            <span>6</span>
+                                                            <span>7</span>
+                                                            <span>8</span>
+                                                        </div>
+
+                                                        <span class="small">Infants(< 2y)</span>
+                                                        <div class="d-flex options infants mt-1 gap-1">
+                                                            <span>0</span>
+                                                            <span>1</span>
+                                                            <span>2</span>
+                                                            <span>3</span>
+                                                            <span>4</span>
+                                                        </div>
+
+                                                        <div class="mt-2 text-end">
+                                                            <button class="btn btn-danger text-white passanger_btn2" type="button">Done</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                          </div>
+                                        </div>
+
+                                        <!-- Round Trip and One Way Trip and Multiple -->
+                            
+                                        <div class="row">
+                                            
+                                            <div id="multi_clone" class="row align-items-center mt-3 multi_clone_class">
+
+                                                <div class="clone_count" style="display: none;">
+                                                    <div class="mb-3 d-flex justify-content-between align-items-center">
+                                                        <button type="button" class="rounded multi_flights border-0 py-1 px-3 ">
+                                                            Flight 1
+                                                        </button>
+                                                        <button type="button" class="btn btn-sm btn-danger ml-2 remove-flight">
+                                                            Remove
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <input style="display: none;" type="text" id="currency_input" name="currency_input" value="NGN" />
+
+
+
+                                                <div class="col-12 one_and_round">
+                                                    
+                                                    <div class="row align-items-start align-items-lg-center">
+
+                                                        <div class="col-12">
+
+                                                            <div class="d-flex justify-content-center  align-items-center swap_parent flex-wrap flex-lg-nowrap">
+
+                                                            <div class="d-flex justify-content-center align-items-center position-relative w-100">
+                                                                <div class="border-end rounded-start origin_col d-flex align-items-center position-relative">
+                                                                    <div class="pe-1 pe-md-3">
+                                                                        <label class="form-label p-0 m-0 small w-100 text-center fw-bold" for="origin">FROM</label>
+                                                                        <input type="text" id="origin" name="origin_display" class="form-control text-center origin border-0 hide_outline p-0 m-0 text-dark" required autocomplete="off" onfocus="this.select()" placeholder="Lagos (LOS)"/>
+                                                                        <input type="hidden" id="hidden_origin" name="origin" class="main_origin"/>
+
+                                                                        <div id="autocomplete-suggestions" class="autocomplete-suggestions hide"></div>
+                                                                    </div>
+
+                                                                </div>
+
+                                                                <div>
+                                                                    <img src="{% static 'img/swap.svg' %}" alt="" class="swap_btn py-2 px-2 rounded border bg-white">
+                                                                </div>
+
+                                                                <div class="border-end destination_col d-flex align-items-center">
+                                                                    <div class="px-1 px-md-3">
+                                                                        <label class="form-label p-0 m-0 small w-100 fw-bold text-center" for="destination">TO</label>
+                                                                        <input type="text" id="destination" name="destination_display" class="form-control destination border-0 hide_outline p-0 m-0 pe-2 text-center text-dark" required autocomplete="off" onfocus="this.select()" placeholder="London (LHR)"/>
+                                                                        <input type="hidden" id="hidden_destination" name="destination" class="main_destination"/>
+                                                                        <div id="autocomplete-suggestions_return" class="autocomplete-suggestions autocomplete-suggestions_return hide autocomplete-suggestions_return"></div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                          
+                                                                <div class="border-end text-center position-relative mt-3 mt-md-0 departure_col">
+
+                                                                    <div class="date-row">
+
+                                                                        <!-- DEPARTURE -->
+                                                                        <div class="date-box position-relative">
+                                                                            <label class="small fw-bold">DEPARTURE</label>
+                                                                            <span id="departureSpan" class="d-block">Select</span>
+                                                                            <input type="date" id="departureDate" class="date-input">
+                                                                        </div>
+
+                                                                        <!-- RETURN -->
+                                                                        <div class="date-box position-relative" id="returnSection">
+                                                                            <label class="small fw-bold">RETURN</label>
+                                                                            <span id="returnSpan" class="d-block">Select</span>
+                                                                            <input type="date" id="returnDate" class="date-input">
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                </div>
+
+                                                                
+                                                                <div class="d-flex justify-content-center align-items-center w-100">
+                                                                    <!-- Passanger Starts -->
+                                                                    <div class="border-end px-3 d-flex justify-content-between align-items-center down_multiple mt-3 mt-lg-0">
+                                                                        <div>
+                                                                            <div class="small text-muted fw-bold text-center" style="text-wrap: nowrap;">
+                                                                                <span>TRAVELLERS</span>
+                                                                            </div>
+
+                                                                            <div class="passenger-summary text-dark" style="text-wrap: nowrap;">
+                                                                                <span class="adults-count">1 ADT</span>
+                                                                                <span>-</span>
+                                                                                <span class="children-count">0 CHD</span>
+                                                                                <span>-</span>
+                                                                                <span class="infants-count">0 INF</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="passenger-category bg-white shadow-3 p-3 rounded d-none text-black">
+                                                                        <span class="small">Adults(>12y)</span>
+                                                                        <div class="d-flex options adults mt-1 mb-3 gap-1">
+                                                                            <span>1</span>
+                                                                            <span>2</span>
+                                                                            <span>3</span>
+                                                                            <span>4</span>
+                                                                            <span>5</span>
+                                                                            <span>6</span>
+                                                                            <span>7</span>
+                                                                            <span>8</span>
+                                                                            <span>9</span>
+                                                                            <input type="hidden" name="adults">
+                                                                        </div>
+
+                                                                        <span class="small">Child(2y - 12y)</span>
+                                                                        <div class="d-flex options children mt-1 mb-3 gap-1">
+                                                                            <span>0</span>
+                                                                            <span>1</span>
+                                                                            <span>2</span>
+                                                                            <span>3</span>
+                                                                            <span>4</span>
+                                                                            <span>5</span>
+                                                                            <span>6</span>
+                                                                            <span>7</span>
+                                                                            <span>8</span>
+                                                                            <input type="hidden" name="child">
+                                                                        </div>
+
+                                                                        <span class="small">Infants(< 2y)</span>
+                                                                        <div class="d-flex options infants mt-1 gap-1">
+                                                                            <span>0</span>
+                                                                            <span>1</span>
+                                                                            <span>2</span>
+                                                                            <span>3</span>
+                                                                            <span>4</span>
+                                                                            <input type="hidden" name="infants">
+                                                                        </div>
+
+                                                                        <div class="mt-2 text-end">
+                                                                            <button class="btn btn-danger text-white passanger_btn" type="button">Done</button>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- Passanger Stops -->
+
+
+                                                                    <!-- Economy Starts -->
+                                                                    <div class="border-end class_col me-3 mt-3 mt-lg-0">
+                                                                        <div class="small text-muted text-center fw-bold" style="text-wrap: nowrap;">
+                                                                            <span>CLASS</span>
+                                                                        </div>
+
+                                                                        <select name="flight_type" id="flight_type" class="bg-white border-0 text-dark" required>
+                                                                            <option value="ECONOMY" selected>ECONOMY</option>
+                                                                            <option value="PREMIUM_ECONOMY">PREMIUM</option>
+                                                                            <option value="BUSINESS">BUSINESS</option>
+                                                                            <option value="FIRST">FIRST</option>
+                                                                        </select>
+                                                                    </div>
+
+                                                                </div>
+
+
+                                                                <!-- <input type="hidden" name="flight_type" id="selected_flight_type"> -->
+
+                                                                <!-- Submit Button Starts -->
+                                                                <div class="normal_submit mt-3 mt-lg-0">
+                                                                    <div class="d-flex justify-content-center justify-content-md-end">
+                                                                        <button class="btn btn-danger rounded-0 text-white submit_btn p-3 px-lg-4 fw-bold" name="round_trip">Search</button>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- Submit Button Stops -->
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+
+
+                                            <div class="row">
+                                                <div class="append_clone"></div>
+                                            </div>
+
+                                            <div class="add_more_multiple " style="display: none;">
+                                                <div class="d-flex align-items-center justify-content-between mt-3">
+                                                    <button type="button" class="border-0 mt-3 py-2 px-4 flight_btn" id="addMore">
+                                                        Add More
+                                                    </button>
+
+                                                    <div class="multiple_submit me-md-3 ms-auto">
+                                                        <button class="btn btn-danger text-white submit_btn p-3" name="round_trip">Search</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-lg-12 col-md-12 col-sm-12 mt-3 flexible_col">
+                                                <div class="form-check">
+                                                    <input class="form-check-input dashboard_checkinput" type="checkbox" id="flexible"
+                                                        name="flexible"/>
+                                                    <label class="form-check-label text-white" for="flexible">Flexible booking dates (±3 days)</label>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="book_hotel" role="tabpanel" aria-labelledby="book_hotel0">
+                                <div class="search-panel">
+                                    <div class="search-section">
+                                        <form action="#" method="POST">
+                                            {% csrf_token %}
+                                            <div class="d-flex justify-content-evnly align-items-center flex-wrap flex-lg-nowrap">
+
+                                                <div class="text-center px-1 px-md-3 border-end w-100">
+                                                    <span class="text-muted fw-bold d-block">DESTINATION</span>
+                                                    <input type="text" id="hotel_destination" name="hotel_destination" class="form-control text-center hotel_destination border-0 hide_outline p-0 m-0 text-dark" required placeholder="Lagos (LOS)"/>
+                                                </div>
+
+                                                <div class="text-center px-1 px-md-3 border-end position-relative w-100">
+                                                    <span class="text-muted fw-bold d-block">CHECK IN</span>
+                                                    <span id="hotelcheckinSpan" class="text-dark">Select Date</span>
+                                                    <input type="date" id="hotel_checkin" name="hotel_checkin" class="hotel_checkin text-black fw-bold" style="opacity: 0; position: absolute; pointer-events: none; left:0; bottom:0px;"/>
+                                                </div>
+
+                                                <div class="text-center px-1 px-md-3 border-end position-relative w-100">
+                                                    <span class="text-muted fw-bold d-block">CHECK OUT</span>
+                                                    <span id="hotelcheckoutSpan" class="text-dark">Select Date</span>
+                                                    <input type="date" id="hotel_checkout" name="hotel_checkout" class="hotel_checkout text-black fw-bold" style="opacity: 0; position: absolute; pointer-events: none; left:0; bottom:0px; width:100;"/>
+                                                </div>
+
+                                                <div class="text-center px-1 px-md-3 border-end w-100">
+                                                    <span class="text-muted fw-bold d-block">GUESTS</span>
+                                                    <input type="number" id="hotel_guests" name="hotel_guests" class="form-control text-center hotel_guests border-0 hide_outline p-0 m-0 text-dark" required value="1"/>
+                                                </div>
+
+                                                <div class="text-center w-100">
+                                                    <!-- <button class="btn btn-danger rounded-0 btn-lg">SEARCH</button> -->
+                                                    <a href="{% url 'hotel_details' %}" class="btn make_bg_one text-white rounded-0 btn-lg">SEARCH</a>
+                                                </div>
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="book_tour" role="tabpanel" aria-labelledby="book_tour0">
+                                <div>
+                                    <form action="#" method="POST">
+                                        {% csrf_token %}
+                                        <div class="d-flex justify-content-evnly align-items-center flex-wrap flex-lg-nowrap">
+
+                                            <div class="text-center px-1 px-md-3 border-end w-100">
+                                                <span class="text-muted fw-bold d-block">DEPRTING</span>
+                                                <input type="text" id="tour_departing" name="tour_departing" class="form-control text-center tour_departing border-0 hide_outline p-0 m-0 text-dark" required placeholder="Starting From"/>
+                                            </div>
+
+                                            <div class="text-center px-1 px-md-3 border-end w-100">
+                                                <span class="text-muted fw-bold d-block">DESTINATION</span>
+                                                <input type="text" id="tour_destination" name="tour_destination" class="form-control text-center tour_destination border-0 hide_outline p-0 m-0 text-dark" required placeholder="Going To"/>
+                                            </div>
+
+                                            <div class="text-center px-1 px-md-3 border-end w-100">
+                                                <span class="text-muted fw-bold d-block">Travel Date</span>
+                                                <div class="d-flex justify-content-center align-items-center w-100" id="tour_datePickerContainer">
+                                                    <div class="px-1 px-md-3 text-center position-relative mt-3 mt-md-0">
+                                                        <span id="tour_date" class="text-dark">Select Date</span>
+                                                        <input type="date" id="tour_date_input" name="departureDate" class="departureDate text-black fw-bold" style="opacity: 0; position: absolute; pointer-events: none; left:0; bottom:0px;"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="text-center w-100">
+                                                <!-- <button class="btn btn-danger rounded-0 btn-lg">SEARCH</button> -->
+                                                <a href="{% url 'tour_details' %}" class="btn make_bg_one text-white rounded-0 btn-lg">SEARCH</a>
+
+                                            </div>
+
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="book_car" role="tabpanel" aria-labelledby="book_car0">
+                                <div>
+                                    <form action="#" method="POST">
+                                        {% csrf_token %}
+                                        <div class="d-flex justify-content-evnly align-items-center flex-wrap flex-lg-nowrap">
+
+                                            <div class="text-center px-1 px-md-3 border-end w-100">
+                                                <span class="text-muted fw-bold d-block">PICK UP</span>
+                                                <input type="text" id="car_pickup" name="car_pickup" class="form-control text-center car_pickup border-0 hide_outline p-0 m-0 text-dark" required placeholder="Enter Pick-up Location"/>
+                                            </div>
+
+                                            <div class="text-center px-1 px-md-3 border-end w-100">
+                                                <span class="text-muted fw-bold d-block">DROP OFF</span>
+                                                <input type="text" id="car_dropoff" name="car_dropoff" class="form-control text-center car_dropoff border-0 hide_outline p-0 m-0 text-dark" required placeholder="Enter Drop-up Location"/>
+                                            </div>
+
+                                            <div class="text-center px-1 px-md-3 border-end w-100">
+                                                <span class="text-muted fw-bold d-block">PICKUP TIME</span>
+                                                <div class="d-flex justify-content-center align-items-center w-100" id="car_datePickerContainer_pickup">
+                                                    <div class="px-1 px-md-3 text-center position-relative mt-3 mt-md-0">
+                                                        <span id="car_date_pickup" class="text-dark">Select Date</span>
+                                                        <input type="date" id="car_date_pickup_input" name="departureDate" class="departureDate text-black fw-bold" style="opacity: 0; position: absolute; pointer-events: none; left:0; bottom:0px;"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="text-center px-1 px-md-3 border-end w-100">
+                                                <span class="text-muted fw-bold d-block">DROPOFF TIME</span>
+                                                <div class="d-flex justify-content-center align-items-center w-100" id="car_datePickerContainer_dropoff">
+                                                    <div class="px-1 px-md-3 text-center position-relative mt-3 mt-md-0">
+                                                        <span id="car_date_dropoff" class="text-dark">Select Date</span>
+                                                        <input type="date" id="car_date_dropoff_input" name="departureDate" class="departureDate text-black fw-bold" style="opacity: 0; position: absolute; pointer-events: none; left:0; bottom:0px;"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="text-center w-100">
+                                                <!-- <button class="btn btn-danger rounded-0 btn-lg">SEARCH</button> -->
+
+                                                <a href="{% url 'car_details' %}" class="btn make_bg_one text-white rounded-0 btn-lg">SEARCH</a>
+                                            </div>
+
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="book_resturant" role="tabpanel" aria-labelledby="book_resturant0">
+                                <div>
+                                    <form action="#" method="POST">
+                                        {% csrf_token %}
+                                        <div class="d-flex justify-content-evnly align-items-center flex-wrap flex-lg-nowrap">
+
+                                            <div class="text-center px-1 px-md-3 border-end w-100">
+                                                <span class="text-muted fw-bold d-block">RESTURANT</span>
+                                                <input type="text" id="resturant" name="resturant" class="form-control text-center resturant border-0 hide_outline p-0 m-0 text-dark" required placeholder="Lagos (LOS)"/>
+                                            </div>
+
+                                            <div class="text-center px-1 px-md-3 border-end w-100">
+                                                <span class="text-muted fw-bold d-block">YOUR LOCATION</span>
+                                                <input type="text" id="resturant_location" name="resturant_location" class="form-control text-center resturant_location border-0 hide_outline p-0 m-0 text-dark" required placeholder="Enter Location"/>
+                                            </div>
+
+                                            <div class="text-center px-1 px-md-3 border-end w-100">
+                                                <span class="text-muted fw-bold d-block">SEARCH FOOD</span>
+                                                <input type="text" id="resturnat_food" name="resturnat_food" class="form-control text-center resturnat_food border-0 hide_outline p-0 m-0 text-dark" required placeholder="What are you creaving?"/>
+                                            </div>
+
+
+                                            <div class="text-center w-100">
+                                                <!-- <button class="btn btn-danger rounded-0 btn-lg">SEARCH</button> -->
+
+                                                
+                                                <a href="{% url 'resturant_details' %}" class="btn make_bg_one text-white rounded-0 btn-lg">SEARCH</a>
+                                            </div>
+
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Other Sections Here -->
+
+        <!-- category start -->
+        <section class="top-category margin-cls slide_one px-3 px-md-5">
+
+            <div class="owl-carousel owl-theme clients mt-5">
+
+                <div class="item ">
+                    <div class="card mb-3" style="max-width: 540px;">
+                        <div class="row g-0">
+                          <div class="col-4">
+                            <a href="#"><img src="{% static 'img/cat/1.jpg' %}" class="img-fluid blur-up lazyload"
+                                alt=""></a>
+                          </div>
+                          <div class="col-8">
+                            <div class="card-body py-1">
+                              <h6 class="card-title fw-bold mb-0 ">Dubai Tour Package <i class="fas fa-heart text-danger"></i></h6>
+                              <div class="d-flex align-items-center">
+                                <span class="text-warning me-3">4.8</span>
+                                <ul class="list-unstyled d-flex justify-content-center mb-0">
+                                    <li>
+                                      <i class="fas fa-star fa-sm text-warning"></i>
+                                    </li>
+                                    <li>
+                                      <i class="fas fa-star fa-sm text-warning"></i>
+                                    </li>
+                                    <li>
+                                      <i class="fas fa-star fa-sm text-warning"></i>
+                                    </li>
+                                    <li>
+                                      <i class="fas fa-star fa-sm text-warning"></i>
+                                    </li>
+                                    <li>
+                                      <i class="fas fa-star-half-alt fa-sm text-warning"></i>
+                                    </li>
+                                  </ul>
+                              </div>
+                              <p class="card-text text-muted small m-0">
+                                Experience the luxury of Dubai with our exclusive tour package.
+                              </p>
+                              <p class="card-text m-0 p-0">
+                                <h6><del class="text-muted">₦1,000,000</del> <span class="fw-bold">₦850,000</span></h6>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="item">
+                    <div class="card mb-3" style="max-width: 540px;">
+                        <div class="row g-0">
+                          <div class="col-4">
+                            <a href="#"><img src="{% static 'img/cat/2.jpg' %}" class="img-fluid blur-up lazyload"
+                                alt=""></a>
+                          </div>
+                          <div class="col-8">
+                            <div class="card-body py-1">
+                              <h6 class="card-title fw-bold mb-0 ">London Explorer <i class="fas fa-heart text-danger"></i></h6>
+                              <div class="d-flex align-items-center">
+                                <span class="text-warning me-3">4.9</span>
+                                <ul class="list-unstyled d-flex justify-content-center mb-0">
+                                    <li>
+                                      <i class="fas fa-star fa-sm text-warning"></i>
+                                    </li>
+                                    <li>
+                                      <i class="fas fa-star fa-sm text-warning"></i>
+                                    </li>
+                                    <li>
+                                      <i class="fas fa-star fa-sm text-warning"></i>
+                                    </li>
+                                    <li>
+                                      <i class="fas fa-star fa-sm text-warning"></i>
+                                    </li>
+                                    <li>
+                                      <i class="fas fa-star fa-sm text-warning"></i>
+                                    </li>
+                                  </ul>
+                              </div>
+                              <p class="card-text text-muted small m-0">
+                                Discover the charm of London with our tailored packages.
+                              </p>
+                              <p class="card-text m-0 p-0">
+                                <h6><del class="text-muted">₦1,200,000</del> <span class="fw-bold">₦1,050,000</span></h6>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="card mb-3" style="max-width: 540px;">
+                        <div class="row g-0">
+                          <div class="col-4">
+                            <a href="#"><img src="{% static 'img/cat/3.jpg' %}" class="img-fluid blur-up lazyload"
+                                alt=""></a>
+                          </div>
+                          <div class="col-8">
+                            <div class="card-body py-1">
+                              <h6 class="card-title fw-bold mb-0 ">South Africa Safari <i class="fas fa-heart text-danger"></i></h6>
+                              <div class="d-flex align-items-center">
+                                <span class="text-warning me-3">4.7</span>
+                                <ul class="list-unstyled d-flex justify-content-center mb-0">
+                                    <li>
+                                      <i class="fas fa-star fa-sm text-warning"></i>
+                                    </li>
+                                    <li>
+                                      <i class="fas fa-star fa-sm text-warning"></i>
+                                    </li>
+                                    <li>
+                                      <i class="fas fa-star fa-sm text-warning"></i>
+                                    </li>
+                                    <li>
+                                      <i class="fas fa-star fa-sm text-warning"></i>
+                                    </li>
+                                    <li>
+                                      <i class="fas fa-star-half-alt fa-sm text-warning"></i>
+                                    </li>
+                                  </ul>
+                              </div>
+                              <p class="card-text text-muted small m-0">
+                                Embark on an unforgettable adventure in South Africa.
+                              </p>
+                              <p class="card-text m-0 p-0">
+                                <h6><del class="text-muted">₦900,000</del> <span class="fw-bold">₦750,000</span></h6>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="card mb-3" style="max-width: 540px;">
+                        <div class="row g-0">
+                          <div class="col-4">
+                            <a href="#"><img src="{% static 'img/cat/4.jpg' %}" class="img-fluid blur-up lazyload"
+                                alt=""></a>
+                          </div>
+                          <div class="col-8">
+                            <div class="card-body py-1">
+                              <h6 class="card-title fw-bold mb-0 ">Caribbean Cruise <i class="fas fa-heart text-danger"></i></h6>
+                              <div class="d-flex align-items-center">
+                                <span class="text-warning me-3">5.0</span>
+                                <ul class="list-unstyled d-flex justify-content-center mb-0">
+                                    <li>
+                                      <i class="fas fa-star fa-sm text-warning"></i>
+                                    </li>
+                                    <li>
+                                      <i class="fas fa-star fa-sm text-warning"></i>
+                                    </li>
+                                    <li>
+                                      <i class="fas fa-star fa-sm text-warning"></i>
+                                    </li>
+                                    <li>
+                                      <i class="fas fa-star fa-sm text-warning"></i>
+                                    </li>
+                                    <li>
+                                      <i class="fas fa-star fa-sm text-warning"></i>
+                                    </li>
+                                  </ul>
+                              </div>
+                              <p class="card-text text-muted small m-0">
+                                Sail away to paradise with our Caribbean cruise packages.
+                              </p>
+                              <p class="card-text m-0 p-0">
+                                <h6><del class="text-muted">₦1,500,000</del> <span class="fw-bold">₦1,300,000</span></h6>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item">
+                   
+                    <div class="card mb-3" style="max-width: 540px;">
+                        <div class="row g-0">
+                          <div class="col-4">
+                            <a href="#"><img src="{% static 'img/cat/2.jpg' %}" class="img-fluid blur-up lazyload"
+                                alt=""></a>
+                          </div>
+                          <div class="col-8">
+                            <div class="card-body py-1">
+                              <h6 class="card-title fw-bold mb-0 ">Canadian Rockies Tour <i class="fas fa-heart text-danger"></i></h6>
+                              <div class="d-flex align-items-center">
+                                <span class="text-warning me-3">4.6</span>
+                                <ul class="list-unstyled d-flex justify-content-center mb-0">
+                                    <li>
+                                      <i class="fas fa-star fa-sm text-warning"></i>
+                                    </li>
+                                    <li>
+                                      <i class="fas fa-star fa-sm text-warning"></i>
+                                    </li>
+                                    <li>
+                                      <i class="fas fa-star fa-sm text-warning"></i>
+                                    </li>
+                                    <li>
+                                      <i class="fas fa-star fa-sm text-warning"></i>
+                                    </li>
+                                    <li>
+                                      <i class="fas fa-star-half-alt fa-sm text-warning"></i>
+                                    </li>
+                                  </ul>
+                              </div>
+                              <p class="card-text text-muted small m-0">
+                                Explore the majestic Rockies with our guided tours.
+                              </p>
+                              <p class="card-text m-0 p-0">
+                                <h6><del class="text-muted">₦1,100,000</del> <span class="fw-bold">₦950,000</span></h6>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div id="about"></div>
+        </section>
+        <!-- category end -->
+
+
+        <!-- about section start -->
+
+        <section class="about-section three-image section-b-space mt-3 mt-md-4 pb-md-5">
+            <div class="container">
+                <div class="title-3 text-center">
+                    <span class="title-label text-capitalize make_bg_one text-white py-1 px-3" data-aos="fade-up" data-aos-duration="2000">about Us</span>
+                    <div class="position-relative d-flex flex-column" data-aos="fade-up" data-aos-duration="2000"><span class="position-absolute text-center w-100 pt-4 fw-bold text-black fs-2">OUR</span> <span class="make_vam_fonts display-1 make_color_one opacity-25">Mission</span></div>
+                </div>
+
+                <div class="row mt-3 mt-md-4">
+                    <div class="col-12 col-lg-8">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="img-box position-relative" data-aos="flip-right" data-aos-duration="2000">
+                                    <img src="{% static 'img/emergency/3.jpg' %}" data-tilt data-tilt-perspective="110"
+                                        data-tilt-speed="400" data-tilt-max="1.2" class="img-fluid blur-up lazyload" alt="">
+                                    <div class="no-class position-absolute top-50" style="margin: -15px;">
+                                        <span class="text-capitalize make_bg_one text-white p-2">01</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-4">
+                                <div class="img-box position-relative" data-aos="flip-right" data-aos-duration="2000">
+                                    <img src="{% static 'img/emergency/4.jpg' %}" data-tilt data-tilt-perspective="110"
+                                        data-tilt-speed="400" data-tilt-max="1.2" class="img-fluid blur-up lazyload" alt="">
+                                    <div class="no-class position-absolute top-50" style="margin: -15px;">
+                                        <span class="text-capitalize make_bg_one text-white p-2">02</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-4">
+                                <div class="img-box position-relative" data-aos="flip-right" data-aos-duration="2000">
+                                    <img src="{% static 'img/emergency/5.jpg' %}" data-tilt data-tilt-perspective="110"
+                                        data-tilt-speed="400" data-tilt-max="1.2" class="img-fluid blur-up lazyload" alt="">
+                                    <div class="no-class position-absolute top-50" style="margin: -15px;">
+                                        <span class="text-capitalize make_bg_one text-white p-2">03</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12  col-lg-4 mt-3 mt-lg-0">
+                        <div class="about-text" data-aos="fade-up" data-aos-duration="2000">
+                            <div>
+                                <!-- <h5 class="text-muted">Special Offers for Our <span class="make_color_one fw-bold">Valued Clients</span></h5> -->
+                                <!-- <h2 class="text-black fw-bold">Jomivic <br> <span class="text-muted text-lowercase small">Travel Experience</span></h2> -->
+                                <p class="fs-6">At Jomivic Travels, we believe every journey should be exciting, stress-free, and memorable. Whether you're planning a short domestic trip or an international adventure, we're here to take care of the details so you can focus on the experience.<br> We offer complete travel solutions — from flights and hotels to tour packages, visa assistance, and corporate travel management. Our goal is to make travel simple, smooth, and enjoyable, no matter where you're going.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- about section end -->
+
+
+        <!-- OUR M & V section start -->
+        <!-- Mission & Vision -->
+        <div class="row g-4 mb-5">
+            <div class="col-12 col-md-6" data-aos="fade-up" data-aos-duration="2000">
+            <div class="h-100 p-4 p-md-5 rounded-4 shadow-5" style="border-left: 5px solid #ef3f3e; background: #fff;">
+                <div class="mb-3">
+                <span class="badge make_bg_one text-white px-3 py-2 rounded-pill">Our Mission</span>
+                </div>
+                <p class="text-muted lh-lg mb-0">
+                At Jomivic Travel, our mission is to provide seamless, reliable, and enriching travel experiences by delivering tailored travel solutions with integrity, excellence, and customer care at the heart of all we do. We are committed to helping individuals, families, and businesses explore the world with confidence and ease.
+                </p>
+            </div>
+            </div>
+            <div class="col-12 col-md-6" data-aos="fade-up" data-aos-duration="2200">
+            <div class="h-100 p-4 p-md-5 rounded-4 shadow-5" style="border-left: 5px solid #222; background: #fff;">
+                <div class="mb-3">
+                <span class="badge bg-dark text-white px-3 py-2 rounded-pill">Our Vision</span>
+                </div>
+                <p class="text-muted lh-lg mb-0">
+                To be a leading travel and tour company recognized for excellence, reliability, and personalized service, inspiring individuals and families to experience the world without limits.
+                </p>
+            </div>
+            </div>
+        </div>
+
+        <!-- OUR M & V section end -->
+
+        <!-- video section end -->
+
+
+        <!-- blog section start-->
+        <section class="blog_section destination-section section-b-space ratio_55 mt-3 mt-lg-5 py-md-5">
+            <div class="container">
+                <div class="title-3 text-center">
+                    <span class="title-label text-capitalize make_bg_one text-white py-1 px-3" data-aos="fade-up" data-aos-duration="2000">Best</span>
+                    <div class="position-relative d-flex flex-column" data-aos="fade-up" data-aos-duration="2000"><span class="position-absolute text-center w-100 pt-4 fw-bold text-black fs-2" data-aos="fade-up" data-aos-duration="2000">Flight Destinations</span> <span class="make_vam_fonts display-1 make_color_one opacity-25">Destinations</span></div>
+                </div>
+
+                <div class="owl-carousel owl-theme destinations mt-3 mt-md-4">
+
+                    <div class="item" data-aos="flip-right" data-aos-duration="2000">
+                        <div class="card mb-3">
+                            <img src="{% static 'img/destination/1.jpg' %}" class="card-img-top" alt="Fissure in Sandstone"/>
+                            <div class="card-body text-center">
+                            <p class="m-0 p-0 font-monospace">France</p>
+                            <h5 class="card-title text-black fw-bolder fs-3">Paris</h5>
+                            <p class="card-text">Book Economy Class Return until 29 Apr. Experience the romance of Paris.</p>
+                            <a href="#!" class="btn make_bg_one fw-bolder rounded-pill text-white" data-mdb-ripple-init>from ₦650,000*</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item" data-aos="flip-right" data-aos-duration="2000">
+                        <div class="card mb-3">
+                            <img src="{% static 'img/destination/2.jpg' %}" class="card-img-top" alt="Fissure in Sandstone"/>
+                            <div class="card-body text-center">
+                            <p class="m-0 p-0 font-monospace">United Kingdom</p>
+                            <h5 class="card-title text-black fw-bolder fs-3">London</h5>
+                            <p class="card-text">Book Economy Class Return until 29 Apr. Discover the history and culture of London</p>
+                            <a href="#!" class="btn make_bg_one fw-bolder rounded-pill text-white" data-mdb-ripple-init>from ₦700,000*</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item" data-aos="flip-right" data-aos-duration="2000">
+                        <div class="card mb-3">
+                            <img src="{% static 'img/destination/3.jpg' %}" class="card-img-top" alt="Fissure in Sandstone"/>
+                            <div class="card-body text-center">
+                            <p class="m-0 p-0 font-monospace">Switzerland</p>
+                            <h5 class="card-title text-black fw-bolder fs-3">Zurich</h5>
+                            <p class="card-text">Book Economy Class Return until 29 Apr. Explore the beauty of Zurich.</p>
+                            <a href="#!" class="btn make_bg_one fw-bolder rounded-pill text-white" data-mdb-ripple-init>from ₦750,000*</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item" data-aos="flip-right" data-aos-duration="2000">
+                        <div class="card mb-3">
+                            <img src="{% static 'img/destination/2.jpg' %}" class="card-img-top" alt="Fissure in Sandstone"/>
+                            <div class="card-body text-center">
+                            <p class="m-0 p-0 font-monospace">United States</p>
+                            <h5 class="card-title text-black fw-bolder fs-3">New York</h5>
+                            <p class="card-text">Book Economy Class Return until 29 Apr. Experience the bustling city life of New York.</p>
+                            <a href="#!" class="btn make_bg_one fw-bolder rounded-pill text-white" data-mdb-ripple-init>from ₦850,000*</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+        <!-- blog section end-->
+
+
+        <!-- full banner section start -->
+
+
+
+        <!-- about section start -->
+        <section class="asection-b-space mt-3 mt-lg-5 py-5">
+            <div class="container">
+                <div class="title-3 text-center">
+                    <span class="title-label text-capitalize make_bg_one text-white py-1 px-3" data-aos="fade-up" data-aos-duration="2000">Best</span>
+                    <div class="position-relative d-flex flex-column" data-aos="fade-up" data-aos-duration="2000"><span class="position-absolute text-center w-100 pt-4 fw-bold text-black fs-2">Emergency Taxi Call</span> <span class="make_vam_fonts display-1 make_color_one opacity-25">Service</span></div>
+                </div>
+
+                <div class="row mt-3 mt-md-4">
+                    <div class="col-12 col-lg-7">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="img-box position-relative" data-aos="flip-right" data-aos-duration="2000">
+                                    <img src="{% static 'img/emergency/1.jpg' %}" data-tilt data-tilt-perspective="110"
+                                        data-tilt-speed="400" data-tilt-max="1.2" class="img-fluid blur-up lazyload" alt="">
+                                    <div class="no-class position-absolute top-50" style="margin: -15px;">
+                                        <span class="text-capitalize make_bg_one text-white p-2">01</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="img-box position-relative" data-aos="flip-right" data-aos-duration="2000">
+                                    <img src="{% static 'img/emergency/2.jpg' %}" data-tilt data-tilt-perspective="110"
+                                        data-tilt-speed="400" data-tilt-max="1.2" class="img-fluid blur-up lazyload" alt="">
+                                    <div class="no-class position-absolute top-50" style="margin: -15px;">
+                                        <span class="text-capitalize make_bg_one text-white p-2">02</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-5 mt-3 mt-md-4">
+                        <div class="about-text" data-aos="fade-up" data-aos-duration="2000">
+                            <div>
+                                <h5 class="text-muted" data-aos="fade-up" data-aos-duration="2000"><span class="make_color_one fw-bold">New</span> Service...</h5>
+                                <h2 class="text-black fw-bold" data-aos="fade-up" data-aos-duration="2000">Call Us to Book a Taxi</h2>
+                                <p class="p-0 m-0 fs-1 make_color_one fw-bolder" data-aos="fade-up" data-aos-duration="2000">012934120</p>
+                                <p class="fs-5" data-aos="fade-up" data-aos-duration="2000">Our operators are available 24/7 to assist you with your transportation needs.</p>
+                                <div data-aos="fade-up" data-aos-duration="2000">
+                                    <button class="btn btn-danger">Discover</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- about section end -->
+
+
+        <!-- video section start -->
+        <section class="video-section parallax-img p-3 py-lg-5 text-white" data-aos="fade-up" data-aos-duration="2000">
+            <div class="container py-5">
+                <div class="row py-lg-5">
+                    <div class="col py-lg-5">
+                        <div class="basic-section text-center position-relative">
+                            <h2 class="make_dance_fonts display-4 fw-bolder" data-aos="fade-up" data-aos-duration="2000">Relax and Enjoy</h2>
+                            <h4 class="text-uppercase fw-bold" style="letter-spacing: 0.5rem;">Luxury Hotels & Best Resorts</h4>
+                            <div class="video-icon2" data-aos="fade-up" data-aos-duration="2000">
+                                <div class="play-button" data-mdb-ripple-init data-mdb-modal-init data-mdb-target="#youtubeLink">
+                                    <span class="play-triangle"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- video section end -->
+
+
+        <!-- category section start -->
+        <section class="section-b-space category-section ratio3_2 mt-3 mt-md-5 pt-5">
+            <div class="container">
+
+                <div class="title-3 text-center">
+                    <span class="title-label text-capitalize make_bg_one text-white py-1 px-3" data-aos="fade-up" data-aos-duration="2000">Best</span>
+                    <div class="position-relative d-flex flex-column" data-aos="fade-up" data-aos-duration="2000"><span class="position-absolute text-center w-100 pt-4 fw-bold text-black fs-2" data-aos="fade-up" data-aos-duration="2000">Our Special Packages</span> <span class="make_vam_fonts display-1 make_color_one opacity-25">Special</span></div>
+                </div>
+
+                <div class="owl-carousel owl-theme special mt-3 mt-md-4">
+
+                    <div class="item" data-aos="flip-right" data-aos-duration="2000">
+                        <div class="card tour-card shadow-4 tour-card-1">
+                            <!-- Image section -->
+                            <div class="bg-image position-relative text-white">
+                                <div class="card-overlay rounded">
+                                    <!-- Offer badge -->
+                                    <div class="card-body d-flex flex-column justify-content-between" style="height: 230px;">
+
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="make_bg_one rounded-pill py-1 px-3">OFFER</span>
+                                            <!-- Price badge -->
+                                            <span class="price-badge bg-white make_color_one p-1 rounded-pill">
+                                                <del class="opacity-75 me-1">₦220,000</del> <span class="fw-bolder">₦200,000</span>
+                                            </span>
+                                        
+                                            <!-- Heart icon -->
+                                            <button class="btn btn-floating btn-white" data-mdb-ripple-init> 
+                                                <i class="fas fa-heart make_color_one"></i>
+                                            </button>
+                                        </div>
+
+                                        <div>
+                                            <div class="d-flex align-items-center">
+                                                <p class="p-0 m-0 me-3 fw-bold text-truncate" style="max-width: 150px;">Romantic Getaway</p>
+                                                <div class="d-flex align-items-center text-warning small">
+                                                    <div class="star-rating me-2">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                    </div>
+                                                </div>
+                                                <p class="m-0 p-0 duration text-white fw-bold text-truncate" style="max-width: 100px;">3 days</p>
+                                            </div>
+                                        
+                                            <p class="text-light opacity-75 small p-0 m-0">
+                                                Enjoy a romantic escape with your loved one.
+                                            </p>
+                                        </div>
+                                    </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item" data-aos="flip-right" data-aos-duration="2000">
+                        <div class="card tour-card shadow-4 tour-card-2">
+                            <!-- Image section -->
+                            <div class="bg-image position-relative text-white">
+                                <div class="card-overlay rounded">
+                                    <!-- Offer badge -->
+                                    <div class="card-body d-flex flex-column justify-content-between" style="height: 230px;">
+
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="make_bg_one rounded-pill py-1 px-3">OFFER</span>
+                                            <!-- Price badge -->
+                                            <span class="price-badge bg-white make_color_one p-1 rounded-pill">
+                                                <del class="opacity-75 me-1">₦180,000</del> <span class="fw-bolder">₦160,000</span>
+                                            </span>
+                                        
+                                            <!-- Heart icon -->
+                                            <button class="btn btn-floating btn-white" data-mdb-ripple-init> 
+                                                <i class="fas fa-heart make_color_one"></i>
+                                            </button>
+                                        </div>
+
+                                        <div>
+                                            <div class="d-flex align-items-center">
+                                                <p class="p-0 m-0 me-3 fw-bold text-truncate" style="max-width: 150px;">Family Adventure</p>
+                                                <div class="d-flex align-items-center text-warning small">
+                                                    <div class="star-rating me-2">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                    </div>
+                                                </div>
+                                                <p class="p-0 m-0 duration text-white fw-bold text-truncate" style="max-width: 100px;">5 days</p>
+                                            </div>
+                                        
+                                            <p class="text-light opacity-75 small p-0 m-0">
+                                                Create unforgettable memories with your family
+                                            </p>
+                                        </div>
+                                    </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item" data-aos="flip-right" data-aos-duration="2000">
+                        <div class="card tour-card shadow-4 tour-card-3">
+                            <!-- Image section -->
+                            <div class="bg-image position-relative text-white">
+                                <div class="card-overlay rounded">
+                                    <!-- Offer badge -->
+                                    <div class="card-body d-flex flex-column justify-content-between" style="height: 230px;">
+
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="make_bg_one rounded-pill py-1 px-3">OFFER</span>
+                                            <!-- Price badge -->
+                                            <span class="price-badge bg-white make_color_one p-1 rounded-pill">
+                                                <del class="opacity-75 me-1">₦200,000</del> <span class="fw-bolder">₦180,000</span>
+                                            </span>
+                                        
+                                            <!-- Heart icon -->
+                                            <button class="btn btn-floating btn-white" data-mdb-ripple-init> 
+                                                <i class="fas fa-heart make_color_one"></i>
+                                            </button>
+                                        </div>
+
+                                        <div>
+                                            <div class="d-flex align-items-center small">
+                                                <p class="p-0 m-0 me-2 fw-bold text-truncate" style="max-width: 100px;">Business Class Upgrade</p>
+                                                <div class="d-flex align-items-center text-warning">
+                                                    <div class="star-rating me-2">
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="far fa-star"></i>
+                                                    </div>
+                                                </div>
+                                                <p class="p-0 m-0 duration text-white fw-bold text-truncate" style="max-width: 100px;">Flexible Dates</p>
+                                            </div>
+                                        
+                                            <p class="text-light opacity-75 small p-0 m-0">
+                                                Travel in comfort and style with our business class upgrades.
+                                            </p>
+                                        </div>
+                                    </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item" data-aos="flip-right" data-aos-duration="2000">
+                        <div class="card tour-card shadow-4 tour-card-2">
+                            <!-- Image section -->
+                            <div class="bg-image position-relative text-white">
+                                <div class="card-overlay rounded">
+                                    <!-- Offer badge -->
+                                    <div class="card-body d-flex flex-column justify-content-between" style="height: 230px;">
+
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="make_bg_one rounded-pill py-1 px-3">OFFER</span>
+                                            <!-- Price badge -->
+                                            <span class="price-badge bg-white make_color_one p-1 rounded-pill">
+                                                <del class="opacity-75 me-1">₦150,000</del> <span class="fw-bolder">₦120,000</span>
+                                            </span>
+                                        
+                                            <!-- Heart icon -->
+                                            <button class="btn btn-floating btn-white" data-mdb-ripple-init> 
+                                                <i class="fas fa-heart make_color_one"></i>
+                                            </button>
+                                        </div>
+
+                                        <div>
+                                            <div class="d-flex align-items-center small">
+                                                <p class="p-0 m-0 me-2 fw-bold text-truncate" style="max-width: 150px;">Weekend Escape</p>
+                                                <div class="d-flex align-items-center text-warning">
+                                                    <div class="star-rating me-2">
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="far fa-star"></i>
+                                                    </div>
+                                                </div>
+                                                <p class="p-0 m-0 duration text-white fw-bold text-truncate" style="max-width: 100px;">Flexible Dates</p>
+                                            </div>
+                                        
+                                            <p class="text-light opacity-75 small p-0 m-0">
+                                                Take a short break and rejuvenate over the weekend.
+                                            </p>
+                                        </div>
+                                    </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </section>
+        <!-- category section end -->
+
+
+        <!-- gallery section strat -->
+        <section class="ratio3_2  mt-3 mt-md-5 py-5">
+            <div class="">
+                <div class="title-3 text-center">
+                    <span class="title-label text-capitalize make_bg_one text-white py-1 px-3" data-aos="fade-up" data-aos-duration="2000">Our</span>
+                    <div class="position-relative d-flex flex-column" data-aos="fade-up" data-aos-duration="2000"><span class="position-absolute text-center w-100 pt-4 fw-bold text-black fs-2" data-aos="fade-up" data-aos-duration="2000">Gallery</span> <span class="make_vam_fonts display-1 make_color_one opacity-25">Gallery</span></div>
+                </div>
+                
+                <div class="owl-carousel owl-theme gallery mt-3 mt-md-4">
+
+                    <div class="item gallery_img_one " data-aos="flip-right" data-aos-duration="2000">
+                        <div class="gallery_content text-white !important p-3">
+                            <h6 class="fw-bolder text-white !important">2 Nights Getaway Promotion Package</h6>
+                            <a href="#" class="btn text-white fw-bolder rounded-0 make_bg_one">View</a>
+                        </div>
+                    </div>
+
+                    <div class="item gallery_img_two" data-aos="flip-right" data-aos-duration="2000">
+                        <div class="gallery_content text-white p-3">
+                            <h6 class="fw-bolder text-white !important">1 Night Beach Promotion Package</h6>
+                            <a href="#" class="btn text-white fw-bolder rounded-0 make_bg_one">View</a>
+                        </div>
+                    </div>
+
+                    <div class="item gallery_img_three" data-aos="flip-right" data-aos-duration="2000">
+                        <div class="gallery_content text-white p-3">
+                            <h6 class="fw-bolder text-white !important">Free Lunch for 3 Days Package</h6>
+                            <a href="#" class="btn text-white fw-bolder rounded-0 make_bg_one">View</a>
+                        </div>
+                    </div>
+
+                    <div class="item gallery_img_four" data-aos="flip-right" data-aos-duration="2000">
+                        <div class="gallery_content text-white p-3">
+                            <h6 class="fw-bolder text-white !important">2 Nights Getaway Promotion Package</h6>
+                            <a href="#" class="btn text-white fw-bolder rounded-0 make_bg_one">View</a>
+                        </div>
+                    </div>
+
+                    <div class="item gallery_img_five" data-aos="flip-right" data-aos-duration="2000">
+                        <div class="gallery_content text-white p-3">
+                            <h6 class="fw-bolder text-white !important">2 Nights Getaway Promotion Package</h6>
+                            <a href="#" class="btn text-white fw-bolder rounded-0 make_bg_one">View</a>
+                        </div>
+                    </div >
+                    </div> <div id="faq"></div>
+                </div>
+            <div class="title-3 text-center mt-5 mb-3">
+                <span class="title-label text-capitalize make_bg_one text-white py-1 px-3" data-aos="fade-up" data-aos-duration="2000">
+                    Frequently
+                </span>
+                <div class="position-relative d-flex flex-column" data-aos="fade-up" data-aos-duration="2000">
+                    <span class="position-absolute text-center w-100 pt-4 fw-bold text-black fs-2">
+                        Asked Questions
+                    </span>
+                    <span class="make_vam_fonts display-1 make_color_one opacity-25">
+                        FAQ
+                    </span>
+                </div>
+            </div>
+        
+            {% include 'super/faq.html' %}
+        </section>
+        <!-- gallery section end -->
+
+
+        <!-- Subscribe section start -->
+            <section class="subscribe_section py-5 bg-light text-center text-md-start">
+            <div class="container">
+                <div class="row align-items-center justify-content-center justify-content-md-between">
+                
+                <!-- Heading / Text -->
+                <div class="col-12 col-md-6 col-lg-5 mb-4 mb-md-0">
+                    <h2 class="fw-bold text-uppercase display-5 mb-3">
+                    SUBSCRIBE TO
+                    <span class="d-inline-block bg-danger text-white rounded-pill px-4 py-2 ms-2 align-middle" style="font-size: 0.7em; vertical-align: middle;">
+                        OUR NEWS
+                    </span>
+                    </h2>
+                    <p class="text-muted lead fs-5">
+                    Subscribe and receive our newsletters to follow the news about our fresh and fantastic travel products.
+                    </p>
+                </div>
+
+                <!-- Form -->
+                <div class="col-12 col-md-6 col-lg-5">
+                    <form class="d-flex flex-column flex-sm-row gap-3 justify-content-center justify-content-md-end">
+                    <input
+                        type="email"
+                        class="form-control form-control-lg rounded-pill py-3 px-4 border-0 shadow-sm"
+                        placeholder="Enter Your Email"
+                        aria-label="Enter your email for newsletter"
+                        required
+                    >
+                    <button
+                        type="submit"
+                        class="btn btn-danger btn-lg rounded-pill fw-bold px-5 py-3 shadow-sm"
+                    >
+                        SUBSCRIBE
+                    </button>
+                    </form>
+                </div>
+
+                </div>
+            </div>
+            </section>
+        <!-- Subscribe section end -->
+
+    </div>
+    <!-- Modal -->
+
+    
+    <div id="preloader">
+        <img src="{% static 'img/loader.gif' %}" alt="" width="20%">
+    </div>
+
+
+{% endblock content %}
+
+
+
+{% block jsfiles %}
+
+    <script>
+        $(document).ready(function(){
+
+            var owl = $(".clients, .destinations, .special");
+
+            owl.owlCarousel({
+                loop: true,
+                margin: 20,
+                nav: false,
+                dots: false,
+                autoplay: true,
+                // autoplayTimeout: 3000,
+                autoplayHoverPause: true,
+                responsive:{
+                    0:{ items: 1 },
+                    600:{ items: 2 },
+                    1000:{ items: 3 }
+                }
+            });
+
+            // Custom navigation button events
+            $(".owl-start").click(function() {
+                owl.trigger("prev.owl.carousel");
+            });
+
+            $(".owl-end").click(function() {
+                owl.trigger("next.owl.carousel");
+            });
+        });
+
+        $(document).ready(function(){
+
+            var owl = $(".gallery");
+
+            owl.owlCarousel({
+                nav: false,
+                dots: false,
+                responsive:{
+                    0:{ items: 1 },
+                    600:{ items: 2 },
+                    1000:{ items: 4 }
+                }
+            });
+
+            // Custom navigation button events
+            $(".owl-start").click(function() {
+                owl.trigger("prev.owl.carousel");
+            });
+
+            $(".owl-end").click(function() {
+                owl.trigger("next.owl.carousel");
+            });
+        });
+
+    
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Get timer elements
+            const daysElement = document.getElementById("days");
+            const hoursElement = document.getElementById("hours");
+            const minutesElement = document.getElementById("minutes");
+            const secondsElement = document.getElementById("seconds");
+            
+            // Total duration in seconds (7 days)
+            const totalDuration = 7 * 24 * 60 * 60; // 7 days in seconds
+            
+            // Function to update the countdown timer
+            function updateCountdown() {
+              // Get current timestamp
+              const now = new Date().getTime();
+              
+              // Calculate how far we are in the 7-day cycle
+              const secondsElapsed = Math.floor(now / 1000) % totalDuration;
+              const secondsRemaining = totalDuration - secondsElapsed;
+              
+              // Calculate days, hours, minutes, and seconds
+              const days = Math.floor(secondsRemaining / (24 * 60 * 60));
+              const hours = Math.floor((secondsRemaining % (24 * 60 * 60)) / (60 * 60));
+              const minutes = Math.floor((secondsRemaining % (60 * 60)) / 60);
+              const seconds = Math.floor(secondsRemaining % 60);
+              
+              // Update the HTML elements
+              if (daysElement) daysElement.textContent = days.toString().padStart(2, '0');
+              if (hoursElement) hoursElement.textContent = hours.toString().padStart(2, '0');
+              if (minutesElement) minutesElement.textContent = minutes.toString().padStart(2, '0');
+              if (secondsElement) secondsElement.textContent = seconds.toString().padStart(2, '0');
+            }
+            
+            // Update the countdown every second
+            updateCountdown(); // Initial call
+            setInterval(updateCountdown, 1000);
+          });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            let originCol = $(".origin_col");
+            let autocompleteBox = $(".autocomplete_box_origin");
+            let autocompleteBox2 = $(".autocomplete_box_destination");
+    
+            // Hide autocomplete box by default
+            autocompleteBox.hide();
+    
+            // Show autocomplete box when clicking on origin_col
+            originCol.click(function (event) {
+                autocompleteBox.show();
+                autocompleteBox2.hide()
+            });
+    
+            // Hide autocomplete box when clicking outside
+            $(document).click(function (event) {
+                if (!originCol.is(event.target) && !autocompleteBox.is(event.target) && autocompleteBox.has(event.target).length === 0) {
+                    autocompleteBox.hide();
+                }
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            let destinationCol = $(".destination_col");
+            let autocompleteBox = $(".autocomplete_box_destination");
+            let autocompleteBox2 = $(".autocomplete_box_origin");
+    
+            // Hide autocomplete box by default
+            autocompleteBox.hide();
+    
+            // Show autocomplete box when clicking on origin_col
+            destinationCol.click(function (event) {
+                autocompleteBox.show();
+                autocompleteBox2.hide()
+            });
+    
+            // Hide autocomplete box when clicking outside
+            $(document).click(function (event) {
+                if (!destinationCol.is(event.target) && !autocompleteBox.is(event.target) && autocompleteBox.has(event.target).length === 0) {
+                    autocompleteBox.hide();
+                }
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Get flight date elements
+            const flightDepartureSpan = document.getElementById("departureSpan");
+            const flightReturnSpan = document.getElementById("returnSpan");
+            const flightDepartureDate = document.getElementById("departureDate");
+            const flightReturnDate = document.getElementById("ReturnDate");
+            
+            // Get hotel date elements
+            const hotelCheckinSpan = document.getElementById("hotelcheckinSpan");
+            const hotelCheckoutSpan = document.getElementById("hotelcheckoutSpan");
+            const hotelCheckinDate = document.getElementById("hotel_checkin");
+            const hotelCheckoutDate = document.getElementById("hotel_checkout");
+            
+            // Function to format date as "10 Feb"
+            function formatDate(dateString) {
+            const date = new Date(dateString);
+            if (isNaN(date)) return "-"; // Handle invalid dates
+            const day = date.getDate();
+            const month = date.toLocaleString("en-US", { month: "short" });
+            return `${day} ${month}`;
+            }
+            
+            // Function to open date picker
+            function openDatePicker(inputElement) {
+            inputElement.focus(); // Focus on the input element
+            inputElement.click(); // Trigger the click event to open the date picker
+            }
+            
+            // Function to set up date picker functionality
+            function setupDatePicker(spanElement, inputElement) {
+            // Click event for span
+            spanElement.addEventListener("click", function() {
+                openDatePicker(inputElement);
+            });
+            
+            // Listen for changes in input
+            inputElement.addEventListener("change", function() {
+                if (inputElement.value) {
+                spanElement.textContent = formatDate(inputElement.value);
+                }
+            });
+            }
+            
+            // Set up flight date pickers
+            if (flightDepartureSpan && flightDepartureDate) {
+            setupDatePicker(flightDepartureSpan, flightDepartureDate);
+            }
+            
+            if (flightReturnSpan && flightReturnDate) {
+            setupDatePicker(flightReturnSpan, flightReturnDate);
+            }
+            
+            // Set up hotel date pickers
+            if (hotelCheckinSpan && hotelCheckinDate) {
+            setupDatePicker(hotelCheckinSpan, hotelCheckinDate);
+            }
+            
+            if (hotelCheckoutSpan && hotelCheckoutDate) {
+            setupDatePicker(hotelCheckoutSpan, hotelCheckoutDate);
+            }
+        });
+    </script>
+
+    <!-- Passanger Starts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const downMultiple = document.querySelector('.down_multiple');
+            const passengerCategory = document.querySelector('.passenger-category');
+            const doneButton = document.querySelector('.passanger_btn');
+            const passengerControl = document.querySelector('.passanger_control2'); // New: Target the passenger control button
+        
+            // Show when clicking on down_multiple
+            downMultiple.addEventListener('click', function () {
+                passengerCategory.classList.remove('d-none');
+                passengerCategory.classList.add('d-block');
+            });
+
+            // Hide when clicking on the Done button
+            doneButton.addEventListener('click', function () {
+                passengerCategory.classList.remove('d-block');
+                passengerCategory.classList.add('d-none');
+            });
+
+            // Hide when clicking on the Done button
+
+            // Function to handle the span selection for each category
+            function handleSelection(category) {
+                const spans = category.querySelectorAll('span');
+        
+                spans.forEach(span => {
+                    span.addEventListener('click', function () {
+                        // Remove the 'selected_number' class from all spans in this category
+                        spans.forEach(s => s.classList.remove('selected_number'));
+        
+                        // Add the 'selected_number' class to the clicked span
+                        this.classList.add('selected_number');
+                    });
+                });
+            }
+        
+            // Apply the selection behavior to each category
+            document.querySelectorAll('.passenger-category .options').forEach(handleSelection);
+        
+            // Select the div elements containing the number options
+            const adultOptions = document.querySelectorAll('.options.adults span');
+            const childOptions = document.querySelectorAll('.options.children span');
+            const infantOptions = document.querySelectorAll('.options.infants span');
+        
+            // Select the summary display spans
+            const summaryAdults = document.querySelector('.passenger-summary .adults-count');
+            const summaryChildren = document.querySelector('.passenger-summary .children-count');
+            const summaryInfants = document.querySelector('.passenger-summary .infants-count');
+        
+            // Select the hidden input fields
+            const inputAdults = document.querySelector('input[name="adults"]');
+            const inputChildren = document.querySelector('input[name="child"]');
+            const inputInfants = document.querySelector('input[name="infants"]');
+        
+            let selectedAdults = 1; // Default value
+            let selectedChildren = 0;
+            let selectedInfants = 0;
+        
+            // Function to update the passenger control button
+            function updatePassengerControl() {
+                const totalPassengers = selectedAdults + selectedChildren + selectedInfants;
+                passengerControl.innerHTML = `${totalPassengers} Passenger${totalPassengers !== 1 ? 's' : ''} <i class="fa-solid fa-angle-down ms-2"></i>`;
+            }
+        
+            function updatePassengerSelection(category, selectedValue) {
+                if (category === 'adults') selectedAdults = selectedValue;
+                if (category === 'children') selectedChildren = selectedValue;
+                if (category === 'infants') selectedInfants = selectedValue;
+        
+                // Ensure total passengers do not exceed 9
+                let totalPassengers = selectedAdults + selectedChildren + selectedInfants;
+                if (totalPassengers > 9) {
+                    selectedInfants = Math.min(selectedInfants, 9 - (selectedAdults + selectedChildren));
+                }
+        
+                // Ensure infants do not exceed adults
+                if (selectedInfants > selectedAdults) {
+                    selectedInfants = selectedAdults;
+                }
+        
+                // Update UI and hidden inputs
+                updateUI();
+                updateSummary();
+                updateHiddenInputs();
+                updatePassengerControl(); // New: Update the passenger control button
+            }
+        
+            function updateUI() {
+                updateCategoryUI(adultOptions, selectedAdults, 'adults');
+                updateCategoryUI(childOptions, selectedChildren, 'children');
+                updateCategoryUI(infantOptions, selectedInfants, 'infants');
+            }
+        
+            function updateCategoryUI(elements, selectedValue, category) {
+                elements.forEach(span => {
+                    const value = parseInt(span.textContent);
+        
+                    // Disable options that exceed allowed limit
+                    if (category === 'adults') {
+                        span.classList.toggle('disabled', value + selectedChildren + selectedInfants > 9);
+                    } else if (category === 'children') {
+                        span.classList.toggle('disabled', value + selectedAdults + selectedInfants > 9);
+                    } else if (category === 'infants') {
+                        span.classList.toggle('disabled', value > selectedAdults || value + selectedAdults + selectedChildren > 9);
+                    }
+        
+                    // Highlight the selected number
+                    span.classList.toggle('selected', value === selectedValue);
+                });
+            }
+        
+            // Function to update the passenger summary text
+            function updateSummary() {
+                summaryAdults.textContent = `${selectedAdults} ADT`;
+                summaryChildren.textContent = `${selectedChildren} CHD`;
+                summaryInfants.textContent = `${selectedInfants} INF`;
+            }
+        
+            // Function to update hidden input values (stores only numbers)
+            function updateHiddenInputs() {
+                inputAdults.value = selectedAdults;
+                inputChildren.value = selectedChildren;
+                inputInfants.value = selectedInfants;
+            }
+        
+            // Add event listeners to each span element
+            adultOptions.forEach(span => {
+                span.addEventListener('click', () => {
+                    if (!span.classList.contains('disabled')) {
+                        updatePassengerSelection('adults', parseInt(span.textContent));
+                    }
+                });
+            });
+        
+            childOptions.forEach(span => {
+                span.addEventListener('click', () => {
+                    if (!span.classList.contains('disabled')) {
+                        updatePassengerSelection('children', parseInt(span.textContent));
+                    }
+                });
+            });
+        
+            infantOptions.forEach(span => {
+                span.addEventListener('click', () => {
+                    if (!span.classList.contains('disabled')) {
+                        updatePassengerSelection('infants', parseInt(span.textContent));
+                    }
+                });
+            });
+        
+            // Initial UI update
+            updateUI();
+            updateSummary();
+            updateHiddenInputs();
+            updatePassengerControl(); // New: Initialize the passenger control button
+        });
+    </script>
+
+    <script>
+        const passengerControl = document.querySelector('.passanger_control2');
+            const passengerCategory = document.querySelector('.passanger-category2');
+            const doneButton = document.querySelector('.passanger_btn2');
+
+            passengerControl.addEventListener('click', function () {
+                passengerCategory.classList.remove('d-none');
+                passengerCategory.classList.add('d-block');
+            });
+
+            doneButton.addEventListener('click', function () {
+                passengerCategory.classList.remove('d-block');
+                passengerCategory.classList.add('d-none');
+            });
+    </script>
+    <!-- Passanger Stops -->
+
+    <script>
+        $(document).ready(function () {
+            // Toggle the dropdown menu visibility
+            $('.passanger_control').click(function () {
+                let $dropdown = $('.passanger_control_box');
+
+                if ($dropdown.hasClass('d-none')) {
+                    $dropdown.removeClass('d-none').addClass('d-flex');
+                } else {
+                    $dropdown.removeClass('d-flex').addClass('d-none');
+                }
+
+                $('.determine').removeClass('d-flex').addClass('d-none')
+                $('.class_control_box').removeClass('d-flex').addClass('d-none')
+            });
+
+            
+
+            // Function to calculate the total number of passengers
+            function updatePassengerCount() {
+                let adults = parseInt($('#adults').val());
+                let children = parseInt($('#child').val());
+                let infants = parseInt($('#infants').val());
+
+                // Calculate the total passengers
+                let totalPassengers = adults + children + infants;
+
+                // Update the button text with the total passengers
+                $('.passanger_control').html(totalPassengers + ' Passenger <i class="fa-solid fa-angle-down ms-2"></i>');
+
+                $('.passanger_control_box').removeClass('d-flex').addClass('d-none');
+            }
+
+            // Update passenger count whenever a select value changes
+            $('.passanger_control_box select').change(function () {
+                updatePassengerCount();
+            });
+
+            // Set the initial passenger count on page load
+            updatePassengerCount();
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const preloader = document.getElementById('preloader');
+            
+            document.getElementById('form_id').addEventListener('submit', function(event) {
+                preloader.style.display = 'flex';
+                sessionStorage.setItem('preloaderVisible', 'true');
+            });
+
+            function hidePreloader() {
+                preloader.style.display = 'none';
+                sessionStorage.removeItem('preloaderVisible');
+            }
+
+            window.onload = function() {
+                if (sessionStorage.getItem('preloaderVisible') === 'false') {
+                    preloader.style.display = 'flex';
+                }
+            };
+
+            document.addEventListener('filteringComplete', function() {
+                hidePreloader();
+            });
+        });
+
+        document.querySelectorAll('.nav-currency').forEach(function(dropdown) {
+        dropdown.addEventListener('change', function() {
+            const selectedCurrency = this.value;
+            document.getElementById('currency_input').value = selectedCurrency;
+        });
+    });
+    </script>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const travelType = document.getElementById("travel_type");
+            const returnSection = document.getElementById("returnSection");
+
+            function toggleReturnField() {
+                if (travelType.value === "round_trip") {
+                    returnSection.style.display = "block";
+                } else {
+                    returnSection.style.display = "none";
+                }
+            }
+
+            // Run on load
+            toggleReturnField();
+
+            // Run when dropdown changes
+            travelType.addEventListener("change", toggleReturnField);
+        });
+    </script>
+
+    <script>
+        const departureInput = document.getElementById("departureDate");
+        const returnInput = document.getElementById("returnDate");
+
+        const departureSpan = document.getElementById("departureSpan");
+        const returnSpan = document.getElementById("returnSpan");
+
+        departureInput.addEventListener("change", function() {
+            departureSpan.textContent = this.value;
+        });
+
+        returnInput.addEventListener("change", function() {
+            returnSpan.textContent = this.value;
+        });
+    </script>
+
+
+
+    <script src="{% static 'js/dashboard/dashboard.js' %}"></script>
+    <script src="{% static 'js/dashboard/autocomplete.js' %}"></script>
+    <!-- jQuery -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
+
+    <!-- Owl Carousel JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+{% endblock jsfiles %}  

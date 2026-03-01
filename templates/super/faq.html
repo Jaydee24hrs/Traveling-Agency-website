@@ -1,0 +1,365 @@
+{% load static %}
+{% block cssfiles %}
+<style>
+  .faq_hero {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    padding: 4rem 0 3rem;
+  }
+  .faq_container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .faq_item {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    transition: box-shadow 0.25s ease;
+  }
+  .faq_item:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  }
+  .faq_question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 1.4rem;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.2s ease;
+  }
+  .faq_question:hover {
+    background: #f8f8f8;
+  }
+  .faq_question_text {
+    font-weight: 700;
+    font-size: 0.94rem;
+    color: #1a1a2e;
+    margin: 0;
+    padding-right: 1rem;
+  }
+  .faq_toggle_icon {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    background: rgba(239,63,62,0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s ease;
+  }
+  .faq_toggle_icon i {
+    color: #ef3f3e;
+    font-size: 0.7rem;
+    transition: transform 0.25s ease;
+  }
+  .faq_item.active .faq_toggle_icon {
+    background: #ef3f3e;
+  }
+  .faq_item.active .faq_toggle_icon i {
+    color: white;
+    transform: rotate(180deg);
+  }
+  .faq_answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.35s ease;
+    padding: 0 1.4rem;
+  }
+  .faq_item.active .faq_answer {
+    max-height: 380px;
+    padding: 0 1.4rem 1.2rem;
+  }
+  .faq_answer_text {
+    color: #555;
+    line-height: 1.65;
+    font-size: 0.88rem;
+    margin: 0;
+  }
+  .faq_category_badge {
+    display: inline-block;
+    background: rgba(239,63,62,0.08);
+    color: #ef3f3e;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    padding: 4px 11px;
+    border-radius: 20px;
+    margin-bottom: 1.4rem;
+  }
+
+  /* Grid layout – 3 columns max */
+  .faq-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.2rem;
+  }
+
+  .faq-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .faq-column .faq_category_badge:first-child {
+    margin-top: 0;
+  }
+
+  @media (min-width: 768px) {
+    .faq-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (min-width: 992px) {
+    .faq-grid {
+      grid-template-columns: 1fr 1fr 1fr;   /* 3 columns on desktop */
+    }
+  }
+
+  /* Other styles */
+  /* .nav-link.active{
+    color: #ef3f3e !important;
+    border-right: 2px solid #ef3f3e !important;
+    font-weight: bold !important;
+  } */
+  .faq_bg{
+    background-image: url("{% static 'img/inner-bg.jpg' %}");
+    display: grid;
+    place-items: center;
+    background-position:center;
+    background-size:cover;
+    height: 68vh;
+  }
+  .breadcrumb-item+.breadcrumb-item::before{
+    color: white !important;
+    content: ">>";
+  }
+  .make_bg{
+    background: #ffffff28;
+  }
+  h6{
+    color: black;
+  }
+</style>
+{% endblock cssfiles %}
+
+{% block content %}
+
+<!-- FAQ Content -->
+<div class="container py-5">
+  <div class="faq_container">
+
+    <div class="faq-grid">
+
+      <!-- COLUMN 1 (Q1–Q5) -->
+      <div class="faq-column">
+
+        <!-- <div class="faq_category_badge" data-aos="fade-up">BOOKING & CUSTOMIZATION</div> -->
+
+        <div class="faq_item" data-aos="fade-up" data-aos-duration="1500">
+          <div class="faq_question">
+            <p class="faq_question_text">Q1: Can I customize my travel package?</p>
+            <div class="faq_toggle_icon"><i class="fas fa-chevron-down"></i></div>
+          </div>
+          <div class="faq_answer">
+            <p class="faq_answer_text">Absolutely! Every Jomivic Travel package can be tailored to your destinations, accommodations, activities, and travel dates to match your preferences and budget.</p>
+          </div>
+        </div>
+
+        <div class="faq_item" data-aos="fade-up" data-aos-duration="1550">
+          <div class="faq_question">
+            <p class="faq_question_text">Q2: How do I book a trip?</p>
+            <div class="faq_toggle_icon"><i class="fas fa-chevron-down"></i></div>
+          </div>
+          <div class="faq_answer">
+            <p class="faq_answer_text">Booking is easy! Choose a package online or contact our travel experts. Once your itinerary is finalized, secure your trip using our safe online payment system.</p>
+          </div>
+        </div>
+
+        <div class="faq_item" data-aos="fade-up" data-aos-duration="1600">
+          <div class="faq_question">
+            <p class="faq_question_text">Q3: Do you offer group bookings?</p>
+            <div class="faq_toggle_icon"><i class="fas fa-chevron-down"></i></div>
+          </div>
+          <div class="faq_answer">
+            <p class="faq_answer_text">Yes! We provide custom packages for families, friends, or corporate groups. Contact us to plan your group trip.</p>
+          </div>
+        </div>
+
+        <div class="faq_item" data-aos="fade-up" data-aos-duration="1650">
+          <div class="faq_question">
+            <p class="faq_question_text">Q4: Can I extend my trip or add extra destinations?</p>
+            <div class="faq_toggle_icon"><i class="fas fa-chevron-down"></i></div>
+          </div>
+          <div class="faq_answer">
+            <p class="faq_answer_text">Many of our packages are flexible. Let us know your desired changes, and we'll adjust your itinerary accordingly.</p>
+          </div>
+        </div>
+
+        <div class="faq_item" data-aos="fade-up" data-aos-duration="1700">
+          <div class="faq_question">
+            <p class="faq_question_text">Q5: Is my booking secure?</p>
+            <div class="faq_toggle_icon"><i class="fas fa-chevron-down"></i></div>
+          </div>
+          <div class="faq_answer">
+            <p class="faq_answer_text">Absolutely. We use secure payment gateways and trusted partners to ensure your information and payment are fully protected.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- COLUMN 2 (Q6–Q10) -->
+      <div class="faq-column">
+
+        <!-- <div class="faq_category_badge" data-aos="fade-up">PAYMENT & SECURITY</div> -->
+
+        <div class="faq_item" data-aos="fade-up" data-aos-duration="1500">
+          <div class="faq_question">
+            <p class="faq_question_text">Q6: What payment methods do you accept?</p>
+            <div class="faq_toggle_icon"><i class="fas fa-chevron-down"></i></div>
+          </div>
+          <div class="faq_answer">
+            <p class="faq_answer_text">We accept all major credit/debit cards, online banking, and popular digital wallets. Custom arrangements are possible for group trips.</p>
+          </div>
+        </div>
+
+        <!-- <div class="faq_category_badge mt-4" data-aos="fade-up">CANCELLATION & REFUNDS</div> -->
+
+        <div class="faq_item" data-aos="fade-up" data-aos-duration="1550">
+          <div class="faq_question">
+            <p class="faq_question_text">Q7: Do you offer refunds or cancellations?</p>
+            <div class="faq_toggle_icon"><i class="fas fa-chevron-down"></i></div>
+          </div>
+          <div class="faq_answer">
+            <p class="faq_answer_text">Policies vary by package and supplier. Contact us promptly if your plans change, and we'll guide you through available options. View our full <a href="{% url 'refund_and_cancellation' %}" class="text-danger fw-semibold">Refund & Cancellation Policy</a>.</p>
+          </div>
+        </div>
+
+        <!-- <div class="faq_category_badge mt-4" data-aos="fade-up">TRAVEL DOCUMENTS & INSURANCE</div> -->
+
+        <div class="faq_item" data-aos="fade-up" data-aos-duration="1600">
+          <div class="faq_question">
+            <p class="faq_question_text">Q8: Do you help with visas and travel documents?</p>
+            <div class="faq_toggle_icon"><i class="fas fa-chevron-down"></i></div>
+          </div>
+          <div class="faq_answer">
+            <p class="faq_answer_text">Yes! Our team can guide you through visa requirements and document preparation for most destinations.</p>
+          </div>
+        </div>
+
+        <div class="faq_item" data-aos="fade-up" data-aos-duration="1650">
+          <div class="faq_question">
+            <p class="faq_question_text">Q9: Do I need travel insurance?</p>
+            <div class="faq_toggle_icon"><i class="fas fa-chevron-down"></i></div>
+          </div>
+          <div class="faq_answer">
+            <p class="faq_answer_text">While optional, travel insurance is strongly recommended to protect against delays, emergencies, or unforeseen events.</p>
+          </div>
+        </div>
+
+        <div class="faq_item" data-aos="fade-up" data-aos-duration="1700">
+          <div class="faq_question">
+            <p class="faq_question_text">Q10: Can I get help after booking?</p>
+            <div class="faq_toggle_icon"><i class="fas fa-chevron-down"></i></div>
+          </div>
+          <div class="faq_answer">
+            <p class="faq_answer_text">Of course! Our support team is available before, during, and after your trip for questions, changes, or emergencies.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- COLUMN 3 (Q11–Q15) -->
+      <div class="faq-column">
+
+        <!-- <div class="faq_category_badge" data-aos="fade-up">SUPPORT & ASSISTANCE</div> -->
+
+        <div class="faq_item" data-aos="fade-up" data-aos-duration="1500">
+          <div class="faq_question">
+            <p class="faq_question_text">Q11: What if I have special requirements (diet, accessibility, etc.)?</p>
+            <div class="faq_toggle_icon"><i class="fas fa-chevron-down"></i></div>
+          </div>
+          <div class="faq_answer">
+            <p class="faq_answer_text">We can accommodate most special needs. Let us know during booking so we can make the necessary arrangements.</p>
+          </div>
+        </div>
+
+        <!-- <div class="faq_category_badge mt-4" data-aos="fade-up">PACKAGE DETAILS</div> -->
+
+        <div class="faq_item" data-aos="fade-up" data-aos-duration="1550">
+          <div class="faq_question">
+            <p class="faq_question_text">Q12: Are flights included in your packages?</p>
+            <div class="faq_toggle_icon"><i class="fas fa-chevron-down"></i></div>
+          </div>
+          <div class="faq_answer">
+            <p class="faq_answer_text">Some packages include flights, while others are land-only. Check each package description or contact us for details.</p>
+          </div>
+        </div>
+
+        <div class="faq_item" data-aos="fade-up" data-aos-duration="1600">
+          <div class="faq_question">
+            <p class="faq_question_text">Q13: How are accommodations selected?</p>
+            <div class="faq_toggle_icon"><i class="fas fa-chevron-down"></i></div>
+          </div>
+          <div class="faq_answer">
+            <p class="faq_answer_text">We select hotels and stays based on quality, location, and traveler feedback. Customization is possible to match your preferences.</p>
+          </div>
+        </div>
+
+        <div class="faq_item" data-aos="fade-up" data-aos-duration="1650">
+          <div class="faq_question">
+            <p class="faq_question_text">Q14: Are local guides included?</p>
+            <div class="faq_toggle_icon"><i class="fas fa-chevron-down"></i></div>
+          </div>
+          <div class="faq_answer">
+            <p class="faq_answer_text">Many packages include professional local guides who provide cultural insights and ensure a smooth experience.</p>
+          </div>
+        </div>
+
+        <div class="faq_item" data-aos="fade-up" data-aos-duration="1700">
+          <div class="faq_question">
+            <p class="faq_question_text">Q15: What about meals and dietary preferences?</p>
+            <div class="faq_toggle_icon"><i class="fas fa-chevron-down"></i></div>
+          </div>
+          <div class="faq_answer">
+            <p class="faq_answer_text">Meal plans vary by package. Options may include breakfast, half-board, or full-board. Vegetarian and other dietary preferences can usually be accommodated.</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Still have questions CTA -->
+    <div class="text-center mt-5 p-4 rounded-4" style="background: linear-gradient(135deg, rgba(239,63,62,0.08) 0%, rgba(239,63,62,0.02) 100%); border: 1px solid rgba(239,63,62,0.15);" data-aos="fade-up">
+      <h4 class="fw-bold text-dark mb-2">Still have questions?</h4>
+      <p class="text-muted mb-3">Our team is here to help. Reach out anytime.</p>
+      <a href="{% url 'contact' %}" class="btn make_bg_one text-white fw-bold px-4">Contact Us</a>
+    </div>
+
+  </div>
+</div>
+{% endblock content %}
+
+{% block jsfiles %}
+<script>
+// FAQ Accordion - only one open at a time
+document.querySelectorAll('.faq_question').forEach(question => {
+  question.addEventListener('click', () => {
+    const faqItem = question.closest('.faq_item');
+    const wasActive = faqItem.classList.contains('active');
+
+    document.querySelectorAll('.faq_item').forEach(item => {
+      item.classList.remove('active');
+    });
+
+    if (!wasActive) {
+      faqItem.classList.add('active');
+    }
+  });
+});
+</script>
+{% endblock jsfiles %}

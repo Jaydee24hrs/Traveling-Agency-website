@@ -1,0 +1,452 @@
+{% extends "base/base2.html" %}
+{% load static %}
+{% block title %} Blog-Information | Jomivic Travels {% endblock title %}
+
+{% block cssfiles %}
+
+<style>
+
+  .faq_bg{
+    background-image: url("{% static 'img/breadcrumb.jpg' %}");
+    display: grid;
+    place-items: center;
+    background-position:center;
+    background-size:cover;
+    height: 68vh;
+  }
+
+  .breadcrumb-item+.breadcrumb-item::before{
+    color: white !important;
+    content: ">>";
+  }
+  .make_bg{
+    background: #ffffff28;
+  }
+
+   .blog_heading{
+    color: black;
+  }
+
+  .blog_heading:hover{
+    color: #ef3f3e;
+  }
+
+  .make_absolute{
+    bottom: 20px;
+    left: 20px;
+  }
+
+
+</style>
+
+{% endblock cssfiles %}
+
+{% block content %}
+
+<div id="preloader">
+  <img src="{% static 'img/loader.gif' %}" alt="" width="20%">
+</div>
+
+<div class="faq_bg">
+  <div class="text-white d-flex flex-column justify-content-center align-items-center shadow-5 p-3 p-md-5 make_bg">
+    <h2 class="fw-bolder" data-aos="fade-up" data-aos-duration="2000">BLOG</h2>
+    <nav aria-label="breadcrumb" class="container justify-content-center d-flex align-items-center" data-aos="fade-up" data-aos-duration="2000">
+      <ol class="breadcrumb m-0">
+        <li class="breadcrumb-item"><a href="{% url 'dashboard' %}" class="text-white fw-bolder">Home</a></li>
+        <li class="breadcrumb-item active text-white fw-bolder" aria-current="page">BLOG</li>
+      </ol>
+  </nav>
+  </div>
+</div>
+
+
+<div class="container my-3 my-md-5 py-lg-5">
+  <div class="row">
+
+    <div class="col-12 col-lg-3 mt-3 order-2 order-lg-1" data-aos="fade-up" data-aos-duration="2000">
+      <div>
+        <div class="input-group bg-white border py-2">
+          <button type="button" class="btn btn-transparent shadow-0 border-end" data-mdb-ripple-init>
+            <i class="fas fa-search make_color_one"></i>
+          </button>
+          <div class="form-outline" data-mdb-input-init>
+            <input type="search" id="form1" class="border-0 px-2 outline-none" placeholder="search here..."/>
+          </div>
+        </div>
+
+        <div class="mt-3" data-aos="fade-up" data-aos-duration="2000">
+          <h5 class="text-black">Categories</h5>
+
+          <div class="accordion" id="accordionExample">
+
+            <div class="accordion-item border-0">
+              <h2 class="accordion-header" id="headingOne">
+                <button
+                  data-mdb-collapse-init
+                  class="accordion-button py-2 bg-light"
+                  type="button"
+                  data-mdb-target="#collapseOne"
+                  aria-expanded="false"
+                  aria-controls="collapseOne"
+                >
+                Lorem Ipsum Is Simple 
+                </button>
+              </h2>
+              <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-mdb-parent="#accordionExample">
+                <div class="accordion-body">
+                  <strong>This is the first item's accordion body.</strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item border-0">
+              <h2 class="accordion-header" id="headingTwo">
+                <button
+                  data-mdb-collapse-init
+                  class="accordion-button collapsed py-2 bg-light"
+                  type="button"
+                  data-mdb-target="#collapseTwo"
+                  aria-expanded="false"
+                  aria-controls="collapseTwo"
+                >
+                Many Variations
+                </button>
+              </h2>
+              <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-mdb-parent="#accordionExample">
+                <div class="accordion-body">
+                  <strong>This is the second item's accordion body.</strong> 
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item border-0">
+              <h2 class="accordion-header" id="headingThree">
+                <button
+                  data-mdb-collapse-init
+                  class="accordion-button collapsed py-2 bg-light"
+                  type="button"
+                  data-mdb-target="#collapseThree"
+                  aria-expanded="false"
+                  aria-controls="collapseThree"
+                >
+                random text 
+                </button>
+              </h2>
+              <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-mdb-parent="#accordionExample">
+                <div class="accordion-body">
+                  <strong>This is the third item's accordion body.</strong> 
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item border-0">
+              <h2 class="accordion-header" id="headingThree">
+                <button
+                  data-mdb-collapse-init
+                  class="accordion-button collapsed py-2 bg-light"
+                  type="button"
+                  data-mdb-target="#collapseFour"
+                  aria-expanded="false"
+                  aria-controls="collapseFour"
+                >
+                lorem ipsum. 
+                </button>
+              </h2>
+              <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingThree" data-mdb-parent="#accordionExample">
+                <div class="accordion-body">
+                  <strong>This is the third item's accordion body.</strong> 
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item border-0">
+              <h2 class="accordion-header" id="headingThree">
+                <button
+                  data-mdb-collapse-init
+                  class="accordion-button collapsed py-2 bg-light"
+                  type="button"
+                  data-mdb-target="#collapseFive"
+                  aria-expanded="false"
+                  aria-controls="collapseFive"
+                >
+                it's Random. 
+                </button>
+              </h2>
+              <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingThree" data-mdb-parent="#accordionExample">
+                <div class="accordion-body">
+                  <strong>This is the third item's accordion body.</strong> 
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
+        <div class="mt-3" data-aos="fade-up" data-aos-duration="2000">
+          <h5  class="text-black">Popular Post</h5>
+
+          <div class="d-flex align-items-center mt-3 ">
+            <img class="img-fluid blur-up lazyload me-3"
+                src="{% static 'img/portfolio/6.jpg' %}"
+                alt="Generic placeholder image" width="100">
+            <div class="media-body align-self-center">
+                <div>
+                    <h6 class="text-black">25 Dec 2018</h6>
+                    <p class="text-muted">100 hits</p>
+                </div>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-center mt-3 ">
+            <img class="img-fluid blur-up lazyload me-3"
+                src="{% static 'img/portfolio/7.jpg' %}"
+                alt="Generic placeholder image" width="100">
+            <div class="media-body align-self-center">
+                <div>
+                    <h6 class="text-black">25 Dec 2018</h6>
+                    <p class="text-muted">540 hits</p>
+                </div>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-center mt-3 ">
+            <img class="img-fluid blur-up lazyload me-3"
+                src="{% static 'img/portfolio/8.jpg' %}"
+                alt="Generic placeholder image" width="100">
+            <div class="media-body align-self-center">
+                <div>
+                    <h6 class="text-black">25 Dec 2018</h6>
+                    <p class="text-muted">250 hits</p>
+                </div>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-center mt-3 ">
+            <img class="img-fluid blur-up lazyload me-3"
+                src="{% static 'img/portfolio/2.jpg' %}"
+                alt="Generic placeholder image" width="100">
+            <div class="media-body align-self-center">
+                <div>
+                    <h6 class="text-black">25 Dec 2018</h6>
+                    <p class="text-muted">30 hits</p>
+                </div>
+            </div>
+          </div>
+
+
+        </div>
+
+        <div class="mt-4" data-aos="fade-up" data-aos-duration="2000">
+          <h5  class="text-black">Popular Tags</h5>
+
+          <div class="d-flex align-items-center mt-3 flex-wrap">
+            <span class="badge badge-light me-2 mt-3 fs-6">Adventure</span>
+            <span class="badge badge-light me-2 mt-3 fs-6">Luxury</span>
+            <span class="badge badge-light me-2 mt-3 fs-6">Romantic</span>
+            <span class="badge badge-light me-2 mt-3 fs-6">Foodie</span>
+            <span class="badge badge-light me-2 mt-3 fs-6">Villas</span>
+            <span class="badge badge-light me-2 mt-3 fs-6">Cruise</span>
+            <span class="badge badge-light me-2 mt-3 fs-6">Shopping</span>
+            <span class="badge badge-light me-2 mt-3 fs-6">Beach</span>
+            <span class="badge badge-light me-2 mt-3 fs-6">Family</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="col-12 col-lg-9 mt-3 order-1 order-lg-2" data-aos="fade-up" data-aos-duration="2000">
+      <div>
+
+        <div id="carouselExampleControls" class="carousel slide" data-mdb-ride="carousel" data-mdb-carousel-init data-aos="fade-up" data-aos-duration="2000">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img src="{% static 'img/spain.jpg' %}" class="d-block w-100" alt="Wild Landscape"/>
+            </div>
+            <div class="carousel-item">
+              <img src="{% static 'img/portfolio/13.jpg' %}" class="d-block w-100" alt="Camera"/>
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-mdb-target="#carouselExampleControls" data-mdb-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-mdb-target="#carouselExampleControls" data-mdb-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+
+        <div class="d-flex justify-content-start align-items-center flex-wrap flex-lg-nowrap mt-3">
+            <span class="pe-3 border-end">25 January 2018 </span>
+            <span class="px-3 border-end">Posted By : Admin Admin</span>
+            <span class="px-3 border-end"><i class="fa fa-heart me-1"></i> 5 Hits</span>
+            <span class="px-3"><i class="fa fa-comments me-1"></i> 10 Comment</span>
+        </div>
+
+        <div data-aos="fade-up" data-aos-duration="2000">
+          <h4 class="text-black mt-1">Five tips to plan your travels for a long weekend</h4>
+
+          <p class="mt-3" data-aos="fade-up" data-aos-duration="2000">
+            Your first step in how to start planning a trip is to choose a travel destination that meets your interests and travel budget.Are you planning overseas travel or a domestic trip at home? Either way, the whole idea of taking a trip is to have a memorable time, to have fun and relax, and not to spend your whole vacation time worrying about money.If you only have 1-2 weeks of vacation time per year, don’t waste too much of that time traveling to and from your destination. Plan your trip accordingly.But if you have 2-4 weeks or over a month you can look at taking an overseas trip or traveling further within your home country.
+          </p>
+
+          <p class="mt-3" data-aos="fade-up" data-aos-duration="2000">
+            Once you have chosen your destination, step two in planning a trip is to book your flights. And learning how to find cheap flights will help you to reduce one of your biggest travel expenses. As a traveling family, if it’s an overseas trip and a long haul flight I like to plan my trip so we get to our destination as quickly as possible, with the most amount of comfort and facilities our budget allows! If it’s your one-and-only dream vacation for the year, and you only have 1-2 weeks, I recommend you pay the little bit extra for a premium airline and fly direct too!
+          </p>
+
+          <p class="mt-3" data-aos="fade-up" data-aos-duration="2000">
+            Another thing to consider when planning a trip is to find out the transportation options in your chosen destination. Will you need to book a rental car or pre-purchase any transportation passes online? Is there a train or bus service? Are there taxis or Uber? Can you simply walk to most places?
+          </p>
+
+          <p class="mt-3" data-aos="fade-up" data-aos-duration="2000">
+            When you plan a trip you’ll want to know what are the must-visit tourist attractions and the best free things to do in your chosen destination. As much as we like to just show up, some trip planning is a good idea especially if you are visiting a popular destination in the peak travel season.
+          </p>
+        </div>
+
+        <div data-aos="fade-up" data-aos-duration="2000">
+          <h5 class="text-black">Comments:</h5>
+
+          <div class="row">
+            <div class="col-md-12" data-aos="fade-up" data-aos-duration="2000">
+              <div class="card text-body bg-transparent shadow-0 ">
+                
+                <div class="card-body px-0" data-aos="fade-up" data-aos-duration="2000">
+                  <div class="d-flex flex-start">
+                    <img class="rounded-circle shadow-1-strong me-3"
+                      src="{% static 'img/avtar' %}" alt="avatar" width="60"
+                      height="60" />
+                    <div>
+
+                      <div class="d-flex align-items-center mb-3">
+                        <p class="p-0 m-0 me-3"><i class="fa fa-user me-2"></i>That Guy</p>
+                        <p class="p-0 m-0"><i class="fas fa-clock me-2"></i>Dec 16, 2014</p>
+                      </div>
+                      <hr>
+                      <p class="mb-0">
+                        Lorem Ipsum is simply dummy text of the printing and typesetting
+                        industry. Lorem Ipsum has been the industry's standard dummy text ever
+                        since the 1500s, when an unknown printer took a galley of type and
+                        scrambled it.
+                      </p>
+
+                      <div class="text-end">
+                        <a href="#" class="text-muted"><i class="fa fa-reply pe-2"></i> reply</a>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card-body px-0" data-aos="fade-up" data-aos-duration="2000">
+                  <div class="d-flex flex-start">
+                    <img class="rounded-circle shadow-1-strong me-3"
+                      src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(23).webp" alt="avatar" width="60"
+                      height="60" />
+                    <div>
+
+                      <div class="d-flex align-items-center mb-3">
+                        <p class="p-0 m-0 me-3"><i class="fa fa-user me-2"></i>That Guy</p>
+                        <p class="p-0 m-0"><i class="fas fa-clock me-2"></i>Dec 16, 2014</p>
+                      </div>
+                      <hr>
+                      <p class="mb-0">
+                        Lorem Ipsum is simply dummy text of the printing and typesetting
+                        industry. Lorem Ipsum has been the industry's standard dummy text ever
+                        since the 1500s, when an unknown printer took a galley of type and
+                        scrambled it.
+                      </p>
+
+                      <div class="text-end">
+                        <a href="#" class="text-muted"><i class="fa fa-reply pe-2"></i> reply</a>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card-body px-0" data-aos="fade-up" data-aos-duration="2000">
+                  <div class="d-flex flex-start">
+                    <img class="rounded-circle shadow-1-strong me-3"
+                      src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(23).webp" alt="avatar" width="60"
+                      height="60" />
+                    <div>
+
+                      <div class="d-flex align-items-center mb-3">
+                        <p class="p-0 m-0 me-3"><i class="fa fa-user me-2"></i>That Guy</p>
+                        <p class="p-0 m-0"><i class="fas fa-clock me-2"></i>Dec 16, 2014</p>
+                      </div>
+                      <hr>
+                      <p class="mb-0">
+                        Lorem Ipsum is simply dummy text of the printing and typesetting
+                        industry. Lorem Ipsum has been the industry's standard dummy text ever
+                        since the 1500s, when an unknown printer took a galley of type and
+                        scrambled it.
+                      </p>
+
+                      <div class="text-end">
+                        <a href="#" class="text-muted"><i class="fa fa-reply pe-2"></i> reply</a>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-3" data-aos="fade-up" data-aos-duration="2000">
+          <h5 class="text-black m-0">Leave a comment</h5>
+
+          <form action="#" method="POST" id="blog_form">
+            {% csrf_token %}
+
+            <div class="row align-items-center">
+              
+              <div class="col-12 col-md-6 mt-3" data-aos="fade-up" data-aos-duration="2000">
+                <div class="form-outline" data-mdb-input-init>
+                  <input type="text" name="full_name" id="full_name" class="form-control form-control-lg bg-light" required />
+                  <label class="form-label" for="full_name">Enter Your Name</label>
+                </div>
+              </div>
+
+
+              <div class="col-12 col-md-6 mt-3" data-aos="fade-up" data-aos-duration="2000">
+                <div class="form-outline" data-mdb-input-init>
+                  <input type="email" name="email_address" id="email_address" class="form-control form-control-lg bg-light" required/>
+                  <label class="form-label" for="email_address">Email Address</label>
+                </div>
+              </div>
+
+
+              <div class="col-12 mt-3" data-aos="fade-up" data-aos-duration="2000">
+                <div class="form-outline" data-mdb-input-init>
+                  <textarea name="description" class="form-control form-control-lg bg-light" id="textAreaExample" rows="4"></textarea>
+                  <label class="form-label" for="textAreaExample">Write Your message</label>
+                </div>
+              </div>
+
+              <div class="col-12 mt-3" data-aos="fade-up" data-aos-duration="2000">
+                <div class="text-end">
+                  <button class="btn make_bg_one text-white rounded-0 fw-bold btn-lg">Post Comment</button>
+                </div>
+              </div>
+
+            </div>
+
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock content %}
+
+
+
+{% block jsfiles %}
+
+{% endblock jsfiles %}

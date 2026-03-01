@@ -1,0 +1,220 @@
+{% extends "base/base2.html" %}
+{% load static %}
+
+{% block title %} CRM {% endblock title %}
+
+{% block cssfiles %}
+    <style>
+     
+
+        .make_background{
+            background: #0106A84b;
+        }
+
+        .make_color{
+            color: #0106A84b;
+        }
+
+        body{
+            background: #E8EEF3 !important;
+        }
+
+        
+    </style>
+
+{% endblock cssfiles %}
+
+{% block content %}
+
+<div id="preloader">
+    <img src="{% static 'img/loader.gif' %}" alt="" width="20%">
+</div>
+
+
+<div class="contriner-fluid make_bg_three p-3 p-md-5 text-white">
+    <div class="container" data-aos="fade-up" data-aos-duration="2000">
+    <h3>CRM</h3>
+    </div>
+</div>
+
+    <div class="container my-5 shadow-2 p-3 p-md-4 p-lg-5 bg-white rounded" data-aos="fade-up" data-aos-duration="2000">
+
+
+    <div class="d-flex justify-content-between align-items-center flex-wrap">
+        <div class="d-flex justify-content-between align-items-center flex-wrap" style="max-width: 400px;">
+            <div class="input-group travel_search mt-3 mt-lg-0 m-auto m-md-0 ms-md-auto">
+            <div class="form-outline" data-mdb-input-init>
+                <input type="search" id="crmsearch" class="form-control"/>
+                <label class="form-label" for="crmsearch">Search by Customer, Email and Phone</label>
+            </div>
+            <button type="button" class="manage_btn border-0 btn make_bg_three text-white" data-mdb-ripple-init>
+                <i class="fas fa-search"></i>
+            </button>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <a class="btn make_bg_three text-white dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-mdb-dropdown-init data-mdb-ripple-init aria-expanded="false">Export</a>
+        
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <li><a class="dropdown-item" href="#" id="excel">Excel</a></li>
+            <li><a class="dropdown-item" href="#" id="notpad">Notpad</a></li>
+            </ul>
+        </div>
+    </div>
+
+        <!-- Teams table -->
+          <div class="table-responsive mt-0 mt-lg-3">
+            <table class="table align-middle mb-0 bg-white" id="teamsTable">
+                <thead class="bg-light">
+                    <tr>
+                        <th>Customer Name</th>
+                        <th>Email Address</th>
+                        <th>Phone Number</th>
+                        <th>Date of Birth</th>
+                    </tr>
+                </thead>
+                <tbody id="crm_section">
+                    
+                    {% for customer in customers %}
+                    <tr>
+                        <td class="customer_name">
+                            <p class="fw-bold mb-1" style="white-space: nowrap;">{{ customer.first_name }} {{ customer.last_name }}</p>
+                        </td>
+
+                        <td class="customer_email">
+                            <p class="mb-0">{{ customer.email }}</p>
+                        </td>
+
+                        <td class="customer_phone">
+                            <p class="mb-0" style="white-space: nowrap;">{{ customer.country_code }} {{ customer.phone_number }}</p>
+                        </td>
+
+                        <td>
+                            <p class="fw-normal m-0" style="white-space: nowrap;">{{ customer.date_of_birth }}</p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+           
+        <div class="d-flex justify-content-center align-items-center mt-3">
+            <nav aria-label="...">
+                <ul class="pagination pagination-square align-items-center">
+                    {% if users.has_previous %}
+                        <li class="page-item me-1">
+                            <a class="btn btn-light shadow-sm"
+                               href="?page={{ users.previous_page_number }}">Previous</a>
+                        </li>
+                    {% endif %} {% for num in users.paginator.page_range %}
+                    <li class="page-item {% if users.number == num %} active {% endif %}" aria-current="page">
+                        <a class="page-link border-0" href="?page={{ num }}">{{ num }} {% if users.number == num %}
+                            <span class="visually-hidden">(current)</span>{% endif %}</a>
+                    </li>
+                {% endfor %} {% if users.has_next %}
+                    <li class="page-item ms-1">
+                        <a class="btn btn-light shadow-sm" href="?page={{ users.next_page_number }}">Next</a>
+                    </li>
+                {% endif %}
+                </ul>
+            </nav>
+        </div>
+
+    </div>
+
+
+{% endblock content %}
+
+
+
+{% block jsfiles %}
+
+<script>
+    // Function to get table data as an array of arrays
+    function getTableData(tableId) {
+        const table = document.getElementById(tableId);
+        const headers = Array.from(table.querySelectorAll('thead th')).map(th => th.textContent.trim());
+        const rows = Array.from(table.querySelectorAll('tbody tr')).map(tr => {
+            return Array.from(tr.querySelectorAll('td')).map(td => td.textContent.trim());
+        });
+        return [headers, ...rows];
+    }
+
+    // Function to find the maximum length of each column
+    function getMaxLengths(data) {
+        const maxLengths = data[0].map(() => 0); // Start with 0 for each column
+        data.forEach(row => {
+            row.forEach((cell, index) => {
+                if (cell.length > maxLengths[index]) {
+                    maxLengths[index] = cell.length;
+                }
+            });
+        });
+        return maxLengths;
+    }
+
+    // Function to pad cells with spaces
+    function padCells(data, maxLengths) {
+        return data.map(row => {
+            return row.map((cell, index) => {
+                // Add spaces to reach max length + 10 extra for readability
+                const paddedCell = cell + ' '.repeat(Math.max(0, maxLengths[index] - cell.length + 10));
+                return `"${paddedCell.replace(/"/g, '""')}"`; // Quote the cell and escape any quotes
+            });
+        });
+    }
+
+    // Function to export table data to CSV for Excel with padded cells
+    function exportToExcel() {
+        const data = getTableData('teamsTable');
+        const maxLengths = getMaxLengths(data);
+        const paddedData = padCells(data, maxLengths);
+        const csvContent = paddedData.map(row => row.join(',')).join('\n');
+        downloadFile(csvContent, 'customers.csv', 'text/csv');
+    }
+
+    // Function to trigger file download
+    function downloadFile(content, filename, mimeType) {
+        const blob = new Blob([content], { type: mimeType });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+
+    // Function to export table data to TSV for Notepad (unchanged)
+    function exportToNotpad() {
+        const data = getTableData('teamsTable');
+        const tsvContent = data.map(row => row.join('\t')).join('\n');
+        downloadFile(tsvContent, 'customers.txt', 'text/plain');
+    }
+
+    // Add event listeners to the buttons
+    document.getElementById('excel').addEventListener('click', exportToExcel);
+    document.getElementById('notpad').addEventListener('click', exportToNotpad);
+</script>
+
+    <script>
+      document.getElementById('crmsearch').addEventListener('input', function () {
+        const searchText = this.value.toLowerCase();
+        const tableRows = document.querySelectorAll('#crm_section tr');
+        tableRows.forEach(function (row) {
+            const customerEmail = row.querySelector('.customer_email'); 
+            const customerName = row.querySelector('.customer_name'); 
+            const customerPhone = row.querySelector('.customer_phone'); 
+  
+            if (customerEmail && customerName && customerPhone) {
+                const email = customerEmail.textContent.toLowerCase();
+                const name = customerName.textContent.toLowerCase();
+                const phone = customerPhone.textContent.toLowerCase();
+                row.style.display = email.includes(searchText) || name.includes(searchText) || phone.includes(searchText) ? 'table-row' : 'none';
+            }
+          });
+      });
+    </script>
+
+{% endblock jsfiles %}

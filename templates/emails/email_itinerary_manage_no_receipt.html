@@ -1,0 +1,833 @@
+{% load static %}
+{% load custom_tags %}
+{% load humanize %}
+<!DOCTYPE html>
+
+<html lang="en" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:v="urn:schemas-microsoft-com:vml">
+
+<head>
+  <title></title>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <!--[if mso]><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch><o:AllowPNG/></o:OfficeDocumentSettings></xml><![endif]--><!--[if !mso]><!-->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900"
+    rel="stylesheet" type="text/css" /><!--<![endif]-->
+  <style>
+    @page {
+        size: A4 portrait;
+        margin: 1cm;
+        /* line-height: 0; */
+    }
+    * {
+      box-sizing: border-box;
+    }
+    div, p {
+    overflow: visible !important;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      line-height: 1.2;
+      overflow: visible !important;
+    }
+
+    a[x-apple-data-detectors] {
+      color: inherit !important;
+      text-decoration: inherit !important;
+    }
+
+    #MessageViewBody a {
+      color: inherit;
+      text-decoration: none;
+    }
+    .table-break-after {
+    page-break-after: always;
+    margin-bottom: 1cm; /* Add spacing before next content */
+}
+
+    p {
+      line-height: inherit
+    }
+
+    .desktop_hide,
+    .desktop_hide table {
+      mso-hide: all;
+      display: none;
+      max-height: 0px;
+      overflow: hidden;
+    }
+
+    .image_block img+div {
+      display: none;
+    }
+
+    sup,
+    sub {
+      font-size: 75%;
+      line-height: 0;
+    }
+
+    @media (max-width:768px) {
+
+      .desktop_hide table.icons-inner,
+      .row-13 .column-1 .block-4.social_block .alignment table,
+      .social_block.desktop_hide .social-table {
+        display: inline-block !important;
+      }
+
+      .icons-inner {
+        text-align: center;
+      }
+
+      .icons-inner td {
+        margin: 0 auto;
+      }
+
+      .mobile_hide {
+        display: none;
+      }
+
+      .row-content {
+        width: 100% !important;
+      }
+
+      .stack .column {
+        width: 100%;
+        display: block;
+      }
+
+      .mobile_hide {
+        min-height: 0;
+        max-height: 0;
+        max-width: 0;
+        overflow: hidden;
+        font-size: 0px;
+      }
+
+      .desktop_hide,
+      .desktop_hide table {
+        display: table !important;
+        max-height: none !important;
+      }
+
+      .row-1 .column-2 .block-1.paragraph_block td.pad>div {
+        text-align: right !important;
+      }
+
+      .row-13 .column-1 .block-1.paragraph_block td.pad>div,
+      .row-13 .column-1 .block-2.paragraph_block td.pad>div,
+      .row-13 .column-1 .block-4.social_block .alignment,
+      .row-13 .column-2 .block-1.paragraph_block td.pad>div,
+      .row-13 .column-2 .block-2.paragraph_block td.pad>div,
+      .row-2 .column-1 .block-1.paragraph_block td.pad>div,
+      .row-2 .column-2 .block-1.paragraph_block td.pad>div,
+      .row-3 .column-1 .block-1.paragraph_block td.pad>div,
+      .row-5 .column-2 .block-1.paragraph_block td.pad>div,
+      .row-5 .column-2 .block-2.paragraph_block td.pad>div,
+      .row-5 .column-2 .block-3.paragraph_block td.pad>div,
+      .row-5 .column-2 .block-4.paragraph_block td.pad>div,
+      .row-5 .column-4 .block-1.paragraph_block td.pad>div,
+      .row-5 .column-4 .block-2.paragraph_block td.pad>div,
+      .row-5 .column-4 .block-3.paragraph_block td.pad>div,
+      .row-5 .column-4 .block-4.paragraph_block td.pad>div,
+      .row-7 .column-1 .block-1.paragraph_block td.pad>div {
+        text-align: center !important;
+      }
+
+      .row-5 .column-3 .block-2.image_block .alignment div {
+        margin: 0 auto !important;
+      }
+    }
+  </style>
+  <!-- [if mso ]><style>sup, sub { font-size: 100% !important; } sup { mso-text-raise:10% } sub { mso-text-raise:-10% }</style> <![endif] -->
+</head>
+
+<body class="body"
+  style="background-color: #f9f9f9; margin: 0; padding: 0; -webkit-text-size-adjust: none; text-size-adjust: none; display:flex; justify-content:center; align-items-center">
+  <table border="0" cellpadding="0" cellspacing="0" class="nl-container" role="presentation"
+    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #f9f9f9;" width="1000px">
+    <tbody>
+      <tr>
+        <td>
+          <table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-1" role="presentation"
+            style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+            <tbody>
+              <tr>
+                <td>
+                  <table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content"
+                    role="presentation"
+                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-radius: 0; color: #000000; width: 100%; margin: 10px auto; "
+                    width="100%">
+                    <tbody>
+                      <tr style="background: #fff; border-radius: 10px;">
+                        <td class="column column-1"
+                          style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: middle;"
+                          width="50%">
+                          <table border="0" cellpadding="0" cellspacing="0" class="image_block block-1"
+                            role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+                            <tr>
+                              <td class="pad" style="padding-left:25px;width:100%;padding-right:0px;">
+                                <div align="left" class="alignment" style="line-height:10px">
+                                  <div style="max-width: 144px;"><img alt="Alternate text" height="auto"
+                                      src="{{host}}/static/img/logo.png"
+                                      style="display: block; height: auto; border: 0; width: 100%;"
+                                      title="Alternate text" width="144" /></div>
+                                </div>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                        <td class="column column-2"
+                          style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; padding-top: 5px; vertical-align: middle;"
+                          width="50%">
+                          <table border="0" cellpadding="20" cellspacing="0" class="paragraph_block block-1"
+                            role="presentation"
+                            style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
+                            <tr>
+                              <td class="pad">
+                                <div
+                                  style="color:#555555;font-family:Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;font-size:12px;font-weight:400;line-height:150%;text-align:right;mso-line-height-alt:18px;">
+                                  <p style="margin: 0; word-break: break-word; margin-bottom: 3px;">Jomivic Travels</p>
+                                  <p style="margin: 0; word-break: break-word; margin-bottom: 3px;">Sheraton Hotel, 30, Mobolaji Bank Anthony, Ikeja, Lagos<br> Lagos Nigeria</p>
+                                  <p style="margin: 0; word-break: break-word; margin-bottom: 3px; color:#555555;">Info@jomivictravels.com</p>
+                                  <p style="margin: 0; word-break: break-word; margin-bottom: 3px;">012934120</p>
+                                  <p style="margin: 0; word-break: break-word;"><a href="www.jomivictravels.com"
+                                      rel="noopener" style="text-decoration: underline; color:#555555;"
+                                      target="_blank">www.jomivictravels.com</a></p>
+                                </div>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-2" role="presentation"
+            style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-size: auto;" width="100%">
+            <tbody>
+              <tr>
+                <td>
+                  <table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack"
+                    role="presentation"
+                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-size: auto; background-color: #4291b8; border-radius: 0px; color: #000000; padding: 10px; width: 100%; margin: 0 auto; margin-bottom: 20px;"
+                    width="100%">
+                    <tbody>
+                      <tr>
+                        <td class="column column-1"
+                          style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; padding-top: 5px; vertical-align: top;"
+                          width="50%">
+                          <table border="0" cellpadding="10" cellspacing="0" class="paragraph_block block-1"
+                            role="presentation"
+                            style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
+                            <tr>
+                              <td class="pad">
+                                <div
+                                  style="color:#f9f9f9;direction:ltr;font-family:Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;font-size:15px;font-weight:400;letter-spacing:0px;line-height:120%;text-align:left;mso-line-height-alt:18px;">
+                                  <p style="margin: 0;">Your Trip Summary</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                        <td class="column column-2"
+                          style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; padding-top: 5px; vertical-align: top;"
+                          width="50%">
+                          <table border="0" cellpadding="10" cellspacing="0" class="paragraph_block block-1"
+                            role="presentation"
+                            style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
+                            <tr>
+                              <td class="pad">
+                                <div
+                                  style="color:#f9f9f9;direction:ltr;font-family:Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;font-size:16px;font-weight:400;letter-spacing:0px;line-height:120%;text-align:right;mso-line-height-alt:19.2px;">
+                                  <p style="margin: 0; margin-bottom: 16px;">Booking Date: {{booking.booking_date}}</p>
+                                  <p style="margin: 0; margin-bottom: 16px;">Trip ID: {{ booking.formatted_id }}</p>
+                                  <p style="margin: 0; margin-bottom: 16px;">PNR: {{ booking.pnr }}</p>
+                                  <div style="display: flex; justify-content: end; align-items: end;">
+                                    <p style="white-space: nowrap; margin: 0; margin-right: 5px;">Airline Ref: </p>
+                                    <div class="d-flex flex-column" style="white-space: nowrap; display: flex; flex-direction: column;">
+                                    {% for ref in booking.response.data.associatedRecords %}
+                                    {% if ref.originSystemCode != 'GDS' %}
+                                        <div>
+                                            <span class="text-uppercase fw-normal" style="white-space: nowrap;">{{ ref.originSystemCode }} - </span>
+                                            <span class="fw-normal" style="white-space: nowrap;">{{ ref.reference }}</span>
+                                        </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                    </div>
+                                  </div>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-3" role="presentation"
+            style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+            <tbody>
+              <tr>
+                <td>
+                  <table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack"
+                    role="presentation"
+                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #ED8525; color: #000000; border-radius: 0; width: 100%; margin: 0 auto;"
+                    width="100%">
+                    <tbody>
+                      <tr>
+                        <td class="column column-1"
+                          style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top;"
+                          width="100%">
+                          <table border="0" cellpadding="5" cellspacing="0" class="paragraph_block block-1"
+                            role="presentation"
+                            style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
+                            <tr>
+                              <td class="pad">
+                                <div
+                                  style="color:#fff;direction:ltr;font-family:Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;font-size:16px;font-weight:700;letter-spacing:0px;line-height:150%;text-align:left;mso-line-height-alt:24px;">
+                                  <p style="margin: 0;">Passengers</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-4" role="presentation"
+            style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+            <tbody>
+              <tr>
+                <td>
+                  <table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack"
+                    role="presentation"
+                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-radius: 0; color: #000000; width: 100%; margin: 0 auto;"
+                    width="100%">
+                    <tbody>
+                      <tr>
+                        <td class="column column-1"
+                          style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top;"
+                          width="100%">
+                          <table border="0" cellpadding="0" cellspacing="0" class="table_block block-1"
+                            role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; margin-top: 10px;" width="100%">
+														
+                            <tr>
+                              <td class="pad">
+                                <table
+                                  style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; width: 100%; table-layout: fixed; direction: ltr; background-color: #f9f9f9; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif; font-weight: 400; color: #101112; text-align: center; letter-spacing: 0px;"
+                                  width="100%">
+                                  <thead
+                                    style="vertical-align: top; background-color: #ED8525; color: #fff; font-size: 14px; line-height: 120%;">
+                                    <tr>
+                                      <th
+                                        style="padding: 5px; word-break: break-word; font-weight: 700; border-top: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; border-left: 1px solid transparent; text-align: start;"
+                                        width="50%">Name</th>
+                                      <th
+                                        style="padding: 5px; word-break: break-word; font-weight: 700; border-top: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; border-left: 1px solid transparent; text-align: center;"
+                                        width="50%">Type</th>
+                                      <th
+                                        style="padding: 5px; word-break: break-word; font-weight: 700; border-top: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; border-left: 1px solid transparent; text-align: center;"
+                                        width="50%">Date Of Birth</th>
+                                      <th
+                                        style="padding: 5px; word-break: break-word; font-weight: 700; border-top: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; border-left: 1px solid transparent; text-align: center;"
+                                        width="50%">Miles Number</th>
+                                      <th
+                                        style="padding: 5px; word-break: break-word; font-weight: 700; border-top: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; border-left: 1px solid transparent; text-align: center;"
+                                        width="50%">Passport Number</th>
+                                      <th
+                                        style="padding: 5px; word-break: break-word; font-weight: 700; border-top: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; border-left: 1px solid transparent; text-align: end;"
+                                        width="50%">Ticket Number</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody style="vertical-align: top; font-size: 14px; line-height: 120%;">
+																		{% for traveller in booking.response.data.travelers %}
+																			{% for pricing in booking.response.data.flightOffers.0.travelerPricings %}
+																					{% if pricing.travelerId == traveller.id %}
+                                      <tr>
+                                        <td
+                                          style="padding-top: 5px; padding-left: 5px; padding-bottom: 5px; word-break: break-word; border-top: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; border-left: 1px solid transparent; text-align: start; font-size:13px;"
+                                          width="50%">{{ traveller.name.lastName }} {{ traveller.name.firstName }}</td>
+                                          
+                                        <td
+                                          style="padding-top: 5px; padding-bottom: 5px; word-break: break-word; border-top: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; border-left: 1px solid transparent; text-align: center;"
+                                          width="50%"> 
+                                          {% if pricing.travelerType == 'HELD_INFANT' %}
+                                              INFANT
+                                          {% else %}
+                                              {{ pricing.travelerType }}
+                                          {% endif %}
+                                        </td>
+
+                                        <td
+                                          style="padding-top: 5px; padding-bottom: 5px; word-break: break-word; border-top: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; border-left: 1px solid transparent; text-align: center;"
+                                          width="50%"> 
+                                          {% if traveller.dateOfBirth %}
+                                            {{ traveller.dateOfBirth|format_dob }}
+                                          {% else %}
+                                          {% endif %}
+                                        </td>
+
+                                        <td
+                                          style="padding-top: 5px; padding-bottom: 5px; word-break: break-word; border-top: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; border-left: 1px solid transparent; text-align: center;"
+                                          width="50%"> 
+                                          {% if traveller.loyaltyPrograms %}
+                                              {% for program in traveller.loyaltyPrograms %}
+                                              {{ program.programOwner }} - {{ program.id }}
+                                              {% endfor %}
+                                          {% else %}
+
+                                          {% endif %}
+                                        </td>
+
+                                        <td
+                                          style="padding-top: 5px; padding-bottom: 5px; word-break: break-word; border-top: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; border-left: 1px solid transparent; text-align: center;"
+                                          width="50%"> 
+                                          {% if traveller.documents %}
+                                              {% for document in traveller.documents %}
+                                                  {% if document.documentType == 'PASSPORT' %}
+                                                      {{ document.number }}
+                                                  {% endif %}
+                                              {% endfor %}
+                                          {% endif %}
+                                        </td>
+
+                                        <td
+                                          style="padding-top: 5px; padding-bottom: 5px; word-break: break-word; border-top: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; border-left: 1px solid transparent; text-align: end;"
+                                          width="50%"> 
+                                          {% for ticket in booking.response.data.tickets %}
+                                              {% if ticket.travelerId == traveller.id %}
+                                                  {{ ticket.documentNumber }}
+                                              {% endif %}
+                                          {% endfor %}
+                                        </td>
+
+                                      </tr>
+
+                                        {% endif %}
+                                      {% endfor %}
+                                    {% endfor %}
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
+
+                          </table>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+					
+					{% for  itinerary in booking.response.data.flightOffers.0.itineraries %}
+						{% for segment in itinerary.segments %}
+								{% for fareDetail in booking.response.data.flightOffers.0.travelerPricings.0.fareDetailsBySegment %}
+										{% if fareDetail.segmentId == segment.id %}
+                    <div style="page-break-before: always; height: 1px; line-height: 1px; visibility: hidden;"> &nbsp; </div>
+										<table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-5" role="presentation"
+											style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+											<tbody>
+												<tr>
+													<td>
+														<table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack"
+															role="presentation"
+															style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #fff; color: #000000; border-radius: 0; padding: 15px; width: 100%; margin: 0 auto;"
+															width="100%">
+															<tbody>
+																<tr>
+																	{% with carrier_code=segment.carrierCode|upper carrier_name=booking.airlines|get_item:segment.carrierCode|upper %}
+																			{% with image_path=carrier_code|add:'_'|add:carrier_name|add:'.PNG' %}
+																	<td class="column column-1"
+																		style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: middle; border-radius: 2px;"
+																		width="25%">
+																		<table border="0" cellpadding="1" cellspacing="0" class="paragraph_block block-1"
+																			role="presentation"
+																			style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
+																			<tr>
+																				
+																				<td class="pad">
+																					<div style="text-align: center;">
+																							<img src="{{ host }}{% static 'img/v2/tail/'|add:image_path %}"
+																							alt="{{ carrier_name }}" width="40" height="40">
+																					</div>
+																					<div
+																						style="color:#101112;direction:ltr;font-family:Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;font-size:14px;font-weight:400;letter-spacing:0px;line-height:120%;text-align:center;mso-line-height-alt:16.8px;">
+																						<p style="margin: 0;">{{ carrier_name }}</p>
+																					</div>
+																				</td>
+																			</tr>
+																			
+																		</table>
+																		<table border="0" cellpadding="1" cellspacing="0" class="paragraph_block block-2"
+																			role="presentation"
+																			style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
+																			<tr>
+																				<td class="pad">
+																					<div
+																						style="color:#101112;direction:ltr;font-family:Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;font-size:14px;font-weight:400;letter-spacing:0px;line-height:120%;text-align:center;mso-line-height-alt:16.8px;">
+																						<p style="margin: 0;">
+																							{% if fareDetail.cabin == 'PREMIUM_ECONOMY'  %}
+																									PREMIUM
+																							{% else %}
+																									{{ fareDetail.cabin }}
+																							{% endif %}
+																							({{ fareDetail.class }})
+																						</p>
+																					</div>
+																				</td>
+																			</tr>
+																		</table>
+																		<table border="0" cellpadding="1" cellspacing="0" class="paragraph_block block-3"
+																			role="presentation"
+																			style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
+																			<tr>
+																				<td class="pad">
+																					<div
+																						style="color:#101112;direction:ltr;font-family:Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;font-size:14px;font-weight:400;letter-spacing:0px;line-height:120%;text-align:center;mso-line-height-alt:16.8px;">
+																						<p style="margin: 0;">{{ segment.carrierCode }} {{ segment.number }}</p>
+																					</div>
+																				</td>
+																			</tr>
+																		</table>
+
+																		{% endwith %}
+																			{% endwith %}
+																	</td>
+																	<td class="column column-2"
+																		style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: middle; border-radius: 2px;"
+																		width="25%">
+																		<table border="0" cellpadding="1" cellspacing="0" class="paragraph_block block-1"
+																			role="presentation"
+																			style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
+																			<tr>
+																				<td class="pad">
+																					<div
+																						style="color:#101112;direction:ltr;font-family:Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;font-size:15px;font-weight:400;letter-spacing:0px;line-height:120%;text-align:left;mso-line-height-alt:15.6px; padding-left:8px;">
+																						<p style="margin: 0;">{{ segment.departure.at|format_date_short }}</p>
+																					</div>
+																				</td>
+																			</tr>
+																		</table>
+																		<table border="0" cellpadding="1" cellspacing="0" class="paragraph_block block-2"
+																			role="presentation"
+																			style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
+																			<tr>
+																				<td class="pad">
+																					<div
+																						style="color:#101112;direction:ltr;font-family:Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;font-size:14px;font-weight:400;letter-spacing:0px;line-height:120%;text-align:left;mso-line-height-alt:16.8px; padding-left:8px;">
+																						<p style="margin: 0;">{{ segment.departure.at|format_time_segment }}</p>
+																					</div>
+																				</td>
+																			</tr>
+																		</table>
+																		<table border="0" cellpadding="1" cellspacing="0" class="paragraph_block block-3"
+																			role="presentation"
+																			style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
+																			<tr>
+																				<td class="pad">
+																					<div
+																						style="color:#101112;direction:ltr;font-family:Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;font-size:14px;font-weight:400;letter-spacing:0px;line-height:120%;text-align:left;mso-line-height-alt:16.8px; padding-left:8px;">
+																						<p style="margin: 0;">{{ segment.departure.iataCode|get_airport_name }} ({{ segment.departure.iataCode }})</p>
+																					</div>
+																				</td>
+																			</tr>
+																		</table>
+																		<table border="0" cellpadding="1" cellspacing="0" class="paragraph_block block-4"
+																			role="presentation"
+																			style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
+																			<tr>
+																				<td class="pad">
+																					<div
+																						style="color:#101112;direction:ltr;font-family:Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;font-size:14px;font-weight:400;letter-spacing:0px;line-height:120%;text-align:left;mso-line-height-alt:16.8px;padding-left:7px;">
+																						<p style="margin: 0;">Terminal {{ segment.departure.terminal|default:"-" }}</p>
+																					</div>
+																				</td>
+																			</tr>
+																		</table>
+																	</td>
+																	<td class="column column-3"
+																		style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: middle; border-radius: 2px;"
+																		width="25%">
+
+																		<table border="0" cellpadding="0" cellspacing="0" class="image_block block-2"
+																			role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+																			<tr>
+																				<td class="pad" style="padding: 0 10px; text-align:left;">
+																					<div align="center" class="alignment" style="line-height:10px">
+																								<div class="">
+																									<p class="m-0 p-0 small">Duration: <span class="text-black">{{ segment.duration|format_duration }}</span></p>
+																									<div class="mt-1">
+                                                    <div class="d-flex justify-content-between align-items-center to_fro_new_svg" style="width: 10rem">
+                                                      <i class="fas fa-plane-departure float-start make_color_result"></i>
+                                                      <div class="border w-100 mx-3"></div>
+                                                      <i class="fas fa-plane-arrival float-end make_color_result"></i>
+                                                    </div>
+																									</div>
+																									<p class="m-0 p-0 small mt-1">Stops: 
+																									<span class="text-black">
+																											{% if segment.numberOfStops == 0 %}
+																													Zero
+																											{%  elif segment.numberOfStops == 1 %}
+																													1
+																											{%  elif segment.numberOfStops == 2 %}
+																													2
+																											{%  elif segment.numberOfStops >= 2 %}
+																													2+
+																											{% endif %}
+																									</span></p>
+
+																									<p class="m-0 p-0 small mt-2">
+																											{% if segment.layover_time %}
+																											Layover: <span class="text-black ps-1">{{ segment.layover_time }}</span>
+																											{% endif %}
+																									</p>
+																							</div>
+																					</div>
+																				</td>
+																			</tr>
+																		</table>
+																	</td>
+																	<td class="column column-4"
+																		style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: middle; border-radius: 2px;"
+																		width="25%">
+																		<table border="0" cellpadding="1" cellspacing="0" class="paragraph_block block-1"
+																			role="presentation"
+																			style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
+																			<tr>
+																				<td class="pad">
+																					<div
+																						style="color:#101112;direction:ltr;font-family:Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;font-size:15px;font-weight:400;letter-spacing:0px;line-height:120%;text-align:left;mso-line-height-alt:15.6px;padding-left:7px;">
+																						<p style="margin: 0;">{{ segment.arrival.at|format_date_short }}</p>
+																					</div>
+																				</td>
+																			</tr>
+																		</table>
+																		<table border="0" cellpadding="1" cellspacing="0" class="paragraph_block block-2"
+																			role="presentation"
+																			style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
+																			<tr>
+																				<td class="pad">
+																					<div
+																						style="color:#101112;direction:ltr;font-family:Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;font-size:14px;font-weight:400;letter-spacing:0px;line-height:120%;text-align:left;mso-line-height-alt:16.8px;padding-left:7px;">
+																						<p style="margin: 0;">{{ segment.arrival.at|format_time_segment }}</p>
+																					</div>
+																				</td>
+																			</tr>
+																		</table>
+																		<table border="0" cellpadding="1" cellspacing="0" class="paragraph_block block-3"
+																			role="presentation"
+																			style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
+																			<tr>
+																				<td class="pad">
+																					<div
+																						style="color:#101112;direction:ltr;font-family:Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;font-size:14px;font-weight:400;letter-spacing:0px;line-height:120%;text-align:left;mso-line-height-alt:16.8px;padding-left:7px;">
+																						<p style="margin: 0;">{{ segment.arrival.iataCode|get_airport_name }} ({{ segment.arrival.iataCode }})</p>
+																					</div>
+																				</td>
+																			</tr>
+																		</table>
+																		<table border="0" cellpadding="1" cellspacing="0" class="paragraph_block block-4"
+																			role="presentation"
+																			style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
+																			<tr>
+																				<td class="pad">
+																					<div
+																						style="color:#101112;direction:ltr;font-family:Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;font-size:14px;font-weight:400;letter-spacing:0px;line-height:120%;text-align:left;mso-line-height-alt:16.8px;padding-left:7px;">
+																						<p style="margin: 0;">Terminal {{ segment.arrival.terminal|default:"-" }}</p>
+																					</div>
+																				</td>
+																			</tr>
+																		</table>
+																	</td>
+																</tr>
+															</tbody>
+														</table>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+										<table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-6" role="presentation"
+											style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+											<tbody>
+												<tr>
+													<td>
+														<table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack"
+															role="presentation"
+															style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-radius: 0; color: #000000; width: 100%; margin: 0 auto;"
+															width="100%">
+															<tbody>
+																<tr>
+																	<td class="column column-1"
+																		style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left;  vertical-align: top;"
+																		width="100%">
+																		<table border="0" cellpadding="5" cellspacing="0" class="table_block block-1"
+																			role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+																			<tr>
+																				<td class="pad" style="padding: 0px;">
+																					<table
+																						style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; width: 100%; table-layout: fixed; direction: ltr; background-color: #fff; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif; font-weight: 400; color: #101112; text-align: center; letter-spacing: 0px; margin-top:10px; margin-bottom:10px;"
+																						width="100%">
+																						<thead
+																							style="vertical-align: top; background-color: #ED8525; color: #fff; font-size: 14px; line-height: 120%;">
+																							<tr>
+																								<th
+																									style="padding: 5px; word-break: break-word; font-weight: 700; border-top: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; border-left: 1px solid transparent; text-align: start;"
+																									width="25%">Name</th>
+																								<th
+																									style="padding: 5px; word-break: break-word; font-weight: 700; border-top: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; border-left: 1px solid transparent; text-align: center;"
+																									width="25%">Baggage</th>
+																								<th
+																									style="padding: 5px; word-break: break-word; font-weight: 700; border-top: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; border-left: 1px solid transparent; text-align: center;"
+																									width="25%">Seat</th>
+																								<th
+																									style="padding: 5px; word-break: break-word; font-weight: 700; border-top: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; border-left: 1px solid transparent; {% if booking.status == 'Issued' or booking.status == 'Exchanged' or booking.status == 'Refunded' %} text-align: center; {% else %} text-align: end; {% endif %}"
+																									width="25%">Meal</th>
+                                                  {% if booking.status == 'Issued' or booking.status == 'Exchanged' or booking.status == 'Refunded' %}
+																								<th
+																									style="padding: 5px; word-break: break-word; font-weight: 700; border-top: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; border-left: 1px solid transparent; text-align: end;"
+																									width="25%">Coupon Status</th>
+                                                {% endif %}
+																							</tr>
+																						</thead>
+																						<tbody style="vertical-align: top; font-size: 13px; line-height: 120%;" width="100%">
+																							{% for traveler in booking.response.data.travelers %}
+																							{% for travelerPricing in booking.response.data.flightOffers.0.travelerPricings %}
+																									{% if traveler.id == travelerPricing.travelerId %}
+																											{% for fareDetail in travelerPricing.fareDetailsBySegment %}
+																													{% if fareDetail.segmentId == segment.id %}
+																															<tr>
+																																<td
+																																	style="word-break: break-word; border-top: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; border-left: 1px solid transparent; text-align: start; padding-left: 5px;"
+																																	width="25%">{{ traveler.name.lastName }} {{ traveler.name.firstName }}</td>
+																																<td
+																																	style="word-break: break-word; border-top: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; border-left: 1px solid transparent;"
+																																	width="25%">
+																																	{% if fareDetail.includedCheckedBags %}
+																																			{% if fareDetail.includedCheckedBags.quantity is not None %}
+																																			{{ fareDetail.includedCheckedBags.quantity|default_if_none:0 }}
+																																			{% else %}
+																																					{{ fareDetail.includedCheckedBags.weight }} {{ fareDetail.includedCheckedBags.weightUnit }}
+																																			{% endif %}
+																																	{% else %}
+																																			No baggage included
+																																	{% endif %}
+																																
+																																</td>
+																																<td
+																																	style="word-break: break-word; border-top: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; border-left: 1px solid transparent;"
+																																	width="25%">
+																																	{% if fareDetail.additionalServices.chargeableSeatNumber %}
+																																			{{ fareDetail.additionalServices.chargeableSeatNumber }}
+																																	{% else %}
+																																			
+																																	{% endif %}
+																																  ​</td>
+																																<td
+																																	style="word-break: break-word; border-top: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; border-left: 1px solid transparent; {% if booking.status == 'Issued' or booking.status == 'Exchanged' or booking.status == 'Refunded' %} text-align: center; {% else %} text-align: end; {% endif %} padding-right: 5px;"
+																																	width="25%">
+																																	{% if fareDetail.mealServices %}
+																																		{% for meal in fareDetail.mealServices %}
+																																						{{ meal.label }}
+																																				{% endfor %}
+																																		{% else %}
+																																				No meal service
+																																		{% endif %}
+																																</td>
+                                                                {% if booking.status == 'Issued' or booking.status == 'Exchanged' or booking.status == 'Refunded' %}
+																																<td
+																																	style="word-break: break-word; border-top: 1px solid transparent; border-right: 1px solid transparent; border-bottom: 1px solid transparent; border-left: 1px solid transparent; text-align: end; padding-right: 5px;"
+																																	width="25%">
+																																	{% if segment.isFlown %}
+                                                                      Flown
+                                                                  {% else %}
+                                                                      Open
+                                                                  {% endif %}
+																																</td>
+                                                                {% endif %}
+																															</tr>
+
+
+																												{% endif %}
+																												{% endfor %}
+																										{% endif %}
+																								{% endfor %}
+																						{% endfor %}
+																						</tbody>
+																					</table>
+																				</td>
+																			</tr>
+																		</table>
+																	</td>
+																</tr>
+															</tbody>
+														</table>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+                    <div style="page-break-after: always; height: 1px; line-height: 1px;"> &nbsp; </div>
+							{% endif %}
+						{% endfor %}
+					{% endfor %}
+				{% endfor %}
+
+
+      
+        <table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-11" role="presentation"
+          style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+          <tbody>
+            <tr>
+              <td>
+                <table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack"
+                  role="presentation"
+                  style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 100%; margin: 0 auto;"
+                  width="100%">
+                  <tbody>
+                    <tr>
+                      <td class="column column-1"
+                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; padding-top: 5px; vertical-align: top;"
+                        width="100%">
+                        <table border="0" cellpadding="5" cellspacing="0" class="paragraph_block block-1"
+                          role="presentation"
+                          style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
+                          <tr>
+                            <td class="pad">
+                              <div
+                                style="color:#101112;direction:ltr;font-family:Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;font-size:13px;font-weight:400;letter-spacing:0px;line-height:150%;text-align:left;mso-line-height-alt:19.5px;">
+                                <p style="margin: 0;">If you need further information about your itinerary, please
+                                  don't hesitate to contact us a to contact us at  <u>{{ settings.email }}</u></p>
+                              </div>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        </td>
+      </tr>
+    </tbody>
+  </table><!-- End -->
+</body>
+
+</html>

@@ -1,0 +1,560 @@
+{% extends "base/base2.html" %}
+{% load static %}
+{% block title %} Teams {% endblock title %}
+
+{% block cssfiles %}
+    <style>
+        .personal_edit {
+            border: none;
+            outline: none;
+        }
+
+        .active-edit,
+        .active-edit:focus {
+            border: 2px solid #007bff3a !important;
+            outline: #007bff3a !important;
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+
+
+        .make_background{
+            background: #1852864b;
+        }
+
+        .make_color{
+            color: #1852864b;
+        }
+
+        body{
+            background: #E8EEF3 !important;
+        }
+
+    </style>
+
+{% endblock cssfiles %}
+
+{% block content %}
+
+{% if user.is_superuser or user.position == 'Admin' or user.position == 'Manager' %}
+
+<div id="preloader">
+    <img src="{% static 'img/loader.gif' %}" alt="" width="20%">
+</div>
+
+
+    <div class="contriner-fluid make_bg_three p-3 p-md-5 text-white">
+        <div class="container">
+        <h3>Teams</h3>
+        </div>
+    </div>
+
+
+    <div class="container my-5 shadow-2 p-3 p-md-4 p-lg-5 bg-white rounded">
+        <!-- Teams -->
+        <div class="tab-pane fade active show" id="v-tabs-teams" role="tabpanel" aria-labelledby="v-tabs-messages-tab">
+
+            <!-- Navbar -->
+            <div class="d-flex justify-content-between align-items center flex-wrap">
+                <button class="btn manage_btn make_bg_three text-white mt-3 mt-md-0" data-mdb-ripple-init data-mdb-modal-init data-mdb-target="#add_new_member">Add New Members</button>
+            </div>
+
+            <!-- Modal For Add New  Members -->
+            <div class="modal fade" id="add_new_member" tabindex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <p class="modal-title fw-bold" id="exampleModalLabel">Add New Members</p>
+                            <button type="button" class="btn-close" data-mdb-ripple-init data-mdb-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{% url 'create_team' %}" method="POST" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="row py-3">
+                                    <!-- Given Name -->
+                                    <div class="col-6">
+                                        <p class="m-0 fw-bold">Given Name</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <div>
+                                            <input type="text" id="given_name" name="first_name" class="form-control"/>
+                                            <!-- <label class="form-label" for="given_name">First Name</label> -->
+                                        </div>
+                                    </div>
+
+                                    <!-- Surname -->
+                                    <div class="col-6 mt-3">
+                                        <p class="m-0 fw-bold">Surname</p>
+                                    </div>
+                                    <div class="col-6 mt-3">
+                                        <div>
+                                            <input type="text" id="surname" name="last_name" class="form-control"/>
+                                            <!-- <label class="form-label" for="surname">Last Name</label> -->
+                                        </div>
+                                    </div>
+
+                                    <!-- Position -->
+                                    <div class="col-6 mt-3">
+                                        <p class="m-0 fw-bold">Position</p>
+                                    </div>
+                                    <div class="col-6 mt-3">
+                                        <div>
+                                            <select name="position" id="position" class="form-control">
+                                                <option value="" selected>Select</option>
+                                                {% if user.is_superuser or  user.position == 'Admin' %}
+                                                <option value="Admin">Admin</option>
+                                                {% endif %}
+                                                <option value="Manager">Manager</option>
+                                                <option value="Finance">Finance</option>
+                                                <option value="Support">Support</option>
+                                          </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Email Address -->
+                                    <div class="col-6 mt-3">
+                                        <p class="m-0 fw-bold">Email Address</p>
+                                    </div>
+                                    <div class="col-6 mt-3">
+                                        <div>
+                                            <input type="email" id="email" name="email" class="form-control"/>
+                                            <!-- <label class="form-label" for="email">Email Address</label> -->
+                                        </div>
+                                    </div>
+
+                                    <!-- Phone Number -->
+                                    <div class="col-6 mt-3">
+                                        <p class="m-0 fw-bold">Phone Number</p>
+                                    </div>
+                                    <div class="col-6 mt-3">
+                                        <div>
+                                            <input type="text" id="phone" name="phone" class="form-control"/>
+                                            <!-- <label class="form-label" for="phone">Phone</label> -->
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button class="btn manage_btn make_bg_three text-white" name="add_member_btn" type="submit" data-mdb-ripple-init
+                                            data-mdb-dismiss="modal">Save
+                                        changes
+                                    </button>
+                                </div>
+                            </form>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            
+            <!-- Modal For Editing Team Member -->
+            <div class="modal fade" id="edit_team_member" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <p class="modal-title fw-bold" id="exampleModalLabel">Edit Team Information</p>
+                            <button type="button" class="btn-close" data-mdb-ripple-init data-mdb-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{% url 'update_team_info' %}" method="POST" enctype="multipart/form-data">
+                                {% csrf_token %}
+
+                                <div class="row py-3">
+                                    <!-- Given Name -->
+                                    <div class="col-6">
+                                        <p class="m-0 fw-bold">Given Name</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <div>
+                                            <input type="text" id="modal_team_first_name" name="first_name" class="form-control" value=""/>
+                                        </div>
+                                    </div>
+
+                                    <!-- Surname -->
+                                    <div class="col-6 mt-3">
+                                        <p class="m-0 fw-bold">Surname</p>
+                                    </div>
+                                    <div class="col-6 mt-3">
+                                        <div>
+                                            <input type="text" id="modal_team_last_name" name="last_name" class="form-control"/>
+                                        </div>
+                                    </div>
+
+                                    <!-- Position -->
+                                    <div class="col-6 mt-3">
+                                        <p class="m-0 fw-bold">Position</p>
+                                    </div>
+                                    <div class="col-6 mt-3">
+                                        <div >
+                                            <input id="modal_team_position" type="text" id="position" name="position" class="form-control"/>
+                                        </div>
+                                    </div>
+
+                                    <!-- Email Address -->
+                                    <div class="col-6 mt-3">
+                                        <p class="m-0 fw-bold">Email Address</p>
+                                    </div>
+                                    <div class="col-6 mt-3">
+                                        <div>
+                                            <input type="email" id="modal_team_email" name="email" class="form-control"/>
+                                        </div>
+                                    </div>
+
+                                    <!-- Phone Number -->
+                                    <div class="col-6 mt-3">
+                                        <p class="m-0 fw-bold">Phone Number</p>
+                                    </div>
+                                    <div class="col-6 mt-3">
+                                        <div>
+                                            <input type="text" id="modal_team_phone" name="phone" class="form-control"/>
+                                        </div>
+                                    </div>
+
+                                    <input id="modal_team_id" name="user_id" type="text" style="display: none;"/>
+
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button class="btn manage_btn make_bg_three text-white" name="add_member_btn" type="submit" data-mdb-ripple-init
+                                            data-mdb-dismiss="modal">Save
+                                        changes
+                                    </button>
+                                </div>
+                            </form>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Teams table -->
+             <div class="table-responsive mt-0 mt-lg-3">
+                <table class="table align-middle mb-0 bg-white" id="teamsTable">
+                    <thead class="bg-light">
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                        <th>Position</th>
+                        <!-- <th>Status</th> -->
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody id="teams_section">
+                    {% for team in teams %}
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center" data-mdb-ripple-init data-mdb-modal-init
+                                    data-mdb-target="#teams_table">
+                                    <div class="ms-3">
+                                        <p class="fw-bold mb-1" style="white-space: nowrap;">{{ team.first_name }} {{ team.last_name }}</p>
+                                    
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td>
+                                <p class="mb-0">{{ team.email }}</p>
+                            </td>
+                            <td>
+                                <p class="mb-0" style="white-space: nowrap;">{{ team.phone_number_dial_code }} {{ team.phone }}</p>
+                            </td>
+
+                            <td>
+                                <p class="fw-normal m-0" style="white-space: nowrap;">{{ team.position }}</p>
+                            </td>
+
+                            <!-- <td>
+                                <span class="badge {% if team.status == 'pending' %} badge-primary {% elif team.status == 'rejected' %} badge-danger {% else %} badge-success {% endif %} rounded-pill d-inline">{{ team.status }}</span>
+                            </td> -->
+
+                            <td>
+                                <button type="button" class="btn btn-link btn-sm btn-rounded" data-mdb-ripple-init
+                                        data-mdb-modal-init data-mdb-target="#teams_table{{ team.id }}">
+                                    View
+                                </button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Modal For table -->
+            {% for team in teams %}
+                <div class="modal fade" id="teams_table{{ team.id }}" data-mdb-backdrop="static"
+                     data-mdb-keyboard="false" tabindex="-1"
+                     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <p class="modal-title text-uppercase fw-bold" id="staticBackdropLabel">
+                                    Personal
+                                    Information
+                                </p>
+                                <button type="button" class="btn-close" data-mdb-ripple-init data-mdb-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <!-- modal Body -->
+                            <div class="modal-body">
+                                <form action="{% url 'update_team' team.id %}" method="post">
+                                    {% csrf_token %}
+                                    <!-- Personal Information -->
+                                    <div class="row px-3 px-md-4 px-lg-5">
+
+                                        <!-- <div class="d-flex justify-content-end align-items-center mt-3 mb-3 mb-md-0">
+                                            <button type="button" class="btn manage_btn make_bg_three text-white" data-id="{{team.id}}" data-mdb-ripple-init data-mdb-modal-init data-mdb-target="#edit_team_member"><i class="fa-regular fa-pen-to-square"></i> &nbsp; Edit
+                                            </button>
+                                        </div> -->
+                                    
+
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="col-lg-6 col-md-6 col-sm-12 ">
+                                                <p class="m-0 ">First Name</p>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                                <input type="text" id="team_first_name{{team.id}}"
+                                                       class="upload_input p-2 border-0 text-primary w-100 text-end text-lg-start"
+                                                       value="{{ team.first_name }}" readonly/>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="col-lg-6 col-md-6 col-sm-12 mt-2">
+                                                <p class="m-0 ">Last Name</p>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12 mt-2">
+                                                <input type="text" id="team_last_name{{team.id}}"
+                                                       class="upload_input p-2 border-0 text-primary w-100 text-end text-lg-start"
+                                                       value="{{ team.last_name }}" readonly/>
+                                            </div>
+                                        </div>
+
+                                        <!-- <div class="d-flex justify-content-between align-items-center">
+                                            <div class="col-lg-6 col-md-6 col-sm-12 mt-2">
+                                                <p class="m-0 ">Date of Birth</p>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12 mt-2">
+                                                <input type="text" id="team_dob{{team.id}}"
+                                                       class="upload_input p-2 border-0 text-primary w-100 text-end text-lg-start"
+                                                       value="{{ team.dob }}" readonly/>
+                                            </div>
+                                        </div> -->
+<!-- 
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="col-lg-6 col-md-6 col-sm-12 mt-2">
+                                                <p class="m-0 ">Gender</p>
+                                            </div>
+
+                                            <div class="col-lg-6 col-md-6 col-sm-12 mt-2">
+                                                <select name="gender" id="team_gender{{team.id}}"
+                                                        class="select border-0 bg-white text-primary w-100 text-end text-lg-start">
+                                                    <option value="{{ team.gender }}"
+                                                            selected>{{ team.gender }}</option>
+                                                    {% if team.gender == "Male" %}
+                                                        <option value="Female">Female</option>
+                                                    {% elif team.gender == "Female" %}
+                                                        <option value="Male">Male</option>
+                                                    {% elif team.gender == None %}
+                                                        <option value="Female">Female</option>
+                                                        <option value="Male">Male</option>
+                                                    {% endif %}
+                                                </select>
+                                            </div>
+                                        </div> -->
+
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="col-lg-6 col-md-6 col-sm-12 mt-2">
+                                                <p class="m-0 ">Position</p>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12 mt-2">
+                                                <input type="text" id="team_position{{team.id}}"
+                                                       class="upload_input p-2 border-0 text-primary w-100 text-end text-lg-start"
+                                                       value="{{ team.position }}" readonly/>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="col-lg-6 col-md-6 col-sm-12 mt-2">
+                                                <p class="m-0 ">Email Address</p>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12 mt-2">
+                                                <input type="text" id="team_email{{team.id}}"
+                                                       class="upload_input p-2 border-0 text-primary w-100 text-end text-lg-start"
+                                                       value="{{ team.email }}" readonly/>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="col-lg-6 col-md-6 col-sm-12 mt-2">
+                                                <p class="m-0 ">Phone Number</p>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12 mt-2">
+                                                <input type="text" id="team_phone{{team.id}}"
+                                                       class="upload_input p-2 border-0 text-primary w-100 text-end text-lg-start"
+                                                       value="{{ team.phone }}" readonly/>
+                                            </div>
+                                        </div>
+
+                                        <!-- <div class="d-flex justify-content-between align-items-center">
+                                            <div class="col-lg-6 col-md-6 col-sm-12 mt-2">
+                                                <p class="m-0 ">Status</p>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12 mt-2">
+                                                <select name="status" id="team_status{{team.id}}" class="w-100 select border-0 bg-white text-primary w-100 text-end text-lg-start">
+                                                    <option value="{{ team.status }}">
+                                                        {% if team.status == 'pending' %} Pending
+                                                        {% elif team.status == 'approved' %} Approved
+                                                        {% elif team.status == 'rejected' %} Rejected
+                                                        {% endif %}
+                                                    </option>
+                                                    {% if team.status != 'pending' %}
+                                                        <option value="pending">Pending</option>
+                                                    {% endif %}
+                                                    {% if team.status != 'approved' %}
+                                                        <option value="approved">Approved</option>
+                                                    {% endif %}
+                                                    {% if team.status != 'rejected' %}
+                                                        <option value="rejected">Rejected</option>
+                                                    {% endif %}
+                                                </select>
+                                            </div>
+                                        </div> -->
+
+                                        <input id="user_team_id{{team.id}}" name="user_id" type="text" value="{{ team.id }}" style="display: none;"/>
+
+                                    </div>
+
+                                    <div class="modal-footer d-flex justify-content-between align-items-center mt-3">
+                                            <a href="{% url 'delete_user' team.id %}" class="btn btn-danger" data-mdb-ripple-init data-mdb-modal-init data-mdb-target="">Delete User
+                                            </a>
+
+                                            <a href="{% url 'resend_password' team.id %}" class="btn btn-info" data-mdb-ripple-init>Resend Invitation Link</a>
+
+                                            <!-- <button type="submit" class="btn manage_btn make_bg_three text-white personal_save_btn"
+                                                    data-mdb-ripple-init>Save
+                                            </button> -->
+                                    </div>
+                                    
+
+
+                                    <!-- Modal For Deleting team -->
+                                    <div class="modal fade" id="delete_team" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <div class="text-end">
+                                                    <button type="button" class="btn-close" data-mdb-ripple-init data-mdb-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+
+                                                <div>
+                                                    Are you sure You want to Delete This User?
+                                                </div>
+
+                                                <div class="text-end">
+                                                    <a href="{% url 'delete_user' team.id %}" class="btn btn-danger" data-mdb-ripple-init data-mdb-modal-init data-mdb-target="#delete_team">Delete User</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+           
+        </div>
+
+
+        <div class="d-flex justify-content-center align-items-center mt-3">
+            <nav aria-label="...">
+                <ul class="pagination pagination-square align-items-center">
+                    {% if users.has_previous %}
+                        <li class="page-item me-1">
+                            <a class="btn btn-light shadow-sm"
+                               href="?page={{ users.previous_page_number }}">Previous</a>
+                        </li>
+                    {% endif %} {% for num in users.paginator.page_range %}
+                    <li class="page-item {% if users.number == num %} active {% endif %}" aria-current="page">
+                        <a class="page-link border-0" href="?page={{ num }}">{{ num }} {% if users.number == num %}
+                            <span class="visually-hidden">(current)</span>{% endif %}</a>
+                    </li>
+                {% endfor %} {% if users.has_next %}
+                    <li class="page-item ms-1">
+                        <a class="btn btn-light shadow-sm" href="?page={{ users.next_page_number }}">Next</a>
+                    </li>
+                {% endif %}
+                </ul>
+            </nav>
+        </div>
+
+    </div>
+
+{% endif %}
+
+{% endblock content %}
+
+
+
+{% block jsfiles %}
+
+    <script src="{% static 'js/dashboard/terms.js' %}"></script>
+    <script src="{% static 'js/dashboard/terms_affiliate.js' %}"></script>
+    <script src="{% static 'js/dashboard/terms_tyktt.js' %}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          const editButtons = document.querySelectorAll('.btn[data-id]'); // Select all buttons with data-id
+      
+          editButtons.forEach(button => {
+            button.addEventListener('click', function() {
+              const teamId = this.getAttribute('data-id'); // Get the team ID from data-id
+              const teamRow = document.getElementById('teams_table' + teamId); // Select the corresponding team row by ID
+      
+              // Get the team data from the row (you'll need to adjust field names as needed)
+              const firstName = teamRow.querySelector('#team_first_name' + teamId).value;
+              const lastName = teamRow.querySelector('#team_last_name' + teamId).value;
+              const dob = teamRow.querySelector('#team_dob' + teamId).value;
+              const gender = teamRow.querySelector('#team_gender' + teamId).value;
+              const position = teamRow.querySelector('#team_position' + teamId).value;
+              const email = teamRow.querySelector('#team_email' + teamId).value;
+              const phone = teamRow.querySelector('#team_phone' + teamId).value;
+              const status = teamRow.querySelector('#team_status' + teamId).value;
+              const user_team_id = teamRow.querySelector('#user_team_id' + teamId).value
+            //   const permission = teamRow.querySelector('#team_permission' + teamId).value;
+      
+              // Now populate the modal fields
+              document.getElementById('modal_team_first_name').value = firstName;
+              document.getElementById('modal_team_last_name').value = lastName;
+              document.getElementById('modal_team_dob').value = dob;
+              document.getElementById('modal_team_gender').value = gender;
+              document.getElementById('modal_team_position').value = position;
+              document.getElementById('modal_team_email').value = email;
+              document.getElementById('modal_team_phone').value = phone;
+            //   document.getElementById('modal_team_status').value = status;
+              document.getElementById('modal_team_id').value = teamId;
+
+            //   document.getElementById('modal_team_permission').value = permission;
+      
+              // Open the modal (MDB's modal trigger)
+              const modal = new mdb.Modal(document.getElementById('edit_team_member'));
+              modal.show();
+            });
+          });
+        });
+    </script>
+      
+
+{% endblock jsfiles %}

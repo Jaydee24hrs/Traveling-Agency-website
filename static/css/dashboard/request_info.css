@@ -1,0 +1,31 @@
+
+small{
+  font-size: 10px;
+  color: #8080809e;
+}
+
+
+.file-input-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.file-input {
+  display: none;
+}
+
+#file_input_icon {
+  font-size: 20px;
+  cursor: pointer;
+  color: gray;
+  transition: color 0.3s ease;
+}
+
+#file_input_icon:hover {
+  color: gray;
+}
+
+.chat_nav{
+  position: sticky;
+  top: 55px;
+}

@@ -1,0 +1,359 @@
+{% extends "base/base2.html" %}
+{% load static %}
+{% block title %} Hotel Page | Jomivic Travels {% endblock title %}
+
+{% block cssfiles %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"/>
+
+
+<style>
+
+  .faq_bg{
+    background-image: url("{% static 'img/banner.jpg' %}");
+    display: grid;
+    place-items: center;
+    background-position:center;
+    background-size:cover;
+    height: 50vh;
+  }
+
+  .process-steps{
+    background-image: url("{% static 'img/background/15.jpg' %}");
+    display: grid;
+    place-items: center;
+    background-position:center;
+    background-size:cover;
+    height: 65vh;
+  }
+
+  .breadcrumb-item+.breadcrumb-item::before{
+    color: white !important;
+    content: ">>";
+  }
+  .make_bg{
+    background: #ffffff28;
+  }
+
+
+</style>
+
+{% endblock cssfiles %}
+
+{% block content %}
+
+<div id="preloader">
+  <img src="{% static 'img/loader.gif' %}" alt="" width="20%">
+</div>
+
+<div class="faq_bg">
+  <div>
+    <h3 class="text-uppercase text-center text-white mb-3 mb-md-4" data-aos="fade-up" data-aos-duration="2000">Book Rooms, Homes & Apartments</h3>
+    <form action="#" method="POST">
+      {% csrf_token %}
+      <div class="d-flex justify-content-evnly align-items-center bg-white p-4 rounded-5 flex-wrap flex-lg-nowrap" data-aos="fade-up" data-aos-duration="2000">
+
+          <div class="text-center px-1 px-md-3 border-end w-100">
+              <span class="text-muted fw-bold d-block">DESTINATION</span>
+              <input type="text" id="hotel_destination" name="hotel_destination" class="form-control text-center hotel_destination border-0 hide_outline p-0 m-0 text-dark" required placeholder="Lagos (LOS)"/>
+          </div>
+
+          <div class="text-center px-1 px-md-3 border-end position-relative w-100">
+              <span class="text-muted fw-bold d-block">CHECK IN</span>
+              <span id="hotelcheckinSpan" class="text-dark">Select Date</span>
+              <input type="date" id="hotel_checkin" name="hotel_checkin" class="hotel_checkin text-black fw-bold" style="opacity: 0; position: absolute; pointer-events: none; left:0; bottom:0px;"/>
+          </div>
+
+          <div class="text-center px-1 px-md-3 border-end position-relative w-100">
+              <span class="text-muted fw-bold d-block">CHECK OUT</span>
+              <span id="hotelcheckoutSpan" class="text-dark">Select Date</span>
+              <input type="date" id="hotel_checkout" name="hotel_checkout" class="hotel_checkout text-black fw-bold" style="opacity: 0; position: absolute; pointer-events: none; left:0; bottom:0px; width:100;"/>
+          </div>
+
+          <div class="text-center px-1 px-md-3 border-end w-100">
+              <span class="text-muted fw-bold d-block">GUESTS</span>
+              <input type="number" id="hotel_guests" name="hotel_guests" class="form-control text-center hotel_guests border-0 hide_outline p-0 m-0 text-dark" required value="1"/>
+          </div>
+
+          <div class="text-center w-100">
+              <!-- <button class="btn btn-danger rounded-0 btn-lg">SEARCH</button> -->
+              <a href="{% url 'hotel_details' %}" class="btn make_bg_one text-white rounded-0 btn-lg">SEARCH</a>
+          </div>
+
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<div class="container py-3 py-md-5">
+    <h2 class="text-center fw-bold text-black" data-aos="fade-up" data-aos-duration="2000">Top Offers</h2>
+
+    <div class="owl-carousel owl-theme destinations mt-3 mt-md-5">
+
+      <div class="item" data-aos="flip-right" data-aos-duration="2000">
+        <div class="card bg-transparent shadow-0 mb-3">
+          <div style="max-width: 200px; margin:auto;">
+            <img src="{% static 'img/offer/1.jpg' %}" class="card-img-top" alt="Fissure in Sandstone"/>
+          </div>
+          <div class="card-body text-center">
+          <h5 class="card-title text-black fw-bolder">Hotel Booking</h5>
+          <p class="card-text m-0 p-0 small">Get the Best Deals on Hotel <br> Bookings Across Nigeria</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="item" data-aos="flip-right" data-aos-duration="2000">
+        <div class="card bg-transparent shadow-0 mb-3">
+          <div style="max-width: 200px; margin:auto;">
+            <img src="{% static 'img/offer/2.jpg' %}" class="card-img-top" alt="Fissure in Sandstone"/>
+          </div>
+          <div class="card-body text-center">
+          <h5 class="card-title text-black fw-bolder">Up to ₦150,000 Off</h5>
+          <p class="card-text m-0 p-0 small">Instant Discount on Domestic <br> Hotel Bookings</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="item" data-aos="flip-right" data-aos-duration="2000">
+        <div class="card bg-transparent shadow-0 mb-3">
+          <div style="max-width: 200px; margin:auto;">
+            <img src="{% static 'img/offer/3.jpg' %}" class="card-img-top" alt="Fissure in Sandstone"/>
+          </div>
+          <div class="card-body text-center">
+          <h5 class="card-title text-black fw-bolder">Holiday Packages</h5>
+          <p class="card-text m-0 p-0 small">Exclusive Weekend Sale on <br> Holiday Bookings</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="item" data-aos="flip-right" data-aos-duration="2000">
+        <div class="card bg-transparent shadow-0 mb-3">
+          <div style="max-width: 200px; margin:auto;">
+            <img src="{% static 'img/offer/4.jpg' %}" class="card-img-top" alt="Fissure in Sandstone"/>
+          </div>
+          <div class="card-body text-center">
+          <h5 class="card-title text-black fw-bolder">Complimentary Breakfast</h5>
+          <p class="card-text m-0 p-0 small">Enjoy Free Breakfast with Hotel Stays. Use Code JOMIBREAKFAST</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="item" data-aos="flip-right" data-aos-duration="2000">
+        <div class="card bg-transparent shadow-0 mb-3">
+          <div style="max-width: 200px; margin:auto;">
+            <img src="{% static 'img/offer/5.jpg' %}" class="card-img-top" alt="Fissure in Sandstone"/>
+          </div>
+          <div class="card-body text-center">
+          <h5 class="card-title text-black fw-bolder">50% Discount</h5>
+          <p class="card-text m-0 p-0 small">50% Off on Airport Transfers When You Book with Us</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <h2 class="text-center fw-bold text-black mt-3 mt-md-5" data-aos="fade-up" data-aos-duration="2000">Most Popular Destinations</h2>
+
+    <div class="owl-carousel owl-theme destinations mt-3 mt-md-5">
+
+      <div class="item" data-aos="flip-right" data-aos-duration="2000">
+        <div class="card bg-transparent shadow-0 mb-3">
+          <div>
+            <img src="{% static 'img/vector/8.jpg' %}" class="card-img-top" alt="Fissure in Sandstone"/>
+          </div>
+          <div class="card-body text-center">
+          <h5 class="card-title text-black fw-bolder">Dubai</h5>
+          <p class="card-text m-0 p-0 small">Starting from ₦40,602</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="item" data-aos="flip-right" data-aos-duration="2000">
+        <div class="card bg-transparent shadow-0 mb-3">
+          <div>
+            <img src="{% static 'img/vector/7.jpg' %}" class="card-img-top" alt="Fissure in Sandstone"/>
+          </div>
+          <div class="card-body text-center">
+          <h5 class="card-title text-black fw-bolder">Canada</h5>
+          <p class="card-text m-0 p-0 small">Starting from ₦68,000</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="item" data-aos="flip-right" data-aos-duration="2000">
+        <div class="card bg-transparent shadow-0 mb-3">
+          <div>
+            <img src="{% static 'img/vector/9.jpg' %}" class="card-img-top" alt="Fissure in Sandstone"/>
+          </div>
+          <div class="card-body text-center">
+          <h5 class="card-title text-black fw-bolder">South Africa</h5>
+          <p class="card-text m-0 p-0 small">Starting from ₦25,000</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="item" data-aos="flip-right" data-aos-duration="2000">
+        <div class="card bg-transparent shadow-0 mb-3">
+          <div>
+            <img src="{% static 'img/vector/10.jpg' %}" class="card-img-top" alt="Fissure in Sandstone"/>
+          </div>
+          <div class="card-body text-center">
+          <h5 class="card-title text-black fw-bolder">The Caribbean</h5>
+          <p class="card-text m-0 p-0 small">Starting from ₦27,000</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="item" data-aos="flip-right" data-aos-duration="2000">
+        <div class="card bg-transparent shadow-0 mb-3">
+          <div>
+            <img src="{% static 'img/vector/11.jpg' %}" class="card-img-top" alt="Fissure in Sandstone"/>
+          </div>
+          <div class="card-body text-center">
+          <h5 class="card-title text-black fw-bolder">Kenya</h5>
+          <p class="card-text m-0 p-0 small">Starting from ₦17,000</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="item" data-aos="flip-right" data-aos-duration="2000">
+        <div class="card bg-transparent shadow-0 mb-3">
+          <div>
+            <img src="{% static 'img/vector/12.jpg' %}" class="card-img-top" alt="Fissure in Sandstone"/>
+          </div>
+          <div class="card-body text-center">
+          <h5 class="card-title text-black fw-bolder">Egypt</h5>
+          <p class="card-text m-0 p-0 small">Starting from ₦13,000</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+</div>
+
+<section class="small-section process-steps icon-large" data-aos="fade-up" data-aos-duration="2000">
+  <div class="container text-center py-3 py-md-5">
+      <div class="title-1 detail-title">
+          <h2 class="pt-0 text-black fw-bold" data-aos="fade-up" data-aos-duration="2000">Super Easy Booking</h2>
+          <p class="text-dark" data-aos="fade-up" data-aos-duration="2000">At Jomivic Travel Agency, we make your travel planning effortless and enjoyable. <br>Our user-friendly platform allows you to explore destinations, get instant quotes, customize <br> your packages, and book your trip with ease.</p>
+      </div>
+      <div class="step-bg">
+          <div class="row">
+              <div class="col-md-3">
+                  <div class="step-box" data-aos="flip-right" data-aos-duration="2000">
+                      <div class="bg-white p-3 rounded-5">
+                          <img src="{% static 'img/vector/13.png' %}" class="img-fluid blur-up lazyload filter-none" alt="" width="50">
+                          <h4>Explore</h4>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-3">
+                  <div class="step-box" data-aos="flip-right" data-aos-duration="2000">
+                    <div class="bg-white p-3 rounded-5">
+                          <img src="{% static 'img/vector/14.png' %}"
+                              class="img-fluid blur-up lazyload filter-none" alt="" width="50">
+                          <h4>Get Quotes</h4>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-3">
+                  <div class="step-box" data-aos="flip-right" data-aos-duration="2000">
+                    <div class="bg-white p-3 rounded-5">
+                          <img src="{% static 'img/vector/15.png' %}"
+                              class="img-fluid blur-up lazyload filter-none" alt="" width="50">
+                          <h4>Customize</h4>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-3">
+                  <div class="step-box" data-aos="flip-right" data-aos-duration="2000">
+                    <div class="bg-white p-3 rounded-5">
+                          <img src="{% static 'img/vector/16.png' %}"
+                              class="img-fluid blur-up lazyload filter-none" alt="" width="50">
+                          <h4>Book &amp; Enjoy</h4>
+                      </div>
+                  </div>
+              </div>
+          </div><!-- row end -->
+      </div>
+  </div>
+  <div class="bird-animation">
+      <div class="bird-container bird-container--one">
+          <div class="bird bird--one"></div>
+      </div>
+      <div class="bird-container bird-container--two">
+          <div class="bird bird--two"></div>
+      </div>
+      <div class="bird-container bird-container--three">
+          <div class="bird bird--three"></div>
+      </div>
+      <div class="bird-container bird-container--four">
+          <div class="bird bird--four"></div>
+      </div>
+  </div>
+</section>
+
+{% endblock content %}
+
+{% block jsfiles %}
+
+<script>
+  $(document).ready(function(){
+
+      var owl = $(".clients, .destinations, .special");
+
+      owl.owlCarousel({
+          loop: true,
+          margin: 20,
+          nav: false,
+          dots: false,
+          autoplay: true,
+          // autoplayTimeout: 3000,
+          autoplayHoverPause: true,
+          responsive:{
+              0:{ items: 2 },
+              600:{ items: 3 },
+              1000:{ items: 4 }
+          }
+      });
+
+      // Custom navigation button events
+      $(".owl-start").click(function() {
+          owl.trigger("prev.owl.carousel");
+      });
+
+      $(".owl-end").click(function() {
+          owl.trigger("next.owl.carousel");
+      });
+  });
+
+  $(document).ready(function(){
+
+      var owl = $(".gallery");
+
+      owl.owlCarousel({
+          nav: false,
+          dots: false,
+          responsive:{
+              0:{ items: 1 },
+              600:{ items: 2 },
+              1000:{ items: 4 }
+          }
+      });
+
+      // Custom navigation button events
+      $(".owl-start").click(function() {
+          owl.trigger("prev.owl.carousel");
+      });
+
+      $(".owl-end").click(function() {
+          owl.trigger("next.owl.carousel");
+      });
+  });
+
+
+</script>
+
+{% endblock jsfiles %}

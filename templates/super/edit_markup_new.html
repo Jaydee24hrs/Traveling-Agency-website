@@ -1,0 +1,525 @@
+{% load custom_tags %}
+<form action="{% url 'markup_update' markup_rule.id %}" method="POST">
+    {% csrf_token %}
+
+    <!-- Carrier Start -->
+    <div class="row align-items-center">
+
+        <div class="col-12 col-md-6 col-lg-6 mt-3 mt-lg-0">
+            <div>
+                <div class="d-flex justify-content-start align-items-center">
+                    <label class="form-check-label me-2 fw-bold" for="edit_marketing_carrier_new" style="white-space: nowrap;">Marketing Carrier</label>
+                    <input class="form-check-input me-2 edit_marketing_carrier_new" type="checkbox" id="edit_marketing_carrier_new" name="is_marketing_carrier" {% if markup_rule.is_marketing_carrier  %}checked{% endif %}/>
+                    <input type="text" id="edit_marketing_carrier_new_input" value="{{ markup_rule.marketing_carrier }}" name="marketing_carrier" class="form-control edit_marketing_carrier_new_input text-uppercase" />
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-4 mt-3 mt-lg-0">
+            <div>
+                <div class="d-flex justify-content-start align-items-center">
+                    <label class="form-check-label me-2 fw-bold" for="edit_others_new" style="white-space: nowrap;">Others</label>
+                    <input class="form-check-input me-2 edit_others_new" type="checkbox" value="" id="edit_others_new" name="is_others" {% if markup_rule.is_others  %}checked{% endif %}/>
+                    <!-- <input type="text" id="edit_others_new_input" value="{{ markup_rule.others }}" name="others" class="form-control edit_others_new_input" /> -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- Carrier Ends -->
+
+    <!-- Office ID Start -->
+    <div class="row align-items-center mt-4">
+        <div class="col-12 col-md-6 mt-3 mt-md-0">
+            <div class="d-flex align-items-center flex-wrap">
+                <div class="d-flex justify-content-start align-items-center">
+                    <div>
+                        <label class="p-0 m-0 me-2 fw-bold" for="edit_corporate_code_{{ markup_rule.id }}" style="white-space: nowrap;">Corporate Code:</label>
+                    </div>
+                    <div data-mdb-input-init class="form-outline me-2">
+                        <input type="text" id="edit_corporate_code_{{ markup_rule.id }}" name="edit_corporate_code" class="form-control text-uppercase border" aria-label="Corporate Code Input" placeholder="QR/12345"/>
+                    </div>
+                    <div data-mdb-input-init class="form-outline">
+                        <button class="btn manage_btn make_bg_three text-white edit_corporate_add_btn_{{ markup_rule.id }}" type="button" aria-label="Add Corporate Code"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                </div>
+                <div class="" id="edit_corporate_list_{{ markup_rule.id }}">
+                    {% for code in markup_rule.corporate_code|split:"," %}
+                        <div class="corporate-code-item" data-md="{{ code }}" data-markup-id="{{markup_rule.id}}">
+                            <span>{{ code }}</span>
+                                <button class="delete-btn" type="button"><i class="fa-solid fa-circle-xmark"></i></button>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="" id="edit_corporate_list_{{ markup_rule.id }}"></div>
+            </div>
+        </div>
+
+    </div>
+    <!-- Office ID Ends -->
+
+    <!-- Markup Section Start -->
+    <div class="p-2 bg-light mt-4">
+        <h5 class="fw-bold">Markup</h5>
+    </div>
+
+    <div>
+        <table class="table table-sm align-middle" id="edit_markup_table_new_{{ markup_rule.id }}">
+            <thead>
+              <tr class="table-primary">
+                <th scope="col">Office ID</th>
+                <th scope="col">Cabin Class</th>
+                <th scope="col">Fare Type</th>
+                <th scope="col">Passenger</th>
+                <th scope="col">Currency</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Departure</th>
+                <th scope="col">Arrival</th>
+                <th scope="col" style="text-wrap: nowrap;">Operation Carrier</th>
+                <th scope="col" style="text-wrap: nowrap;">Validating Carrier</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+
+                <td>
+                    <div class="dropdown dropdown-checkboxes">
+                        <button class="btn border text-capitalize fs-6 fw-normal rounded shadow-0 dropdown-toggle edit_office_id_new_btn" type="button" id="edit_office_id_new_btn" data-bs-toggle="dropdown" aria-expanded="false">Office ID</button>
+                        <input type="hidden" name="office_ids" value=""/>
+                        <ul class="dropdown-menu p-3 edit_office_id_new_box" aria-labelledby="edit_office_id_new_btn" style="display: none;" id="edit_office_id_new_box">
+                            <li>
+                                <div class="form-check">
+                                    <input name="LOSN828HJ" class="form-check-input edit-office-checkbox-markup_{{ markup_rule.id }}" type="checkbox" value="LOSN828HJ" id="LOSN828HJ" {% if 'LOSN828HJ' in markup_rule.office_id  %}checked{% endif %}>
+                                    <label class="form-check-label">LOSN828HJ</label>
+                                </div>
+                            </li>
+           
+                        </ul>
+                    </div>
+                </td>
+
+                <td>
+                    <div>
+                        <select name="carbin_class" class="form-select  bg-white  rounded outline-0" required style="min-width: 102px;">
+                            <option value="ECONOMY" selected>Economy</option>
+                            <option value="PREMIUM">Premium</option>
+                            <option value="BUSINESS">Business</option>
+                            <option value="FIRST">First</option>
+                            <option value="ALL">ALL</option>
+                        </select>
+                    </div>
+                </td>
+
+                <td>
+                    <div>
+                        <select name="fare_type" class="form-select bg-white  rounded outline-0" required style="min-width: 105px;">
+                            <option value="PUBLISHED" selected>Published</option>
+                            <option value="CORPORATE">Corporate</option>
+                            <option value="NEGOTIATED">Negotiated</option>
+                            <option value="ALL">ALL</option>
+                        </select>
+                    </div>
+                </td>
+                
+                <td>
+                    <div>
+                        <select name="passenger" class="form-select  bg-white  rounded outline-0" required style="min-width: 78px;">
+                            <option value="ALL" selected>ALL</option>
+                            <option value="ADULT">Adult</option>
+                            <option value="CHILD">Child</option>
+                            <option value="INFANT">Infant</option>
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <select name="currency" class="form-select bg-white  rounded outline-0 edit-currency-select-markup_{{ markup_rule.id }}" required style="min-width: 75px;">
+                            <option value="NGN" selected>NGN</option>
+                            <option value="USD">USD</option>
+                            <option value="ALL">ALL</option>
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <div class="input-group">
+                            <button class="btn manage_btn make_bg_three text-white dropdown-toggle edit_markup_dropdown_btn_amount_new_{{ markup_rule.id }} px-1" type="button" data-mdb-dropdown-init data-mdb-ripple-init aria-expanded="false">Select</button>
+                            <ul class="dropdown-menu edit_markup_dropdown_menu_amount_new_{{ markup_rule.id }}" aria-labelledby="markupDropdownButton">
+                              <li><a class="dropdown-item edit_markup_items_amount_new" href="#" data-value="Fixed">Amt.</a></li>
+                              <li><a class="dropdown-item edit_markup_items_amount_new" href="#" data-value="Percentage">%</a></li>
+                              <input type="hidden" value="" class="edit_selected_markup_input_amount_new_{{ markup_rule.id }}" name="amount_type">
+                            </ul>
+                            <input type="text" class="form-control" aria-label="Text" name="amount" oninput="validateNumber(this)"/>
+                            <input type="text" style="display: none" class="form-control" aria-label="Text" name="markup_commission" value="Markup"/>
+                        </div>
+                    </div>
+                </td>
+
+                <td>
+                    <div>
+                        <div class="input-group">
+                            <button class="btn manage_btn make_bg_three text-white dropdown-toggle edit_markup_dropdown_btn_departure_new px-1" type="button" data-mdb-dropdown-init data-mdb-ripple-init aria-expanded="false">Select</button>
+                            <ul class="dropdown-menu markup_dropdown_menu_departure_new" aria-labelledby="markupDropdownButton">
+                              <li><a class="dropdown-item edit_markup_items_departure_new" href="#" data-value="Country">Country</a></li>
+                              <li><a class="dropdown-item edit_markup_items_departure_new" href="#" data-value="City">City</a></li>
+                              <input type="hidden" value="" class="edit_selected_markup_input_departure_new" name="departure_type">
+                            </ul>
+                            <input type="text" class="form-control text-uppercase" aria-label="Text" name="departure"/>
+                        </div>
+                    </div>
+                </td>
+
+                <td>
+                    <div>
+                        <div class="input-group">
+                            <button class="btn manage_btn make_bg_three text-white dropdown-toggle edit_markup_dropdown_btn_arrival_new px-1" type="button" data-mdb-dropdown-init data-mdb-ripple-init aria-expanded="false">Select</button>
+                            <ul class="dropdown-menu markup_dropdown_menu_arrival_new" aria-labelledby="markupDropdownButton">
+                              <li><a class="dropdown-item edit_markup_items_arrival_new" href="#" data-value="Country">Country</a></li>
+                              <li><a class="dropdown-item edit_markup_items_arrival_new" href="#" data-value="City">City</a></li>
+                              <input type="hidden" value="" class="edit_selected_markup_input_arrival_new" name="arrival_type">
+                            </ul>
+                            <input type="text" class="form-control text-uppercase" aria-label="Text" name="arrival"/>
+                        </div>
+                    </div>
+                </td>
+
+                <td>
+                    <div>
+                        <input type="text" value="" name="operating_carrier" style="max-width: 80px;" class="form-control operating_carrier text-uppercase" />
+                    </div>
+                </td>
+
+                <td>
+                    <div>
+                        <input type="text" value="" name="validating_carrier" style="max-width: 80px;" class="form-control validating_carrier text-uppercase" />
+                    </div>
+                </td>
+
+                <td>
+                    <div>
+                        <button class="btn manage_btn make_bg_three text-white d-flex align-items-center edit_markup_btn" data-markup-id="{{ markup_rule.id }}" type="button"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                </td>
+              </tr>
+
+            </tbody>
+        </table>
+    </div>
+    <!-- Markup Section Ends -->
+
+
+    <!-- Commission Section Start -->
+    <div class="p-2 bg-light d-flex justify-content-between align-items-center mt-4">
+        <h5 class="fw-bold">Commission</h5>
+    </div>
+  
+    <div>
+        <table class="table table-sm align-middle" id="edit_commission_table_new_{{ markup_rule.id }}">
+            <thead>
+              <tr class="table-primary">
+                <th scope="col">Office ID</th>
+                <th scope="col">Cabin Class</th>
+                <th scope="col">Fare Type</th>
+                <th scope="col">Passenger</th>
+                <th scope="col">Currency</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Departure</th>
+                <th scope="col">Arrival</th>
+                <th scope="col" style="text-wrap: nowrap;">Operating Carrier</th>
+                <th scope="col" style="text-wrap: nowrap;">Validating Carrier</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+
+                <td>
+                    <div class="dropdown dropdown-checkboxes">
+                        <button class="btn border text-capitalize fs-6 fw-normal rounded shadow-0 dropdown-toggle edit_office_id_new_btn_commission" type="button" id="edit_office_id_new_btn_commission" data-bs-toggle="dropdown" aria-expanded="false">Office ID</button>
+                        <input type="hidden" name="office_ids" value=""/>
+                        <ul class="dropdown-menu p-3 edit_office_id_new_box_commission" aria-labelledby="edit_office_id_new_btn_commission" style="display: none;" id="edit_office_id_new_box_commission">
+                            <li>
+                                <div class="form-check">
+                                    <input name="LOSN828HJ" class="form-check-input edit-office-checkbox-commission_{{ markup_rule.id }}" type="checkbox" value="LOSN828HJ" id="LOSN828HJ" {% if 'LOSN828HJ' in markup_rule.office_id  %}checked{% endif %}>
+                                    <label class="form-check-label">LOSN828HJ</label>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+                
+                <td>
+                    <div>
+                        <select name="carbin_class" class="form-select  bg-white  rounded outline-0" required style="min-width: 102px;">
+                            <option value="ALL" selected>ALL</option>
+                            <option value="ECONOMY">Economy</option>
+                            <option value="PREMIUM">Premium</option>
+                            <option value="BUSINESS">Business</option>
+                            <option value="FIRST">First</option>
+                        </select>
+                    </div>
+                </td>
+
+                <td>
+                    <div>
+                        <select name="fare_type" class="form-select bg-white  rounded outline-0" required style="min-width: 105px;">
+                            <option value="PUBLISHED" selected>Published</option>
+                            <option value="CORPORATE">Corporate</option>
+                            <option value="NEGOTIATED">Negotiated</option>
+                            <option value="ALL">ALL</option>
+                        </select>
+                    </div>
+                </td>
+                
+                <td>
+                    <div>
+                        <select name="passenger" class="form-select  bg-white  rounded outline-0" required style="min-width: 78px;">
+                            <option value="ALL" selected>ALL</option>
+                            <option value="ADULT">Adult</option>
+                            <option value="CHILD">Child</option>
+                            <option value="INFANT">Infant</option>
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <select name="currency" class="form-select bg-white  rounded outline-0 edit-currency-select-commission_{{ markup_rule.id }}" required style="min-width: 75px;">
+                            <option value="ALL" selected>ALL</option>
+                            <option value="NGN">NGN</option>
+                            <option value="USD">USD</option>
+                        </select>
+                    </div>
+                </td>               
+                <td>
+                    <div>
+                        <div class="input-group">
+                            <button class="btn manage_btn make_bg_three text-white dropdown-toggle edit_commission_dropdown_btn_amount_new_{{ markup_rule.id }} px-1" type="button" data-mdb-dropdown-init data-mdb-ripple-init aria-expanded="false">Select</button>
+                            <ul class="dropdown-menu edit_commission_dropdown_menu_amount_new_{{ markup_rule.id }}" aria-labelledby="markupDropdownButton">
+                                <li><a class="dropdown-item edit_commission_items_amount_new" href="#" data-value="Percentage">%</a></li>
+                              <li><a class="dropdown-item edit_commission_items_amount_new" href="#" data-value="Fixed">Amt.</a></li>
+                              <input type="hidden" value="" class="edit_selected_commission_input_amount_new_{{ markup_rule.id }}" name="amount_type">
+                            </ul>
+                            <input type="text" class="form-control" aria-label="Text" name="amount" oninput="validateNumber(this)"/>
+                            <input type="text" style="display: none" class="form-control" aria-label="Text" name="markup_commission" value="Commission"/>
+                        </div>
+                    </div>
+                </td>
+
+                <td>
+                    <div>
+                        <div class="input-group">
+                            <button class="btn manage_btn make_bg_three text-white dropdown-toggle edit_commission_dropdown_btn_departure_new px-1" type="button" data-mdb-dropdown-init data-mdb-ripple-init aria-expanded="false">Select</button>
+                            <ul class="dropdown-menu commission_dropdown_menu_departure_new" aria-labelledby="markupDropdownButton">
+                              <li><a class="dropdown-item edit_commission_items_departure_new" href="#" data-value="Country">Country</a></li>
+                              <li><a class="dropdown-item edit_commission_items_departure_new" href="#" data-value="City">City</a></li>
+                              <input type="hidden" value="" class="edit_selected_commission_input_departure_new" name="departure_type">
+                            </ul>
+                            <input type="text" class="form-control text-uppercase" aria-label="Text" name="departure"/>
+                        </div>
+                    </div>
+                </td>
+
+                <td>
+                    <div>
+                        <div class="input-group">
+                            <button class="btn manage_btn make_bg_three text-white dropdown-toggle edit_commission_dropdown_btn_arrival_new px-1" type="button" data-mdb-dropdown-init data-mdb-ripple-init aria-expanded="false">Select</button>
+                            <ul class="dropdown-menu commission_dropdown_menu_arrival_new" aria-labelledby="markupDropdownButton">
+                              <li><a class="dropdown-item edit_commission_items_arrival_new" href="#" data-value="County">Country</a></li>
+                              <li><a class="dropdown-item edit_commission_items_arrival_new" href="#" data-value="City">City</a></li>
+                              <input type="hidden" value="" class="edit_selected_commission_input_arrival_new" name="arrival_type">
+                            </ul>
+                            <input type="text" class="form-control text-uppercase" aria-label="Text" name="arrival"/>
+                        </div>
+                    </div>
+                </td>
+
+                <td>
+                    <div>
+                        <input type="text" value="" name="operating_carrier" style="max-width: 80px;" class="form-control operating_carrier text-uppercase" />
+                    </div>
+                </td>
+
+                <td>
+                    <div>
+                        <input type="text" value="" name="validating_carrier" style="max-width: 80px;" class="form-control validating_carrier text-uppercase" />
+                    </div>
+                </td>
+
+                <td>
+                    <div>
+                        <button class="btn manage_btn make_bg_three text-white d-flex align-items-center edit_commission_btn" data-markup-id="{{ markup_rule.id }}" type="button"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                </td>
+              </tr>
+
+            </tbody>
+        </table>
+    </div>
+    <!-- Commission Section Ends -->
+
+
+    <!-- Result Section Starts -->
+    <div class="p-2 bg-light d-flex justify-content-between align-items-center mt-4">
+        <h5 class="fw-bold">Result</h5>
+    </div>
+
+    <div class="edit-result-section">
+        <table class="table table-sm align-middle">
+            <thead>
+              <tr class="table-primary">
+                <tr class="table-primary">
+                    <th scope="col" style="white-space: nowrap;">Type</th>
+                    <th scope="col" style="white-space: nowrap;">Office ID</th>
+                    <th scope="col" style="white-space: nowrap;">Cabin Class</th>
+                    <th scope="col" style="white-space: nowrap;">Fare Type</th>
+                    <th scope="col" style="white-space: nowrap;">Passenger</th>
+                    <th scope="col" style="white-space: nowrap;">Currency</th>
+                    <th scope="col" style="white-space: nowrap;">Amount</th>
+                    <th scope="col" style="white-space: nowrap;">Departure</th>
+                    <th scope="col" style="white-space: nowrap;">Arrival</th>
+                    <th scope="col" style="white-space: nowrap;">Operating Carrier</th>
+                    <th scope="col" style="white-space: nowrap;">Validating Carrier</th>
+                    <th scope="col" style="white-space: nowrap;">Action</th>
+                  </tr>
+              </tr>
+            </thead>
+            <tbody>
+            {% for markup in markup_rule.tyktt_commission.all %}
+            <tr id="markup-row-{{ markup.id }}">
+                
+                <td style="white-space: nowrap;">
+                    <div>
+                        <p class="fw-bold m-0 p-0">{{ markup.markup_commission }}</p>
+                    </div>
+                </td>
+
+                <td style="white-space: nowrap;">
+                    <div>
+                        <p class="fw-bold m-0 p-0">{{ markup.office_id|extract_prefixes }}</p>
+                    </div>
+                </td>
+
+                <td style="white-space: nowrap;">
+                    <div class="d-flex align-items-center justify-content-start">
+                        <p class="fw-bold m-0 p-0 text-capitalize">{{ markup.carbin_class }}</p>
+                    </div>
+                </td>
+                
+                <td style="white-space: nowrap;">
+                    <div class="d-flex align-items-center justify-content-start">
+                        <p class="fw-bold m-0 p-0 text-capitalize">{{ markup.fare_type }}</p>
+                    </div>
+                </td>
+                
+                <td style="white-space: nowrap;">
+                    <div class="d-flex align-items-center justify-content-start">
+                        <p class="fw-bold m-0 p-0 text-capitalize">{{ markup.passenger }}</p>
+                    </div>
+                </td>
+
+                <td style="white-space: nowrap;">
+                    <div class="d-flex align-items-center justify-content-start">
+                        <p class="fw-bold m-0 p-0 text-capitalize">{{ markup.currency }}</p>
+                    </div>
+                </td>
+
+                <td style="white-space: nowrap;">
+                    <div class="d-flex align-items-center justify-content-start fw-bold">
+                        <span class="border border-end-0 p-2">{% if markup.amount_type == 'Fixed' %} Amt. {% else %} % {% endif %}</span>
+                        <span class="border p-2">{{ markup.amount }}</span>
+                    </div>
+                </td>
+
+                <td style="white-space: nowrap;">
+                    <div class="d-flex align-items-center justify-content-start fw-bold">
+                        <span class="border border-end-0 p-2">{{ markup.departure_type }}</span>
+                        {% if markup.departure %}
+                        <span class="border p-2"><a href="#" data-mdb-tooltip-init title="{{ markup.departure }}">View</a></span>
+                        {% else %}
+                        <span class="border p-2"></span>
+                        {% endif %}
+                    </div>
+                </td>
+
+                <td style="white-space: nowrap;">
+                    <div class="d-flex align-items-center justify-content-start fw-bold">
+                        <span class="border border-end-0 p-2">{{ markup.arrival_type }}</span>
+                        {% if markup.arrival %}
+                        <span class="border p-2"><a href="#" data-mdb-tooltip-init title="{{ markup.arrival }}">View</a></span>
+                        {% else %}
+                        <span class="border p-2"></span>
+                        {% endif %}
+                    </div>
+                </td>
+                  
+                <td style="white-space: nowrap;">
+                    <div class="d-flex align-items-center justify-content-start">
+                        <p class="fw-bold m-0 p-0">{{ markup.operating_carrier }}</p>
+                    </div>
+                </td>
+                  
+                <td style="white-space: nowrap;">
+                    <div class="d-flex align-items-center justify-content-start">
+                        <p class="fw-bold m-0 p-0">{{ markup.validating_carrier }}</p>
+                    </div>
+                </td>
+
+                <td style="white-space: nowrap;">
+                    <div>
+                        <button
+                            class="btn-floating btn btn-danger delete-markup"
+                            data-id="{{ markup.id }}"
+                            data-url="{% url 'markup_commission_delete' markup.id %}">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>
+                </td>
+
+              </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <!-- Result Section Ends -->
+
+
+
+    <div class="p-2 bg-light d-flex justify-content-between align-items-center mt-4">
+        <h5 class="fw-bold">Note</h5>
+    </div>
+
+    <div>
+        <ul>
+                                          
+            <li>
+                To add multiple details, use a comma (<code>,</code>) to separate them. 
+                For <span class="me-2">example:</span> Airline: <strong class="me-2">AW,ET,SA</strong> Country: <strong class="me-2">NG,US,UK</strong> City: <strong>LOS,LON,ACC</strong>
+            </li>
+        
+            <li>
+              Selecting <strong>"Others"</strong> will apply a markup to any carrier not listed in the <b>Margin Manager table</b>.
+            </li>
+
+            <li>
+              To exclude specific details, use an exclamation mark (<code>!</code>) 
+              before the code. For example: <strong>!AW,!ET,!SA</strong>, etc.
+            </li>
+
+            <li>
+                To add Corporate Code, Input the airline carrier code / corporate code number. Eg: <strong>QR/12345</strong>
+            </li>
+
+            <li>
+                To add single/multiple corporate codes, use the <strong>Add button</strong>
+            </li>
+
+          </ul>
+    </div>
+
+    <div class="d-flex justify-content-end mt-3">
+        <button class="btn manage_btn make_bg_three text-white">Submit</button>
+    </div>
+
+</form>

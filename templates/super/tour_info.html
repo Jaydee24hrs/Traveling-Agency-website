@@ -1,0 +1,788 @@
+{% extends "base/base2.html" %}
+{% load static %}
+{% block title %} Tour Information | Jomivic Travels {% endblock title %}
+
+{% block cssfiles %}
+
+<style>
+  
+  .faq_bg{
+    background-image: url("{% static 'img/spain4.jpg' %}");
+    display: grid;
+    place-items: center;
+    background-position:center;
+    background-size:cover;
+    height: 68vh;
+  }
+
+  .breadcrumb-item+.breadcrumb-item::before{
+    color: white !important;
+    content: ">>";
+  }
+  .make_bg{
+    background: #04040479;
+  }
+
+
+  ul li{
+    list-style: none !important;
+  }
+
+</style>
+{% endblock cssfiles %}
+
+{% block content %}
+
+<div id="preloader">
+  <img src="{% static 'img/loader.gif' %}" alt="" width="20%">
+</div>
+
+<div class="faq_bg text-capitalize">
+  <div class="text-white d-flex flex-column justify-content-center align-items-center shadow-5 p-3 p-md-5 make_bg">
+    <h2 class="fw-bold text-uppercase" data-aos="fade-up" data-aos-duration="2000">Splendid Spain</h2>
+    <ul class="package-detail d-flex align-items-center p-0" data-aos="fade-up" data-aos-duration="2000">
+      <li class="me-3"><i class="far fa-calendar-alt me-2"></i>7 days</li>
+      <li class="me-3"><i class="fas fa-plane me-2"></i>11 dec, 2019</li>
+      <li class="me-3"><i class="fas fa-download me-2"></i><a href="#" class="text-white">download pdf</a></li>
+  </ul>
+  </div>
+</div>
+
+<div class="container py-3 py-md-5">
+  <section class="single-section small-section bg-inner">
+    <div class="container text-capitalize">
+        <div class="row">
+
+            <div class="col-12 col-md-9">
+
+                <div class="description-section tab-section">
+                    <div class="menu-top menu-up">
+                        <ul class="nav nav-tabs shadow-3 bg-white mb-3" id="top-tab" role="tablist" data-aos="fade-up" data-aos-duration="2000">
+                            <li class="nav-item"><a data-mdb-toggle="tab" class="nav-link active" href="#highlight">Highlight</a></li>
+                            <li class="nav-item"><a data-mdb-toggle="tab" class="nav-link" href="#itinerary">Itinerary</a></li>
+                            <li class="nav-item"><a data-mdb-toggle="tab" class="nav-link" href="#gallery">Gallery</a></li>
+                            <li class="nav-item"><a data-mdb-toggle="tab" class="nav-link" href="#accommodation">Accommodation</a></li>
+                            <li class="nav-item"><a data-mdb-toggle="tab" class="nav-link" href="#location">location</a></li>
+                            <li class="nav-item"><a data-mdb-toggle="tab" class="nav-link" href="#review">reviews</a></li>
+                            <li class="nav-item"><a data-mdb-toggle="tab" class="nav-link" href="#policy">policies</a></li>
+                        </ul>
+                        <div class="description-details shadow-3 tab-content" id="top-tabContent" data-aos="fade-up" data-aos-duration="2000">
+                            <div class="menu-part tab-pane bg-white p-3 fade show active highlight small" role="tabpanel" id="highlight">
+                            
+                              <div class="about-sec">
+                                <p>Hola Espana! The vibrant country of Spain beckons for an adventure that lets us
+                                    explore the sights 'n' sounds of this remarkable destination. Visit
+                                    architechturally brilliant and culture-rich cities of Madrid, Seville,
+                                    Barcelona, Cordoba, Valencia on this tour and have the experience of a lifetime!
+                                </p>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="about-sec">
+                                        <h4 class="text-black fw-bold">inclusion</h4>
+                                        <ul class="p-0">
+                                            <li>Return economy class airfare with taxes</li>
+                                            <li>Barcelona to Prague Internal flight ticket</li>
+                                            <li>2 Nights Stay With Breakfast At Prague</li>
+                                            <li>2 Nights Stay With Breakfast At Budapest</li>
+                                            <li>1 Night Stay With Breakfast At Vienna</li>
+                                            <li>Normal Visa Charges of Schengen</li>
+                                            <li>5% GST</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 margin-up">
+                                    <div class="about-sec">
+                                        <h4 class="text-black fw-bold">exclusion</h4>
+                                        <ul class="p-0">
+                                            <li>Any Extra Sightseeing Which Is Not Mentioned In The Itinerary</li>
+                                            <li>Overseas Travel Insurance & Personal Expense Such As Mineral Water,
+                                                Laundry Etc</li>
+                                            <li>Personal expenses</li>
+                                            <li>Excess baggage charge</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="detail-img my-3">
+                                <img src="{% static 'img/spain.jpg' %}" class="img-fluid blur-up lazyload"
+                                    alt="">
+                            </div>
+                            <div class="about-sec">
+                                <h6 class="text-black fw-bold">a road rip along spain's mediterranean coast</h6>
+                                <p>A road trip along Spain’s Mediterranean coast is a guarantee of sunshine, lovely
+                                    beaches, and plenty of destinations with things to see and do. We suggest
+                                    following the coastline at your own pace, without a fixed timetable and with
+                                    room to improvise.We choose Barcelona as a starting point because it’s a huge
+                                    transport hub. You might fancy heading north for a couple of days to see the
+                                    Costa Brava (Girona): beautiful bays like Roses, coves where the pine trees grow
+                                    right to the shoreline, large seaside resorts and the fishing villages that once
+                                    inspired Dalí.</p>
+                                <h6 class="text-black fw-bold">the history of spain's great civilisations</h6>
+                                <p>In Spain, you can get a history lesson while you enjoy your holiday. Let us show
+                                    you places to visit where you can discover milestones of human development, like
+                                    the earliest humans, the birth of art, and the power of the great civilisations.
+                                </p>
+                                <h6 class="text-black fw-bold">foodies, prepare to be enthused</h6>
+                                <p>From tasty tapas to superb seafood and traditional roasts, food in Spain is all
+                                    about making the most of the best local produce.Whether you're on a city break
+                                    in Barcelona or Madrid, or you've plumped for a countryside or coastal retreat,
+                                    Spanish food is full of flavour and character.</p>
+                            </div>
+
+                            </div>
+
+                            <div class="itinerary menu-part tab-pane bg-white p-3 fade" role="tabpanel" id="itinerary">
+
+                              <div id="accordion" class="accordion-plan">
+                                <div class="accordion" id="mdb-accordion">
+                                  <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingOne">
+                                      <button class="accordion-button" type="button" data-mdb-toggle="collapse" data-mdb-target="#collapseOne"
+                                        aria-expanded="true" aria-controls="collapseOne">
+                                        Madrid (1 Night)
+                                      </button>
+                                    </h2>
+                                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                                      data-mdb-parent="#mdb-accordion">
+                                      <div class="accordion-body">
+                                        Welcome to Madrid - the capital city of Spain. On arrival we enjoy the city orientation tour which includes
+                                        the Plaza de Espana, Sabatini Garden, Cervantes Statue, Cibeles fountain, Parliament, Puerto del sol. Then
+                                        visit the Royal Palace and Prado Museum – one of the world's greatest art galleries. From inside.
+                                        <div class="highlight mt-3">
+                                          <ul class="p-0">
+                                            <li><img src="{% static 'img/tour_tips/fork.png' %}" class="img-fluid blur-up lazyload me-2" alt=""> dinner</li>
+                                            <li><img src="{% static 'img/tour_tips/bed.png' %}" class="img-fluid blur-up lazyload me-2" alt=""> night stay in madrid</li>
+                                          </ul>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                              
+                                  <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingTwo">
+                                      <button class="accordion-button collapsed" type="button" data-mdb-toggle="collapse" data-mdb-target="#collapseTwo"
+                                        aria-expanded="false" aria-controls="collapseTwo">
+                                        Madrid – Toledo – Seville (2 Nights)
+                                      </button>
+                                    </h2>
+                                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                                      data-mdb-parent="#mdb-accordion">
+                                      <div class="accordion-body">
+                                        Today we proceed to Toledo - declared as World Heritage Site by UNESCO. On arrival we visit the city's most
+                                        famous monument Santa Maria la Blanca Synagogue. Then we visit Sword factory. Later we leave for Seville
+                                        <div class="highlight mt-3">
+                                          <ul class="p-0">
+                                            <li><img src="{% static 'img/tour_tips/fork.png' %}" class="img-fluid blur-up lazyload me-2" alt=""> breakfast</li>
+                                            <li><img src="{% static 'img/tour_tips/fork.png' %}" class="img-fluid blur-up lazyload me-2" alt=""> lunch</li>
+                                            <li><img src="{% static 'img/tour_tips/fork.png' %}" class="img-fluid blur-up lazyload me-2" alt=""> dinner</li>
+                                            <li><img src="{% static 'img/tour_tips/bed.png' %}" class="img-fluid blur-up lazyload me-2" alt=""> night stay in seville</li>
+                                          </ul>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                              
+                                  <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingThree">
+                                      <button class="accordion-button collapsed" type="button" data-mdb-toggle="collapse"
+                                        data-mdb-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        Seville
+                                      </button>
+                                    </h2>
+                                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                                      data-mdb-parent="#mdb-accordion">
+                                      <div class="accordion-body">
+                                        Today we enjoy Seville city tour wherein, we visit the massive cathedral with the Tomb of Christopher Columbus,
+                                        Moorish Giralda Tower, The Alcázar, a photo stop at Santa Cruz Quarter with flower decked balconies and the
+                                        Ultramodern expo site - a small scale model of "Victoria" the first vessel to circumnavigate the globe. Then
+                                        we visit Metropol Parasol - The largest wooden structure in the world. In the evening we enjoy the Flamenco
+                                        Show with dinner.
+                                        <div class="highlight mt-3">
+                                          <ul class="p-0">
+                                            <li><img src="{% static 'img/tour_tips/fork.png' %}" class="img-fluid blur-up lazyload me-2" alt=""> breakfast</li>
+                                            <li><img src="{% static 'img/tour_tips/fork.png' %}" class="img-fluid blur-up lazyload me-2" alt=""> lunch</li>
+                                            <li><img src="{% static 'img/tour_tips/fork.png' %}" class="img-fluid blur-up lazyload me-2" alt=""> dinner</li>
+                                            <li><img src="{% static 'img/tour_tips/bed.png' %}" class="img-fluid blur-up lazyload me-2" alt=""> night stay in seville</li>
+                                          </ul>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                              
+                                  <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingFour">
+                                      <button class="accordion-button" type="button" data-mdb-toggle="collapse" data-mdb-target="#collapseFour"
+                                        aria-expanded="true" aria-controls="collapseFour">
+                                        Seville – Costa Del Sol – Malaga (1 Night)
+                                      </button>
+                                    </h2>
+                                    <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+                                      data-mdb-parent="#mdb-accordion">
+                                      <div class="accordion-body">
+                                        Today we proceed to Costa del Sol - a region in the south of Spain. Here we explore Puerto Banus, then we
+                                        proceed to Malaga. On arrival we enjoy orientation tour which includes Cathedral of Malaga, Plaza de la
+                                        Merced, The Museo Picasso from outside, then we visit Moorish fortress La Alcazaba.
+                                        <div class="highlight mt-3">
+                                          <ul class="p-0">
+                                            <li><img src="{% static 'img/tour_tips/fork.png' %}" class="img-fluid blur-up lazyload me-2" alt=""> breakfast</li>
+                                            <li><img src="{% static 'img/tour_tips/fork.png' %}" class="img-fluid blur-up lazyload me-2" alt=""> lunch</li>
+                                            <li><img src="{% static 'img/tour_tips/fork.png' %}" class="img-fluid blur-up lazyload me-2" alt=""> dinner</li>
+                                            <li><img src="{% static 'img/tour_tips/bed.png' %}" class="img-fluid blur-up lazyload me-2" alt=""> night stay in Málaga</li>
+                                          </ul>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                              
+                                  <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingFive">
+                                      <button class="accordion-button collapsed" type="button" data-mdb-toggle="collapse" data-mdb-target="#collapseFive"
+                                        aria-expanded="false" aria-controls="collapseFive">
+                                        Malaga – Cordoba – Valencia (1 Night)
+                                      </button>
+                                    </h2>
+                                    <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive"
+                                      data-mdb-parent="#mdb-accordion">
+                                      <div class="accordion-body">
+                                        Today we proceed to Cordoba. On arrival we visit Mezquita from inside followed by orientation city tour which
+                                        includes Roman bridge, Arab waterwheels and Plaza del Potro. Then we leave for Valencia.
+                                        <div class="highlight mt-3">
+                                          <ul class="p-0">
+                                            <li><img src="{% static 'img/tour_tips/fork.png' %}" class="img-fluid blur-up lazyload me-2" alt=""> breakfast</li>
+                                            <li><img src="{% static 'img/tour_tips/fork.png' %}" class="img-fluid blur-up lazyload me-2" alt=""> lunch</li>
+                                            <li><img src="{% static 'img/tour_tips/fork.png' %}" class="img-fluid blur-up lazyload me-2" alt=""> dinner</li>
+                                            <li><img src="{% static 'img/tour_tips/bed.png' %}" class="img-fluid blur-up lazyload me-2" alt=""> night stay in Valencia</li>
+                                          </ul>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                              
+                                  <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingSix">
+                                      <button class="accordion-button collapsed" type="button" data-mdb-toggle="collapse" data-mdb-target="#collapseSix"
+                                        aria-expanded="false" aria-controls="collapseSix">
+                                        Valencia – Barcelona (2 Nights)
+                                      </button>
+                                    </h2>
+                                    <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix"
+                                      data-mdb-parent="#mdb-accordion">
+                                      <div class="accordion-body">
+                                        Today we enjoy orientation city tour which includes Plaza del Mercado, Serranos Towers, Plaza de Ayuntamento
+                                        and Cathedral of Valencia. Then we visit City of Arts and Sciences- to see the work of the Valencian architect
+                                        Santiago Calatrava, several of its buildings have become icons in the city. Then we visit Ceramics Museum from
+                                        inside. Later we proceed to Barcelona. On arrival we visit Poble Espanyol – an open air Archaeological museum
+                                        and Spanish village showing replicas of characteristic houses from all regions of Spain.
+                                        <div class="highlight mt-3">
+                                          <ul class="p-0">
+                                            <li><img src="{% static 'img/tour_tips/fork.png' %}" class="img-fluid blur-up lazyload me-2" alt=""> breakfast</li>
+                                            <li><img src="{% static 'img/tour_tips/fork.png' %}" class="img-fluid blur-up lazyload me-2" alt=""> lunch</li>
+                                            <li><img src="{% static 'img/tour_tips/fork.png' %}" class="img-fluid blur-up lazyload me-2" alt=""> dinner</li>
+                                            <li><img src="{% static 'img/tour_tips/bed.png' %}" class="img-fluid blur-up lazyload me-2" alt=""> night stay in Barcelona</li>
+                                          </ul>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                              
+                                  <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingSeven">
+                                      <button class="accordion-button collapsed" type="button" data-mdb-toggle="collapse"
+                                        data-mdb-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                                        Barcelona
+                                      </button>
+                                    </h2>
+                                    <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingSeven"
+                                      data-mdb-parent="#mdb-accordion">
+                                      <div class="accordion-body">
+                                        Today we enjoy Barcelona city orientation tour which includes Olympic stadium, colourful La Ramblas, Statue of
+                                        Christopher Columbus and visit Gaudi's Sagrada Familia Cathedral Antoni Gaudí's unfinished masterpiece. Later
+                                        we take a cable car ride to Montjuic hill which gives a panoramic view of the entire Barcelona city and
+                                        Tibidado hill. Today evening we enjoy beach front of Barcelona.
+                                        <div class="highlight mt-3">
+                                          <ul class="p-0">
+                                            <li><img src="{% static 'img/tour_tips/fork.png' %}" class="img-fluid blur-up lazyload me-2" alt=""> breakfast</li>
+                                            <li><img src="{% static 'img/tour_tips/fork.png' %}" class="img-fluid blur-up lazyload me-2" alt=""> lunch</li>
+                                            <li><img src="{% static 'img/tour_tips/fork.png' %}" class="img-fluid blur-up lazyload me-2" alt=""> dinner</li>
+                                            <li><img src="{% static 'img/tour_tips/bed.png' %}" class="img-fluid blur-up lazyload me-2" alt=""> night stay in Barcelona</li>
+                                          </ul>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                              
+                                  <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingEight">
+                                      <button class="accordion-button collapsed" type="button" data-mdb-toggle="collapse"
+                                        data-mdb-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+                                        Departure from Barcelona
+                                      </button>
+                                    </h2>
+                                    <div id="collapseEight" class="accordion-collapse collapse" aria-labelledby="headingEight"
+                                      data-mdb-parent="#mdb-accordion">
+                                      <div class="accordion-body">
+                                        It’s time now to say goodbye to our travel companions. Let us be in contact with each other through email,
+                                        Facebook, and meet again on one more memorable tour. See you all!!
+                                        <div class="highlight mt-3">
+                                          <ul class="p-0">
+                                            <li><img src="{% static 'img/tour_tips/fork.png' %}" class="img-fluid blur-up lazyload me-2" alt=""> breakfast</li>
+                                            <li><img src="{% static 'img/tour_tips/fork.png' %}" class="img-fluid blur-up lazyload me-2" alt=""> lunch</li>
+                                          </ul>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              
+                            </div>
+
+                            <div class="menu-part tab-pane bg-white p-3 fade gallery" role="tabpanel" id="gallery">
+                                <div class="row">
+                                  <div class="col-12 col-md-6 col-lg-4 mt-3 mt-md-0">
+                                    <img src="{% static 'img/tour/7.jpg' %}" alt="" width="100%">
+                                  </div>
+                                  
+                                  <div class="col-12 col-md-6 col-lg-4 mt-3 mt-md-0">
+                                    <img src="{% static 'img/tour/8.jpg' %}" alt="" width="100%">
+                                  </div>
+
+                                  <div class="col-12 col-md-6 col-lg-4 mt-3 mt-md-0">
+                                    <img src="{% static 'img/tour/9.jpg' %}" alt="" width="100%">
+                                  </div>
+
+                                  <div class="col-12 col-md-6 col-lg-4 mt-3">
+                                    <img src="{% static 'img/tour/10.jpg' %}" alt="" width="100%">
+                                  </div>
+
+                                  <div class="col-12 col-md-6 col-lg-4 mt-3">
+                                    <img src="{% static 'img/tour/11.jpg' %}" alt="" width="100%">
+                                  </div>
+
+                                  <div class="col-12 col-md-6 col-lg-4 mt-3">
+                                    <img src="{% static 'img/tour/12.jpg' %}" alt="" width="100%">
+                                  </div>
+                                </div>
+                            </div>
+
+                            <div class="menu-part tab-pane bg-white p-3 fade accommodation" role="tabpanel" id="accommodation">
+                              <div class="list-view">
+                                <div class="list-box row">
+                                    <div class="list-img col-12 col-md-4">
+                                        <a href="#">
+                                            <img src="{% static 'img/hotel_gallery/1.jpg' %}"
+                                                class="img-fluid blur-up lazyload" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="list-content col-12 col-md-8">
+                                        <div>
+                                            <a href="#">
+                                                <h5 class="text-black fw-bold mb-0">sea view hotel</h5>
+                                            </a>
+                                            <p class="m-0 p-0">dubai, 2km from center</p>
+                                            <div class="rating mt-3">
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="far fa-star text-warning"></i>
+                                                <span class="ms-3 text-black small">26412 review</span>
+                                            </div>
+                                            <p class="hotel-info small">relax and unwind with a special stay offer at a
+                                                superlative value. conveniently located, offers spacious rooms.
+                                                great dinning options. gym &amp; pool. innovative dinning and bar
+                                                options. relaxing spa open till 2 A.M.</p>
+                                            <div class="facility-icon d-flex gap-3">
+                                                <div class="facility-box d-flex flex-column align-items-center">
+                                                    <img src="{% static 'img/hotel/beer.png' %}"
+                                                        class="img-fluid blur-up lazyload" alt="" width="20">
+                                                    <span>bar</span>
+                                                </div>
+                                                <div class="facility-box d-flex flex-column align-items-center">
+                                                    <img src="{% static 'img/hotel/wifi.png' %}"
+                                                        class="img-fluid blur-up lazyload" alt="" width="20">
+                                                    <span>wifi</span>
+                                                </div>
+                                                <div class="facility-box d-flex flex-column align-items-center">
+                                                    <img src="{% static 'img/hotel/sunset.png' %}"
+                                                        class="img-fluid blur-up lazyload" alt="" width="20">
+                                                    <span>beach</span>
+                                                </div>
+                                                <div class="facility-box d-flex flex-column align-items-center">
+                                                    <img src="{% static 'img/hotel/pool.png' %}"
+                                                        class="img-fluid blur-up lazyload" alt="" width="20">
+                                                    <span>swimming</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-view mt-5">
+                                <div class="list-box row">
+                                    <div class="list-img col-12 col-md-4">
+                                        <a href="#">
+                                            <img src="{% static 'img/hotel_gallery/2.jpg' %}"
+                                                class="img-fluid blur-up lazyload" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="list-content col-12 col-md-8">
+                                        <div>
+                                            <a href="#">
+                                                <h5 class="fw-bold text-black">sea view hotel</h5>
+                                            </a>
+                                            <p>dubai, 2km from center</p>
+                                            <div class="rating">
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="far fa-star text-warning"></i>
+                                                <span>26412 review</span>
+                                            </div>
+                                            <p class="hotel-info small">relax and unwind with a special stay offer at a
+                                                superlative value. conveniently located, offers spacious rooms.
+                                                great dinning options. gym &amp; pool. innovative dinning and bar
+                                                options. relaxing spa open till 2 A.M.</p>
+                                            <div class="facility-icon d-flex gap-3">
+                                                <div class="facility-box d-flex flex-column align-items-center">
+                                                    <img src="{% static 'img/hotel/beer.png' %}"
+                                                        class="img-fluid blur-up lazyload" alt="" width="20">
+                                                    <span>bar</span>
+                                                </div>
+                                                <div class="facility-box d-flex flex-column align-items-center">
+                                                    <img src="{% static 'img/hotel/wifi.png' %}"
+                                                        class="img-fluid blur-up lazyload" alt="" width="20">
+                                                    <span>wifi</span>
+                                                </div>
+                                                <div class="facility-box d-flex flex-column align-items-center">
+                                                    <img src="{% static 'img/hotel/sunset.png' %}"
+                                                        class="img-fluid blur-up lazyload" alt="" width="20">
+                                                    <span>beach</span>
+                                                </div>
+                                                <div class="facility-box d-flex flex-column align-items-center">
+                                                    <img src="{% static 'img/hotel/pool.png' %}"
+                                                        class="img-fluid blur-up lazyload" alt="" width="20">
+                                                    <span>swimming</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-view mt-5">
+                                <div class="list-box row">
+                                    <div class="list-img col-12 col-md-4">
+                                        <a href="#">
+                                            <img src="{% static 'img/hotel_gallery/3.jpg' %}"
+                                                class="img-fluid blur-up lazyload" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="list-content col-12 col-md-8">
+                                        <div>
+                                            <a href="#">
+                                                <h5 class="fw-bold text-black">sea view hotel</h5>
+                                            </a>
+                                            <p>dubai, 2km from center</p>
+                                            <div class="rating">
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="far fa-star text-warning"></i>
+                                                <span>26412 review</span>
+                                            </div>
+                                            <p class="hotel-info small">relax and unwind with a special stay offer at a
+                                                superlative value. conveniently located, offers spacious rooms.
+                                                great dinning options. gym &amp; pool. innovative dinning and bar
+                                                options. relaxing spa open till 2 A.M.</p>
+                                            <div class="facility-icon d-flex gap-3">
+                                                <div class="facility-box d-flex flex-column align-items-center">
+                                                    <img src="{% static 'img/hotel/beer.png' %}"
+                                                        class="img-fluid blur-up lazyload" alt="" width="20">
+                                                    <span>bar</span>
+                                                </div>
+                                                <div class="facility-box d-flex flex-column align-items-center">
+                                                    <img src="{% static 'img/hotel/wifi.png' %}"
+                                                        class="img-fluid blur-up lazyload" alt="" width="20">
+                                                    <span>wifi</span>
+                                                </div>
+                                                <div class="facility-box d-flex flex-column align-items-center">
+                                                    <img src="{% static 'img/hotel/sunset.png' %}"
+                                                        class="img-fluid blur-up lazyload" alt="" width="20">
+                                                    <span>beach</span>
+                                                </div>
+                                                <div class="facility-box d-flex flex-column align-items-center">
+                                                    <img src="{% static 'img/hotel/pool.png' %}"
+                                                        class="img-fluid blur-up lazyload" alt="" width="20">
+                                                    <span>swimming</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+
+                            <div class="menu-part tab-pane bg-white p-3 fade map" role="tabpanel" id="location">
+                                <iframe
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d193595.9147718689!2d-74.11976358820196!3d40.69740344169578!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2sin!4v1568001991098!5m2!1sen!2sin"
+                                    style="border:0;" allowfullscreen="" width="100%" height="500px"></iframe>
+                            </div>
+
+                            <div class="menu-part tab-pane bg-white p-3 fade review" role="tabpanel" id="review">
+                                <div class="review-box">
+                                    <div class="rating">
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <span class="text-black fw-bold ms-2">The stay in the hotel was excellent</span>
+                                    </div>
+                                    <h6>by xyz, jun 18, 2019</h6>
+                                    <p>Our stay at sea view was pleasant. We stayed here for a day and the view from
+                                        the room was brilliant. Rooms were clean hygienic and big. foods were
+                                        amazing. rooms were neat and clean.staff is very courteous and
+                                        cooperative.great place to stay. Good atmosphere, Staff was amazing..well
+                                        education..mannered. Room was spacious and cleaned more then an expected.
+                                    </p>
+                                </div>
+                                <div class="review-box">
+                                    <div class="rating">
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="far fa-star text-warning"></i>
+                                        <span class="text-black fw-bold ms-2">Awesome Stay..value for money</span>
+                                    </div>
+                                    <h6>by xyz, jun 18, 2019</h6>
+                                    <p>We were there for 3 nights and hotel was too good. Greenery was flaunting
+                                        everywhere. There were games kept for our entertainment. View from room was
+                                        good. Hotel staff behavior was nice. They provided each and every
+                                        service in hand. Overall stay was too good.</p>
+                                </div>
+                                <div class="review-box">
+                                    <div class="rating">
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="far fa-star text-warning"></i>
+                                        <span class="text-black fw-bold ms-2">Best getaway destination with family</span>
+                                    </div>
+                                    <h6>by xyz, jun 18, 2019</h6>
+                                    <p>The location, view from the rooms are just awesome. Very cool landscaping has
+                                        been done Around the hotel. There are small activities that you can indulge
+                                        with your family. Pool wasn't functional at the time of our
+                                        stay. In all, the stay is really peaceful, calm and Silent. A place we would
+                                        definitely want to visit again.</p>
+                                </div>
+                            </div>
+
+                            <div class="menu-part tab-pane bg-white p-3 fade policy" role="tabpanel" id="policy">
+                              <div class="about-sec">
+                                <h6 class="fw-bold text-black">Payment Policy</h6>
+                                <ul class="p-0">
+                                    <li>Initial deposit – INR. 1, 00,000 per person at the time of booking.</li>
+                                    <li>1st part payment 50% of the tour cost at least 60 days prior departure.</li>
+                                    <li>Balance payment 30 days prior departure.</li>
+                                </ul>
+                            </div>
+                            <div class="about-sec">
+                                <h6 class="fw-bold text-black">Cancellation Policy</h6>
+                                <ul class="p-0">
+                                    <li>Deposit of INR 1,00,000 per person is non-refundable in any case once
+                                        booking is confirmed.</li>
+                                    <li>45 Days to 60 days prior to departure – 50% of the total tour cost.</li>
+                                    <li>30 to 44 Days prior to departure 75 % of the tour cost.</li>
+                                    <li>Within 30 days of departure 100% of the tour cost.</li>
+                                </ul>
+                            </div>
+                            <div class="about-sec">
+                                <h6 class="fw-bold text-black">Important Terms and Conditions</h6>
+                                <ul class="p-0">
+                                    <li>All travelers have to carry their own passports, tickets, forex & any other
+                                        important documents. It is recommended to leave passport photocopy at your
+                                        resident, office & carry one copy while travelling.</li>
+                                    <li>Passengers having excess baggage over 20 kgs per person in check in baggage
+                                        & 07 kgs in hand luggage are liable to pay excess baggage charge directly at
+                                        airport.</li>
+                                    <li>Any sightseeing not mentioned in the itinerary will have to be paid
+                                        directly.</li>
+                                    <li>For the convenience of passengers the itinerary may be amended.</li>
+                                    <li>Flight cost and availability are subject to change at time of actual
+                                        booking.</li>
+                                </ul>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="special-section related-box ratio3_2 grid-box">
+                  <section class="blog_section destination-section section-b-space ratio_55 mt-3 mt-lg-3">
+                    <div class="container">        
+                        <div class="owl-carousel owl-theme destinations mt-3 mt-md-4">
+        
+                          <div class="item" data-aos="flip-right" data-aos-duration="2000">
+                              <div class="card mb-3">
+                                  <img src="{% static 'img/room/14.jpg' %}" class="card-img-top" alt="Fissure in Sandstone" height="250"/>
+                                  <div class="card-body p-0 py-1">
+                                    <div class="special-content text-center">
+                                        <h5 class="text-black fw-bolder p-0 m-0">Best of Europe</h5>
+                                        <span>6N 7D</span>
+                                    </div>
+                                  </div>
+                              </div>
+                          </div>
+      
+                          <div class="item" data-aos="flip-right" data-aos-duration="2000">
+                              <div class="card mb-3">
+                                  <img src="{% static 'img/room/13.jpg' %}" class="card-img-top" alt="Fissure in Sandstone" height="250"/>
+                                  <div class="card-body p-0 py-1">
+                                    <div class="special-content text-center">
+                                        <h5 class="text-black fw-bolder p-0 m-0">Best of Europe</h5>
+                                        <span>6N 7D</span>
+                                    </div>
+                                  </div>
+                              </div>
+                          </div>
+      
+                          <div class="item" data-aos="flip-right" data-aos-duration="2000">
+                              <div class="card mb-3">
+                                  <img src="{% static 'img/room/10.jpg' %}" class="card-img-top" alt="Fissure in Sandstone" height="250"/>
+                                  <div class="card-body p-0 py-1">
+                                    <div class="special-content text-center">
+                                        <h5 class="text-black fw-bolder p-0 m-0">Best of Europe</h5>
+                                        <span>6N 7D</span>
+                                    </div>
+                                  </div>
+                              </div>
+                          </div>
+      
+                          <div class="item" data-aos="flip-right" data-aos-duration="2000">
+                              <div class="card mb-3">
+                                  <img src="{% static 'img/room/15.jpg' %}" class="card-img-top" alt="Fissure in Sandstone" height="250"/>
+                                  <div class="card-body p-0 py-1">
+                                    <div class="special-content text-center">
+                                        <h5 class="text-black fw-bolder p-0 m-0">Best of Europe</h5>
+                                        <span>6N 7D</span>
+                                    </div>
+                                  </div>
+                              </div>
+                          </div>
+        
+                        </div>
+                    </div>
+        
+                </section>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-3" id="booking">
+                <div class="sticky-cls-top">
+                    <div class="single-sidebar bg-white p-3 shadow-3" data-aos="fade-up" data-aos-duration="2000">
+                        <div class="selection-section">
+                            <div class="book-btn-section">
+                              <h6 class="text-black fw-bold">Book This Journey</h6>
+
+                              
+                              <div class="form-outline w-100">
+                                <input type="text" id="firstname" class="form-control" />
+                                <label class="form-label" for="firstname">First Name</label>
+                              </div>
+                              
+                              <div class="form-outline w-100 mt-3">
+                                <input type="email" id="email" class="form-control" />
+                                <label class="form-label" for="email">Enter Your Email</label>
+                              </div>
+                              
+                              <div class="form-outline w-100 mt-3">
+                                <input type="number" id="phone" class="form-control" />
+                                <label class="form-label" for="phone">Phone Number</label>
+                              </div>
+
+                              <div class="form-outline w-100 mt-3">
+                                <input type="date" id="datepicker" class="form-control" />
+                                <label class="form-label" for="datepicker">Check In</label>
+                              </div>
+
+                              
+                      
+                              <div class="mt-3 text-end">
+                                <a href="{% url 'tour_book' %}" class="btn make_bg_one rounded-0 text-white">Start My Journey</a>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="single-sidebar bg-white p-3 shadow-3 mt-3 mt-md-4" data-aos="fade-up" data-aos-duration="2000">
+                        <h6 class="contact-title text-black fw-bold">always first</h6>
+                        <p class="address text-muted small">Be the first to find out latest tours and exclusive offers and get 15% off your first booking.</p>
+                     
+                        <div class="form-outline w-100 mt-3">
+                          <input type="email" id="email" class="form-control" />
+                          <label class="form-label" for="email">Enter Your Email</label>
+                        </div>
+                        
+                        <div class="mt-3 text-end">
+                          <a href="{% url 'tour_book' %}" class="btn make_bg_one rounded-0 text-white">Be The First</a>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+
+
+
+
+{% endblock content %}
+
+
+
+{% block jsfiles %}
+
+<script>
+  $(document).ready(function(){
+
+      var owl = $(".destinations");
+
+      owl.owlCarousel({
+          loop: true,
+          margin: 20,
+          nav: false,
+          dots: false,
+          autoplay: true,
+          // autoplayTimeout: 3000,
+          autoplayHoverPause: true,
+          responsive:{
+              0:{ items: 1 },
+              600:{ items: 2 },
+              1000:{ items: 2 }
+          }
+      });
+
+      // Custom navigation button events
+      $(".owl-start").click(function() {
+          owl.trigger("prev.owl.carousel");
+      });
+
+      $(".owl-end").click(function() {
+          owl.trigger("next.owl.carousel");
+      });
+  });
+
+
+
+</script>
+{% endblock jsfiles %}

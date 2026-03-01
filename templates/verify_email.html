@@ -1,0 +1,135 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block title %} Verify OTP {% endblock title %}
+
+{% block cssfiles %}
+
+    <style>
+        .container {
+            display: grid;
+            place-items: center;
+            height: 100vh;
+        }
+
+        .otp_box {
+            padding: 40px 100px;
+        }
+
+        .otp-input {
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            margin: 0 5px;
+            font-size: 1.2em;
+        }
+
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column; 
+        }
+
+        /* .spinner-border {
+            width: 10rem;
+            height: 10rem;
+        } */
+
+        .preloader_img{
+            max-width: 300px;
+        }
+
+    </style>
+{% endblock cssfiles %}
+
+
+{% block content %}
+
+<div id="preloader">
+    <img src="{% static 'img/loader.gif' %}" alt="" width="20%">
+</div>
+
+    <div class="container">
+        <div class="text-center bg-light rounded shadow-sm otp_box" data-aos="fade-up" data-aos-duration="2000">
+
+            <h3 class="text-center">Verify OTP</h3>
+
+            <form action="" method="post" id="otp_verification_form">
+                {% csrf_token %}
+                <div class="mt-3">
+                    <input type="text" class="otp-input" name="digit1" maxlength="1" required autofocus>
+                    <input type="text" class="otp-input" name="digit2" maxlength="1" required>
+                    <input type="text" class="otp-input" name="digit3" maxlength="1" required>
+                    <input type="text" class="otp-input" name="digit4" maxlength="1" required>
+                    <input type="text" class="otp-input" name="digit5" maxlength="1" required>
+                </div>
+                <div class="mt-3">
+                    <button type="submit" class="btn btn-dark">Verify</button>
+                </div>
+                <div class="mt-3">
+                    <a href="{% url 'verify_otp' %}"><p>Resend OTP</p></a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+{% endblock content %}
+
+{% block jsfiles %}
+
+    <script>
+        const otpInputs = document.querySelectorAll('.otp-input');
+        otpInputs.forEach((input, index) => {
+            input.addEventListener('input', (event) => {
+                const value = event.target.value;
+
+                if (value && index < otpInputs.length - 1) {
+                    otpInputs[index + 1].focus();
+                } else if (!value && index > 0) {
+                    otpInputs[index - 1].focus();
+                }
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const preloader = document.getElementById('preloader');
+        
+            document.getElementById('otp_verification_form').addEventListener('submit', function(event) {
+                sessionStorage.setItem('preloaderVisible', 'true');
+                preloader.style.display = 'flex';
+            });
+        
+
+            function hidePreloader() {
+                preloader.style.display = 'none';
+                sessionStorage.removeItem('preloaderVisible');
+            }
+        
+
+            window.onload = function() {
+                if (sessionStorage.getItem('preloaderVisible') === 'false') {
+                    preloader.style.display = 'flex';
+                }
+            };
+        
+
+            document.addEventListener('filteringComplete', function() {
+                hidePreloader();
+            });
+        });
+      </script>
+
+{% endblock jsfiles %}
+
+

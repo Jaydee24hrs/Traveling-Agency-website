@@ -1,0 +1,34 @@
+{% extends "base/base2.html" %}
+{% load static %}
+{% block title %} 404 - Page Not Found {% endblock title %}
+
+
+{% block cssfiles %}
+<style>
+  .authenticate_options {
+    display: grid;
+    height: 90vh;
+    place-items: center;
+    max-width: 600px;
+  }
+</style>
+{% endblock cssfiles %}
+
+
+{% block content %}
+
+<div id="preloader">
+  <img src="{% static 'img/loader.gif' %}" alt="" width="20%">
+</div>
+
+<div class="container authenticate_options ">
+  <div class="shadow-sm p-3 p-md-5 rounded text-center w-100" data-aos="fade-up" data-aos-duration="2000">
+    <img src="{% static 'img/logo.png' %}" alt="" width="100" class="mb-3">
+      <h3>Page Not Found</h3>
+      <p class="m-0 mb-3">Oops! It looks like the page you’re looking for has gone off the map.</p>
+      <a href="{% url 'dashboard' %}" class="btn make_bg_one text-white px-4 text-uppercase">Return to Home Page</a>
+  </div>
+
+</div>
+
+{% endblock content %}

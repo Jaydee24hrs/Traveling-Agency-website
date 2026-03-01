@@ -1,0 +1,967 @@
+{% extends "base/base2.html" %}
+{% load static %}
+{% block title %} Our Services | Jomivic Travels {% endblock title %}
+
+{% block cssfiles %}
+
+<style>
+
+  /* ==============================
+     ROOT VARIABLES
+  ============================== */
+  :root {
+    --red: #ef3f3e;
+    --dark: #1a1a2e;
+    --light-red: rgba(239, 63, 62, 0.08);
+    --border-light: rgba(239, 63, 62, 0.15);
+  }
+
+  /* ==============================
+     PAGE HEADER
+  ============================== */
+  .services_hero {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    min-height: 52vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .services_hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 70% 50%, rgba(239,63,62,0.18) 0%, transparent 60%),
+                radial-gradient(ellipse at 20% 80%, rgba(239,63,62,0.10) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .hero_grid_lines {
+    position: absolute;
+    inset: 0;
+    background-image: 
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  .services_hero h1 {
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    line-height: 1.15;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  .hero_tag {
+    display: inline-block;
+    background: var(--red);
+    color: white;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 5px 16px;
+    border-radius: 30px;
+    margin-bottom: 1.2rem;
+  }
+
+  .hero_scroll_indicator {
+    position: absolute;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    color: rgba(255,255,255,0.45);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .hero_scroll_indicator .scroll_line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.5), transparent);
+    animation: scrollPulse 1.8s ease-in-out infinite;
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(0.8); }
+    50% { opacity: 1; transform: scaleY(1); }
+  }
+
+  /* ==============================
+     SECTION TITLE STYLE
+  ============================== */
+  .section_eyebrow {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--red);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0.6rem;
+  }
+
+  .section_eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 28px;
+    height: 2px;
+    background: var(--red);
+    border-radius: 2px;
+  }
+
+  /* ==============================
+     SERVICE INTRO STRIP
+  ============================== */
+  .services_intro_strip {
+    background: #fff;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .intro_stat {
+    text-align: center;
+    padding: 1.8rem 1rem;
+    border-right: 1px solid #f0f0f0;
+  }
+
+  .intro_stat:last-child {
+    border-right: none;
+  }
+
+  .intro_stat .stat_num {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--red);
+    line-height: 1;
+    display: block;
+  }
+
+  .intro_stat .stat_label {
+    font-size: 0.8rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 4px;
+    display: block;
+  }
+
+  /* ==============================
+     SERVICE CARDS GRID
+  ============================== */
+  .service_card {
+    background: #fff;
+    border-radius: 18px;
+    border: 1px solid #f0f0f0;
+    overflow: hidden;
+    transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .service_card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--red);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s ease;
+  }
+
+  .service_card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.10), 0 4px 16px rgba(239,63,62,0.08);
+    border-color: var(--border-light);
+  }
+
+  .service_card:hover::after {
+    transform: scaleX(1);
+  }
+
+  .service_card_header {
+    padding: 2rem 2rem 1.5rem;
+    border-bottom: 1px solid #f8f8f8;
+    position: relative;
+  }
+
+  .service_icon_wrap {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    background: var(--light-red);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.2rem;
+    transition: all 0.3s ease;
+  }
+
+  .service_card:hover .service_icon_wrap {
+    background: var(--red);
+  }
+
+  .service_icon_wrap i {
+    font-size: 1.5rem;
+    color: var(--red);
+    transition: color 0.3s ease;
+  }
+
+  .service_card:hover .service_icon_wrap i {
+    color: white;
+  }
+
+  .service_card_header h4 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin: 0 0 0.4rem;
+  }
+
+  .service_card_header p {
+    font-size: 0.88rem;
+    color: #888;
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  .service_number {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.8rem;
+    font-size: 3rem;
+    font-weight: 900;
+    color: rgba(239,63,62,0.06);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    transition: color 0.3s ease;
+  }
+
+  .service_card:hover .service_number {
+    color: rgba(239,63,62,0.1);
+  }
+
+  .service_card_body {
+    padding: 1.5rem 2rem;
+    flex: 1;
+  }
+
+  .service_features {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .service_features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.875rem;
+    color: #555;
+    line-height: 1.5;
+  }
+
+  .service_features li::before {
+    content: '';
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--red);
+    margin-top: 6px;
+    flex-shrink: 0;
+  }
+
+  .service_card_footer {
+    padding: 1.2rem 2rem;
+    border-top: 1px solid #f8f8f8;
+  }
+
+  .service_cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--red);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: gap 0.25s ease;
+  }
+
+  .service_cta:hover {
+    color: var(--red);
+    gap: 14px;
+  }
+
+  .service_cta i {
+    font-size: 0.8rem;
+    transition: transform 0.25s ease;
+  }
+
+  .service_cta:hover i {
+    transform: translateX(3px);
+  }
+
+  /* ==============================
+     FEATURED / HIGHLIGHT SECTION
+  ============================== */
+  .highlight_section {
+    background: linear-gradient(135deg, var(--dark) 0%, #16213e 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .highlight_section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 80% 30%, rgba(239,63,62,0.15) 0%, transparent 55%);
+    pointer-events: none;
+  }
+
+  .highlight_card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(8px);
+  }
+
+  .highlight_card:hover {
+    background: rgba(255,255,255,0.09);
+    border-color: rgba(239,63,62,0.35);
+    transform: translateY(-4px);
+  }
+
+  .highlight_card h5 {
+    color: white;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .highlight_card p {
+    color: rgba(255,255,255,0.6);
+    font-size: 0.85rem;
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  .highlight_card .hl_icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(239,63,62,0.15);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+
+  .highlight_card .hl_icon i {
+    color: var(--red);
+    font-size: 1.2rem;
+  }
+
+  /* ==============================
+     PROCESS SECTION
+  ============================== */
+  .process_step {
+    position: relative;
+    text-align: center;
+    padding: 2rem 1.5rem;
+  }
+
+  .process_step_num {
+    width: 56px;
+    height: 56px;
+    background: var(--red);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: 800;
+    margin: 0 auto 1.2rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .process_connector {
+    position: absolute;
+    top: 3rem;
+    left: calc(50% + 28px);
+    right: calc(-50% + 28px);
+    height: 1px;
+    background: repeating-linear-gradient(90deg, var(--red) 0px, var(--red) 6px, transparent 6px, transparent 12px);
+    z-index: 1;
+  }
+
+  .col-process:last-child .process_connector {
+    display: none;
+  }
+
+  .process_step h6 {
+    font-weight: 700;
+    color: #1a1a2e;
+    font-size: 0.95rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .process_step p {
+    font-size: 0.82rem;
+    color: #888;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* ==============================
+     CTA BANNER
+  ============================== */
+  .cta_banner {
+    background: var(--red);
+    border-radius: 20px;
+    padding: 3rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta_banner::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    width: 220px;
+    height: 220px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 50%;
+  }
+
+  .cta_banner::after {
+    content: '';
+    position: absolute;
+    bottom: -60px;
+    left: 20%;
+    width: 160px;
+    height: 160px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 50%;
+  }
+
+  .cta_banner h2 {
+    color: white;
+    font-weight: 800;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+  }
+
+  .cta_banner p {
+    color: rgba(255,255,255,0.85);
+    font-size: 1rem;
+  }
+
+  .btn_white {
+    background: white;
+    color: var(--red);
+    font-weight: 700;
+    border-radius: 8px;
+    padding: 0.7rem 1.8rem;
+    border: none;
+    transition: all 0.25s ease;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn_white:hover {
+    background: #f9f9f9;
+    color: var(--red);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  }
+
+  .btn_ghost_white {
+    background: transparent;
+    color: white;
+    font-weight: 600;
+    border-radius: 8px;
+    padding: 0.7rem 1.8rem;
+    border: 2px solid rgba(255,255,255,0.5);
+    transition: all 0.25s ease;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn_ghost_white:hover {
+    background: rgba(255,255,255,0.12);
+    color: white;
+    border-color: white;
+  }
+
+  /* ==============================
+     RESPONSIVE
+  ============================== */
+  @media (max-width: 767.98px) {
+    .intro_stat {
+      border-right: none;
+      border-bottom: 1px solid #f0f0f0;
+      padding: 1.2rem;
+    }
+
+    .intro_stat:last-child {
+      border-bottom: none;
+    }
+
+    .process_connector {
+      display: none;
+    }
+
+    .service_card_header,
+    .service_card_body,
+    .service_card_footer {
+      padding-left: 1.4rem;
+      padding-right: 1.4rem;
+    }
+
+    .cta_banner {
+      padding: 2rem 1.5rem;
+    }
+  }
+
+</style>
+
+{% endblock cssfiles %}
+
+{% block content %}
+
+<div id="preloader">
+  <img src="{% static 'img/loader.gif' %}" alt="" width="20%">
+</div>
+
+<!-- ============================================================
+     PAGE HERO
+============================================================ -->
+<div class="services_hero">
+  <div class="hero_grid_lines"></div>
+  <div class="container position-relative" style="z-index: 2;">
+    <div class="row align-items-center py-5">
+      <div class="col-12 col-lg-7" data-aos="fade-up" data-aos-duration="2000">
+        <div class="mb-3">
+          <a href="javascript:void(0);" onclick="history.back();" class="btn btn-sm btn-outline-light opacity-75 me-3">
+            <i class="fa-solid fa-arrow-left me-2"></i> Back
+          </a>
+        </div>
+        <div class="hero_tag">What We Offer</div>
+        <h1 class="text-white mb-4">
+          Complete Travel Solutions,<br>
+          <span style="color: #ef3f3e;">All in One Place</span>
+        </h1>
+        <p class="text-white opacity-75 fs-5 mb-4" style="max-width: 520px; line-height: 1.7;">
+          From flights and hotels to guided tours, cab transfers, visa assistance, and restaurant bookings — Jomivic Travels handles every detail so you can focus on the journey.
+        </p>
+        <div class="d-flex gap-3 flex-wrap">
+          <a href="{% url 'dashboard' %}" class="btn make_bg_one text-white fw-bold px-4 py-2 rounded-3">
+            Book Now <i class="fas fa-arrow-right ms-2"></i>
+          </a>
+          <a href="{% url 'contact' %}" class="btn btn-outline-light fw-bold px-4 py-2 rounded-3">
+            Talk to Us
+          </a>
+        </div>
+      </div>
+      <div class="col-12 col-lg-5 mt-5 mt-lg-0 d-none d-lg-flex justify-content-end" data-aos="fade-left" data-aos-duration="2200">
+        <!-- Floating service icons -->
+        <div class="position-relative" style="width: 340px; height: 280px;">
+          <div class="position-absolute bg-white rounded-4 p-3 shadow-lg d-flex align-items-center gap-3" style="top:0; left:20px; min-width:200px;" data-aos="fade-down" data-aos-delay="200">
+            <div style="width:44px;height:44px;background:rgba(239,63,62,0.1);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <i class="fas fa-plane-departure" style="color:#ef3f3e;font-size:1.1rem;"></i>
+            </div>
+            <div><div class="fw-bold small text-dark">Flight Bookings</div><div class="text-muted" style="font-size:0.75rem;">Domestic & International</div></div>
+          </div>
+          <div class="position-absolute bg-white rounded-4 p-3 shadow-lg d-flex align-items-center gap-3" style="top:85px; right:0; min-width:200px;" data-aos="fade-down" data-aos-delay="400">
+            <div style="width:44px;height:44px;background:rgba(239,63,62,0.1);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <i class="fas fa-hotel" style="color:#ef3f3e;font-size:1.1rem;"></i>
+            </div>
+            <div><div class="fw-bold small text-dark">Hotel Reservations</div><div class="text-muted" style="font-size:0.75rem;">Luxury to Budget Stays</div></div>
+          </div>
+          <div class="position-absolute bg-white rounded-4 p-3 shadow-lg d-flex align-items-center gap-3" style="bottom:0; left:40px; min-width:200px;" data-aos="fade-up" data-aos-delay="600">
+            <div style="width:44px;height:44px;background:rgba(239,63,62,0.1);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <i class="fas fa-map-marked-alt" style="color:#ef3f3e;font-size:1.1rem;"></i>
+            </div>
+            <div><div class="fw-bold small text-dark">Tour Packages</div><div class="text-muted" style="font-size:0.75rem;">Guided & Curated Tours</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero_scroll_indicator">
+    <div class="scroll_line"></div>
+    <span>Scroll</span>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     STATS STRIP
+============================================================ -->
+<div class="services_intro_strip">
+  <div class="container">
+    <div class="row g-0">
+      <div class="col-6 col-md-3">
+        <div class="intro_stat" data-aos="fade-up" data-aos-duration="1500">
+          <span class="stat_num">10,000+</span>
+          <span class="stat_label">Happy Travelers</span>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="intro_stat" data-aos="fade-up" data-aos-duration="1600">
+          <span class="stat_num">500+</span>
+          <span class="stat_label">Destinations</span>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="intro_stat" data-aos="fade-up" data-aos-duration="1700">
+          <span class="stat_num">6</span>
+          <span class="stat_label">Core Services</span>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="intro_stat" data-aos="fade-up" data-aos-duration="1800">
+          <span class="stat_num">24/7</span>
+          <span class="stat_label">Support Available</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     SERVICES GRID
+============================================================ -->
+<div class="container py-5 mt-3">
+
+  <div class="text-center mb-5" data-aos="fade-up" data-aos-duration="1800">
+    <div class="section_eyebrow justify-content-center">Our Services</div>
+    <h2 class="fw-bolder text-black fs-1">Everything You Need for Your Journey</h2>
+    <p class="text-muted mx-auto" style="max-width: 560px; font-size: 1rem; line-height: 1.7;">
+      We bring all your travel needs under one roof — transparent pricing, trusted partners, and a team that's always here for you.
+    </p>
+  </div>
+
+  <div class="row g-4">
+
+    <!-- 1. FLIGHT BOOKINGS -->
+    <div class="col-12 col-md-6 col-lg-4" data-aos="fade-up" data-aos-duration="1800">
+      <div class="service_card">
+        <div class="service_card_header">
+          <div class="service_number">01</div>
+          <div class="service_icon_wrap">
+            <i class="fas fa-plane-departure"></i>
+          </div>
+          <h4>Flight Bookings</h4>
+          <p>Domestic and international flights booked in seconds — with the best available fares.</p>
+        </div>
+        <div class="service_card_body">
+          <ul class="service_features">
+            <li>One-way, round trip, and multi-city options</li>
+            <li>Economy, Business, and First Class bookings</li>
+            <li>Real-time seat availability across major airlines</li>
+            <li>Instant booking confirmation and e-tickets</li>
+            <li>Flexible date search for best prices</li>
+          </ul>
+        </div>
+        <div class="service_card_footer">
+          <a href="{% url 'dashboard' %}" class="service_cta">
+            Book a Flight <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. HOTEL RESERVATIONS -->
+    <div class="col-12 col-md-6 col-lg-4" data-aos="fade-up" data-aos-duration="1900">
+      <div class="service_card">
+        <div class="service_card_header">
+          <div class="service_number">02</div>
+          <div class="service_icon_wrap">
+            <i class="fas fa-hotel"></i>
+          </div>
+          <h4>Hotel Reservations</h4>
+          <p>Comfortable, quality accommodations for every style, occasion, and budget.</p>
+        </div>
+        <div class="service_card_body">
+          <ul class="service_features">
+            <li>Budget, mid-range, and luxury hotel options</li>
+            <li>Verified properties with real guest reviews</li>
+            <li>Special corporate and group rates available</li>
+            <li>Room preferences handled at booking</li>
+            <li>Flexible cancellation options on select rates</li>
+          </ul>
+        </div>
+        <div class="service_card_footer">
+          <a href="{% url 'dashboard' %}" class="service_cta">
+            Find a Hotel <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. TOUR PACKAGES -->
+    <div class="col-12 col-md-6 col-lg-4" data-aos="fade-up" data-aos-duration="2000">
+      <div class="service_card">
+        <div class="service_card_header">
+          <div class="service_number">03</div>
+          <div class="service_icon_wrap">
+            <i class="fas fa-map-marked-alt"></i>
+          </div>
+          <h4>Tour Packages</h4>
+          <p>Curated local and international tours — explore destinations like a true insider.</p>
+        </div>
+        <div class="service_card_body">
+          <ul class="service_features">
+            <li>Romantic getaways, family adventures & group tours</li>
+            <li>Guided and self-guided tour options</li>
+            <li>Honeymoon packages from ₦500,000</li>
+            <li>Nature tours with 20–30% seasonal discounts</li>
+            <li>Customizable itineraries for any traveler type</li>
+          </ul>
+        </div>
+        <div class="service_card_footer">
+          <a href="{% url 'dashboard' %}" class="service_cta">
+            Explore Tours <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. CAB & TRANSFER SERVICES -->
+    <div class="col-12 col-md-6 col-lg-4" data-aos="fade-up" data-aos-duration="1800">
+      <div class="service_card">
+        <div class="service_card_header">
+          <div class="service_number">04</div>
+          <div class="service_icon_wrap">
+            <i class="fas fa-car"></i>
+          </div>
+          <h4>Cab &amp; Transfer Services</h4>
+          <p>Reliable, comfortable rides for airport transfers, city trips, and everything in between.</p>
+        </div>
+        <div class="service_card_body">
+          <ul class="service_features">
+            <li>Airport pickups and drop-offs</li>
+            <li>City rides and intercity transfers</li>
+            <li>Emergency taxi — call us anytime: 012934120</li>
+            <li>24/7 operator support for urgent bookings</li>
+            <li>Vetted, professional drivers for safe travel</li>
+          </ul>
+        </div>
+        <div class="service_card_footer">
+          <a href="{% url 'dashboard' %}" class="service_cta">
+            Book a Cab <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. VISA ASSISTANCE -->
+    <div class="col-12 col-md-6 col-lg-4" data-aos="fade-up" data-aos-duration="1900">
+      <div class="service_card">
+        <div class="service_card_header">
+          <div class="service_number">05</div>
+          <div class="service_icon_wrap">
+            <i class="fas fa-passport"></i>
+          </div>
+          <h4>Visa Assistance</h4>
+          <p>Expert guidance and support throughout your visa application process.</p>
+        </div>
+        <div class="service_card_body">
+          <ul class="service_features">
+            <li>Tourist, business, and student visa support</li>
+            <li>Document checklist and preparation guidance</li>
+            <li>Embassy appointment scheduling assistance</li>
+            <li>Up-to-date visa requirement information</li>
+            <li>Available for both Nigerian and international travel</li>
+          </ul>
+        </div>
+        <div class="service_card_footer">
+          <a href="{% url 'contact' %}" class="service_cta">
+            Get Visa Help <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. CORPORATE TRAVEL MANAGEMENT -->
+    <div class="col-12 col-md-6 col-lg-4" data-aos="fade-up" data-aos-duration="2000">
+      <div class="service_card">
+        <div class="service_card_header">
+          <div class="service_number">06</div>
+          <div class="service_icon_wrap">
+            <i class="fas fa-briefcase"></i>
+          </div>
+          <h4>Corporate Travel Management</h4>
+          <p>End-to-end business travel solutions built around your team's needs and schedule.</p>
+        </div>
+        <div class="service_card_body">
+          <ul class="service_features">
+            <li>Dedicated account manager for corporate clients</li>
+            <li>Bulk bookings for flights, hotels, and transfers</li>
+            <li>Centralized invoicing and expense reporting</li>
+            <li>Priority support for last-minute changes</li>
+            <li>Tailored travel policies for organizations</li>
+          </ul>
+        </div>
+        <div class="service_card_footer">
+          <a href="{% url 'contact' %}" class="service_cta">
+            Request a Quote <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ============================================================
+     DARK HIGHLIGHT SECTION — WHY CHOOSE JOMIVIC
+============================================================ -->
+<div class="highlight_section py-5 mt-3">
+  <div class="container py-3">
+    <div class="row align-items-center mb-5">
+      <div class="col-12 col-lg-6" data-aos="fade-right" data-aos-duration="2000">
+        <div class="section_eyebrow" style="color: rgba(239,63,62,0.9);">Why Jomivic</div>
+        <h2 class="text-white fw-bolder fs-1 mb-3">Travel Smarter.<br>Explore Further.<br>Worry Less.</h2>
+        <p class="text-white opacity-75 lh-lg" style="max-width: 460px;">
+          Imagine arriving at your destination and everything just works — your flight is booked, your hotel is ready, your cab is waiting, and your tour is lined up. That's the Jomivic promise.
+        </p>
+        <div class="mt-4">
+          <a href="{% url 'contact' %}" class="btn make_bg_one text-white fw-bold px-4 py-2 rounded-3 me-3">Contact Us</a>
+          <a href="{% url 'about' %}" class="btn btn-outline-light fw-bold px-4 py-2 rounded-3">Learn About Us</a>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6 mt-4 mt-lg-0">
+        <div class="row g-3">
+          <div class="col-12 col-sm-6" data-aos="fade-up" data-aos-duration="1800">
+            <div class="highlight_card">
+              <div class="hl_icon"><i class="fas fa-shield-alt"></i></div>
+              <h5>Safe &amp; Secure Bookings</h5>
+              <p>Your personal information and payments are fully protected with industry-standard security.</p>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6" data-aos="fade-up" data-aos-duration="1900">
+            <div class="highlight_card">
+              <div class="hl_icon"><i class="fas fa-tags"></i></div>
+              <h5>Transparent Pricing</h5>
+              <p>No hidden fees, no surprises. Know exactly what you're paying before you confirm any booking.</p>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6" data-aos="fade-up" data-aos-duration="2000">
+            <div class="highlight_card">
+              <div class="hl_icon"><i class="fas fa-headset"></i></div>
+              <h5>Friendly Support Team</h5>
+              <p>Our operators are available 24/7 to help — before, during, and after your trip.</p>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6" data-aos="fade-up" data-aos-duration="2100">
+            <div class="highlight_card">
+              <div class="hl_icon"><i class="fas fa-sliders-h"></i></div>
+              <h5>Tailored Travel Plans</h5>
+              <p>Every trip is crafted around your unique needs, preferences, and budget — no cookie-cutter packages.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     HOW IT WORKS — BOOKING PROCESS
+============================================================ -->
+<div class="container py-5 mt-3">
+  <div class="text-center mb-5" data-aos="fade-up" data-aos-duration="1800">
+    <div class="section_eyebrow justify-content-center">How It Works</div>
+    <h2 class="fw-bolder text-black">Booking in 4 Easy Steps</h2>
+    <p class="text-muted">Simple, quick, and stress-free — just the way travel should be.</p>
+  </div>
+
+  <div class="row g-0" id="process_row">
+    <div class="col-6 col-md-3 col-process" data-aos="fade-up" data-aos-duration="1700">
+      <div class="process_step">
+        <div class="process_connector"></div>
+        <div class="process_step_num">1</div>
+        <h6>Choose Your Service</h6>
+        <p>Select from flights, hotels, tours, cabs, visa assistance, or corporate travel.</p>
+      </div>
+    </div>
+    <div class="col-6 col-md-3 col-process" data-aos="fade-up" data-aos-duration="1850">
+      <div class="process_step">
+        <div class="process_connector"></div>
+        <div class="process_step_num">2</div>
+        <h6>Enter Your Details</h6>
+        <p>Fill in your travel dates, destinations, and preferences in our easy booking form.</p>
+      </div>
+    </div>
+    <div class="col-6 col-md-3 col-process" data-aos="fade-up" data-aos-duration="2000">
+      <div class="process_step">
+        <div class="process_connector"></div>
+        <div class="process_step_num">3</div>
+        <h6>Confirm &amp; Pay</h6>
+        <p>Review your booking, choose your options, and pay securely through our platform.</p>
+      </div>
+    </div>
+    <div class="col-6 col-md-3 col-process" data-aos="fade-up" data-aos-duration="2150">
+      <div class="process_step">
+        <div class="process_step_num">4</div>
+        <h6>Travel &amp; Enjoy</h6>
+        <p>Receive instant confirmation and travel with confidence. We're here if you need us.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     CTA BANNER
+============================================================ -->
+<div class="container pb-5">
+  <div class="cta_banner" data-aos="fade-up" data-aos-duration="2000">
+    <div class="row align-items-center position-relative" style="z-index: 2;">
+      <div class="col-12 col-lg-7 mb-4 mb-lg-0">
+        <h2>Ready to Plan Your Next Trip?</h2>
+        <p class="mb-0">
+          Whether it's a solo adventure, a family holiday, or a corporate retreat — Jomivic Travels has got you covered. Get in touch today and let us handle the rest.
+        </p>
+      </div>
+      <div class="col-12 col-lg-5 d-flex gap-3 flex-wrap justify-content-lg-end">
+        <a href="{% url 'dashboard' %}" class="btn_white">
+          Start Booking <i class="fas fa-arrow-right ms-2"></i>
+        </a>
+        <a href="{% url 'contact' %}" class="btn_ghost_white">
+          Contact Us
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+
+{% block jsfiles %}
+{% endblock jsfiles %}

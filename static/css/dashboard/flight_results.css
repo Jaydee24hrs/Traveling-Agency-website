@@ -1,0 +1,17 @@
+.owl-carousel2 {
+  overflow-x: scroll !important;
+}
+
+#searchResult {
+  display: none;
+  width: 100%;
+}
+
+/* .custom-checkbox {
+  width: 15px; 
+  height: 15px; 
+} */
+
+/* .form-check-label {
+  font-size: 1.2em;
+} */

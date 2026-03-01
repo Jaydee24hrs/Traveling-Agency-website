@@ -1,0 +1,153 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block title %} Sign In {% endblock title %}
+
+{% block cssfiles %}
+  <style>
+
+
+    #password{
+      outline: none !important;
+    }
+
+  .signin_box{
+    min-height: 83vh;
+    display: grid;
+    place-items: center;
+  }
+
+  .preloader_img{
+      max-width: 300px;
+  }
+
+  .explain_box{
+    height: 470px;
+    overflow-y: scroll;
+  }
+
+  .back_btn,
+  .back_btn:hover{
+      background: #ef3f3e;
+      color: #fff;
+  }
+
+  .progress-bar-animated-custom {
+    animation: loadProgress 2s linear infinite;
+  }
+
+  @keyframes loadProgress {
+  0% {
+      width: 0%;
+  }
+  100% {
+      width: 100%;
+  }
+  }
+  body{
+    background: #E8EEF3 !important;
+}
+
+  </style>
+{% endblock cssfiles %}
+
+{% block content %}
+
+  <!-- Button trigger modal -->
+  <div id="preloader">
+    <img src="{% static 'img/loader.gif' %}" alt="" width="20%">
+  </div>
+
+
+  <div class="container signin_box" id="signin_container">
+    <div class="row">
+
+      <div class="col-sm-12 col-lg-12">
+        <div class="container bg-white shadow-5 rounded" data-aos="fade-up" data-aos-duration="2000">
+          <form action="" method="post" class="p-3 p-md-5" id="sign_in_form">
+            {% csrf_token %}
+            <h2 class="text-center">Sign In</h2>
+            <p class="text-center">Enter your email address and password to Sign In.</p>
+
+            <div class="row">
+
+              <div class="col-12">
+                <div class="mb-3">
+                  <label for="email" class="form-label fw-bold">Email address</label>
+                  <input type="email" class="form-control" name="email" id="email" placeholder="Enter Email Address" value="{{request.POST.email}}" required>
+                </div>
+              </div>
+
+              <div class="col-12 ">
+                <div class="mb-3 password_box">
+                  <label for="password" class="form-label fw-bold">Password</label>
+                  <div class="d-flex justify-content-between align-items-center form-control">
+                    <input type="password" class="border-0 w-100" name="password" id="password"
+                      placeholder="Enter Password" value="{{request.POST.password}}" required>
+                    <i class="bi bi-eye-slash password-toggle-icon"></i>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 ">
+                <div class="mb-3">
+                  <button class="btn back_btn make_bg_one rounded-0 w-100">Sign In</button>
+                </div>
+              </div>
+
+            </div>
+          </form>
+        </div>
+      </div>
+
+
+  </div>
+  </div>
+
+{% endblock content %}
+
+{% block jsfiles %}
+<script>
+  $(document).ready(function () {
+    $('.password-toggle-icon').click(function () {
+      var passwordInput = $('#password');
+      var isPasswordVisible = passwordInput.attr('type') === 'text';
+
+      if (isPasswordVisible) {
+        passwordInput.attr('type', 'password');
+        $(this).removeClass('bi-eye').addClass('bi-eye-slash');
+      } else {
+        passwordInput.attr('type', 'text');
+        $(this).removeClass('bi-eye-slash').addClass('bi-eye');
+      }
+    });
+  });
+</script>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      const preloader = document.getElementById('preloader');
+  
+      document.getElementById('sign_in_form').addEventListener('submit', function(event) {
+          sessionStorage.setItem('preloaderVisible', 'true');
+          preloader.style.display = 'flex';
+      });
+  
+      function hidePreloader() {
+          preloader.style.display = 'none';
+          sessionStorage.removeItem('preloaderVisible');
+      }
+  
+      window.onload = function() {
+          if (sessionStorage.getItem('preloaderVisible') === 'false') {
+              preloader.style.display = 'flex';
+          }
+      };
+  
+      document.addEventListener('filteringComplete', function() {
+          hidePreloader();
+      });
+  });
+</script>
+
+{% endblock jsfiles %}

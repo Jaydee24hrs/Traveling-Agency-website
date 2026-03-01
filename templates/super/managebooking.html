@@ -1,0 +1,254 @@
+{% extends "base/base2.html" %}
+{% load static %}
+{% load humanize %}
+{% block title %} Manage Booking {% endblock title %}
+
+{% block cssfiles %}
+
+<style>
+  .hide{
+    display: none;
+  }
+
+  .show{
+    display: block;
+  }
+
+  .comapny_logo{
+    max-height: 80px;
+    position: relative;
+    left: -45px;
+}
+
+  /* .spinner-border {
+      width: 10rem;
+      height: 10rem;
+  } */
+
+  .preloader_img{
+    max-width: 300px;
+  }
+
+  #pagination-controls-manage {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+  #pagination-controls-manage button {
+      padding: 5px 10px;
+      margin: 0 5px;
+      cursor: pointer;
+  }
+
+  #pagination-info-manage {
+      font-weight: bold;
+  }
+
+  body{
+      background: #E8EEF3 !important;
+  }
+
+  .progress-bar-animated-custom {
+    animation: loadProgress 6s linear infinite;
+  }
+
+  @keyframes loadProgress {
+  0% {
+      width: 0%;
+  }
+  100% {
+      width: 100%;
+  }
+  }
+
+
+</style>
+  
+{% endblock cssfiles %}
+
+{% block content %}
+
+<div id="preloader">
+  <img src="{% static 'img/loader.gif' %}" alt="" width="20%">
+</div>
+
+  <div class="contriner-fluid make_bg_three p-3 p-md-5 text-white">
+    <div class="container">
+      <h3 data-aos="fade-up" data-aos-duration="2000">Manage Booking</h3>
+    </div>
+  </div>
+
+  <div class="container bg-light shadow-2 px-3 px-md-5 my-5 py-3 py-md-5">
+
+    <div class="col-12 col-md-6 col-lg-4 mb-3 ms-auto">
+
+    <div class="d-flex justify-content-between align-items-center flex-wrap">
+      <div class="input-group travel_search mt-3 mt-lg-0 m-auto m-md-0 ms-md-auto">
+        <div class="form-outline" data-mdb-input-init>
+          <input type="search" id="agencySearch" class="form-control"/>
+          <label class="form-label" for="agencySearch">Search by Customer and Trip ID</label>
+        </div>
+        <button type="button" class="make_bg_three text-white border-0 btn" data-mdb-ripple-init>
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- Tabs navs -->
+    <ul class="nav nav-tabs mb-3 mt-3" id="ex1" role="tablist">
+      <!-- Flight -->
+      <li class="nav-item" role="presentation">
+        <a data-mdb-tab-init class="nav-link active" id="ex1-tab-1" href="#ex1-tabs-1" role="tab" aria-controls="ex1-tabs-1" aria-selected="true">Flight</a>
+      </li>
+    </ul>
+    <!-- Tabs navs -->
+
+    <div class="tab-content" id="ex1-content">
+      <!-- Flight -->
+      <div class="tab-pane fade show active" id="ex1-tabs-1" role="tabpanel" aria-labelledby="ex1-tab-1">
+        <!-- Table -->
+        <div class="table-responsive" data-aos="fade-up" data-aos-duration="2000">
+        <table class="table mt-3 table-striped">
+          <thead class="table-secondary">
+            <tr>
+              <th scope="col" style="white-space: nowrap;">Traveller Name</th>
+              <th scope="col" style="white-space: nowrap;">Trip ID</th>
+              <th scope="col" style="white-space: nowrap;">Amount</th>
+              <th scope="col">Airline</th>
+              <th scope="col" style="white-space: nowrap;">Booking Date</th>
+              <th scope="col" style="white-space: nowrap;">Status</th>
+            </tr>
+          </thead>
+          <tbody id="agency_table" class="align-middle">
+            {% for book in booking %}
+                <tr id="agency">
+              <!-- name -->
+              <td class="customer">
+                <span class="text-capitalize d-inline-block text-truncate"  style="max-width: 150px">
+                <form action="{% url 'update_booking' book.id %}" method="post" id="opening_passangers_details">
+                <!-- <form action="#" method="post" id="opening_passangers_details"> -->
+                  {% csrf_token %}
+                  <button class="border-0 bg-transparent fw-bold" data-mdb-ripple-init data-mdb-modal-init data-mdb-target="#preloader_all">
+                    {% if book.response and book.response.data and book.response.data.travelers and book.response.data.travelers|length > 0 %}
+                          {{ book.response.data.travelers.0.name.lastName }} {{ book.response.data.travelers.0.name.firstName }}
+                      {% else %}
+                          No traveler information available
+                      {% endif %}
+                  </button>
+                </form>
+                </span>
+              </td>
+
+              <!-- PNR -->
+              <td class="pnr" style="white-space: nowrap;">
+                {{book.formatted_id}}
+              </td>
+              <!-- Amount -->
+             
+              {% if book.status  == 'Cancelled' %}
+                <td>&#8358; 0.00</td>
+              {% else  %}
+                <!-- {% if currency == "NGN" %}
+                <td style="white-space: nowrap;">&#8358; {{ book.tyktt_currency_price|floatformat:2|intcomma }}</td>
+                {% else %}
+                <td style="white-space: nowrap;">&#36; {{ book.tyktt_currency_price|floatformat:2|intcomma }}</td>
+                {% endif %} -->
+                <td style="white-space: nowrap;">{% if book.currency == "NGN" %}&#8358; {% elif  book.flight_data.is_converted %} &#8358;{% else %}&#36;{% endif %} {{ book.tyktt_currency_price|floatformat:2|intcomma }}</td>
+              {% endif %}
+
+              <!-- Airline Name -->
+              <td>
+                {% for carrier_code, carrier_name in book.airlines.items %}
+                  {% if forloop.first %}
+                  {% with image_path=carrier_code|add:'_'|add:carrier_name|add:'.PNG' %}
+                      <div class="d-flex align-items-center">
+                        <img src="{% static 'img/v2/tail/'|add:image_path %}"  alt="{{ carrier_name }}"  width="20" height="20"  class="me-2">
+                    
+                        <span class="text-capitalize text-truncate"  style="max-width: 150px">{{ carrier_name }}</span>
+                      </div>
+                  {% endwith %}
+                  {% endif %}
+                {% endfor %}
+              </td>
+
+              <!-- Booking Date -->
+              <td style="white-space: nowrap;">
+                {{ book.booking_date }}
+              </td>
+
+              <!-- Booking Date -->
+              <td class="statusClass {% if book.status  == 'Cancelled' %} text-danger {% elif book.status  == 'Reserved' %} text-warning {% elif book.status  == 'Issued' %} text-success {% endif %}" style="white-space: nowrap;">
+                <!-- Incomplete Payment -->
+                 {% if book.status == 'Issued' %}
+                      Ticketed
+                  {% else %}
+                    {{ book.status }}
+                  {% endif %}
+                 <!-- Fully Paid -->
+              </td>
+
+            </tr>
+            {% endfor %}
+
+          </tbody>
+        </table>
+
+
+        <div id="pagination-controls-manage">
+          <button id="prev-page-manage" class="btn manage_btn">Previous</button>
+          <span id="pagination-info-manage"></span>
+          <button id="next-page-manage" class="btn manage_btn">Next</button>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+  <!-- Tabs content -->
+    
+  </div>
+
+  {% endblock content %}
+
+
+{% block jsfiles %}
+
+<script src="{% static 'js/dashboard/managebooking.js' %}"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      const preloader = document.getElementById('preloader');
+
+      const forms = document.querySelectorAll('form[id="opening_passangers_details"]');
+  
+      forms.forEach(function(form) {
+        form.addEventListener('submit', function(event) {
+            sessionStorage.setItem('preloaderVisible', 'true');
+            preloader.style.display = 'flex';
+        });
+    });
+
+      function hidePreloader() {
+          preloader.style.display = 'none';
+          sessionStorage.removeItem('preloaderVisible');
+      }
+  
+
+      window.onload = function() {
+          if (sessionStorage.getItem('preloaderVisible') === 'false') {
+              preloader.style.display = 'flex';
+          }
+      };
+  
+      document.addEventListener('filteringComplete', function() {
+          hidePreloader();
+      });
+  });
+
+</script>
+  
+{% endblock jsfiles %}

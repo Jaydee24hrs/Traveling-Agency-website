@@ -1,0 +1,531 @@
+{% extends "base/base2.html" %}
+{% load static %}
+{% block title %} Tour Details | Jomivic Travels {% endblock title %}
+
+{% block cssfiles %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"/>
+
+
+<style>
+
+  .faq_bg{
+    background-image: url("{% static 'img/breadcrumb1.jpg' %}");
+    display: grid;
+    place-items: center;
+    background-position:center;
+    background-size:cover;
+    height: 68vh;
+  }
+
+  .breadcrumb-item+.breadcrumb-item::before{
+    color: white !important;
+    content: ">>";
+  }
+  .make_bg{
+    background: #ffffff28;
+  }
+
+  .thumb-carousel .item {
+    cursor: pointer;
+    opacity: 0.6;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+  }
+  
+  .thumb-carousel .item.active-thumb {
+    border: 2px solid white;
+    opacity: 1;
+  }
+
+  .show_widget:hover{
+    color: #ef3f3e;
+    cursor: pointer;
+  }
+  
+  
+
+
+</style>
+
+{% endblock cssfiles %}
+
+{% block content %}
+
+<div id="preloader">
+  <img src="{% static 'img/loader.gif' %}" alt="" width="20%">
+</div>
+
+<div class="faq_bg">
+  <div class="text-white d-flex flex-column justify-content-center align-items-center shadow-5 p-3 p-md-5 make_bg">
+    <h2 class="fw-bolde text-uppercase" data-aos="fade-up" data-aos-duration="2000">holiday package</h2>
+    <nav aria-label="breadcrumb" class="container justify-content-center d-flex align-items-center" data-aos="fade-up" data-aos-duration="2000">
+      <ol class="breadcrumb m-0">
+        <li class="breadcrumb-item"><a href="{% url 'dashboard' %}" class="text-white fw-bolder">Home</a></li>
+        <li class="breadcrumb-item active text-white fw-bolder text-capitalize" aria-current="page">holiday package</li>
+      </ol>
+  </nav>
+  </div>
+</div>
+
+<div class="container mt-3">
+  <div class="d-flex justify-content-between align-items-center p-3 bg-white" data-aos="fade-up" data-aos-duration="2000">
+    <div>
+      <button class="btn shadow-0 rounded-0 btn-danger">All</button>
+      <button class="btn shadow-0 rounded-0 btn-light">Popular</button>
+      <button class="btn shadow-0 rounded-0 btn-light">Latest</button>
+      <button class="btn shadow-0 rounded-0 btn-light">Trend</button>
+    </div>
+
+    <div class="show_widget">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <span>Find Tours</span>
+    </div>
+
+  </div>
+</div>
+
+<div class="container widget_box d-none">
+  <form action="#" method="POST">
+    {% csrf_token %}
+    <div class="d-flex justify-content-evnly align-items-center flex-wrap flex-lg-nowrap bg-white p-3 mt-3">
+
+        <div class="text-center px-1 px-md-3 border-end w-100">
+            <span class="text-muted fw-bold d-block">DEPRTING</span>
+            <input type="text" id="tour_departing" name="tour_departing" class="form-control text-center tour_departing border-0 hide_outline p-0 m-0 text-dark" required placeholder="Starting From"/>
+        </div>
+
+        <div class="text-center px-1 px-md-3 border-end w-100">
+            <span class="text-muted fw-bold d-block">DESTINATION</span>
+            <input type="text" id="tour_destination" name="tour_destination" class="form-control text-center tour_destination border-0 hide_outline p-0 m-0 text-dark" required placeholder="Going To"/>
+        </div>
+
+        <div class="text-center px-1 px-md-3 border-end w-100">
+            <span class="text-muted fw-bold d-block">Travel Date</span>
+            <div class="d-flex justify-content-center align-items-center w-100" id="tour_datePickerContainer">
+                <div class="px-1 px-md-3 text-center position-relative mt-3 mt-md-0">
+                    <span id="tour_date" class="text-dark">Select Date</span>
+                    <input type="date" id="tour_date_input" name="departureDate" class="departureDate text-black fw-bold" style="opacity: 0; position: absolute; pointer-events: none; left:0; bottom:0px;"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center w-100">
+            <!-- <button class="btn btn-danger rounded-0 btn-lg">SEARCH</button> -->
+            <a href="{% url 'tour_details' %}" class="btn make_bg_one text-white rounded-0 btn-lg">SEARCH</a>
+
+        </div>
+
+    </div>
+  </form>
+</div>
+
+<div class="container my-3 my-md-4">
+
+  <div class="row">
+    <div class="col-12 col-md-4 mt-3" data-aos="fade-up" data-aos-duration="2000">
+      <div class="bg-white p-3">
+
+         <div class="py-3">
+          <div class="input-group rounded border">
+            <span class="input-group-text border-0 make_color_one" id="search-addon">
+              <i class="fas fa-search"></i>
+            </span>
+            <input type="search" class="form-control border-0 rounded" placeholder="Search here.." aria-label="Search" aria-describedby="search-addon" />
+          </div>
+         </div>
+
+          <div class="py-2 px-3 rounded-5  bg-white">
+            <p class="fs-5 text-black fw-bold">Latest Filter</p>
+          </div>
+
+           <!-- Star Category -->
+           <div class="py-2 px-3 rounded-5  bg-white">
+            <div class="d-flex justify-content-between align-items-center">
+                <h6 class="text-black fw-bold">Star Category</h6>
+                <!-- Buttons trigger collapse -->
+                <button class="border-0 outline-0 bg-transparent btns" type="button"
+                        data-mdb-collapse-init data-mdb-ripple-init data-mdb-target="#starcategory"
+                        aria-expanded="false" aria-controls="starcategory"><i
+                        class="fa-solid fa-minus fs-5"></i></button>
+            </div>
+
+            <!-- Collapsed content -->
+            <div class="collapse show mt-1" id="starcategory">
+                <div class="form-check align-items-center mt-1 p-0 d-flex">
+                    <input class="custom-checkbox me-3 " type="checkbox" id="start1"/>
+                    <label class="form-check-label" for="start1">
+                      <i class="fa-solid fa-star text-warning"></i>
+                      <i class="fa-solid fa-star text-warning"></i>
+                      <i class="fa-solid fa-star text-warning"></i>
+                      <i class="fa-solid fa-star text-warning"></i>
+                      <i class="fa-solid fa-star text-warning"></i>
+                      (4025) 
+                    </label>
+                </div>
+
+                <div class="form-check align-items-center mt-1 p-0 d-flex">
+                    <input class="custom-checkbox me-3 " type="checkbox" id="start2"/>
+                    <label class="form-check-label" for="start2">
+                      <i class="fa-solid fa-star text-warning"></i>
+                      <i class="fa-solid fa-star text-warning"></i>
+                      <i class="fa-solid fa-star text-warning"></i>
+                      <i class="fa-solid fa-star text-warning"></i>
+                      <i class="fa-regular fa-star text-warning"></i>
+                      (2012)
+                    </label>
+                </div>
+
+                <div class="form-check align-items-center mt-1 p-0 d-flex">
+                    <input class="custom-checkbox me-3 " type="checkbox" id="start3"/>
+                    <label class="form-check-label" for="start3">
+                      <i class="fa-solid fa-star text-warning"></i>
+                      <i class="fa-solid fa-star text-warning"></i>
+                      <i class="fa-solid fa-star text-warning"></i>
+                      <i class="fa-regular fa-star text-warning"></i>
+                      <i class="fa-regular fa-star text-warning"></i>
+                      (25)
+                    </label>
+                </div>
+
+                <div class="form-check align-items-center mt-1 p-0 d-flex">
+                    <input class="custom-checkbox me-3 " type="checkbox" id="start4"/>
+                    <label class="form-check-label" for="start4">
+                      <i class="fa-solid fa-star text-warning"></i>
+                      <i class="fa-solid fa-star text-warning"></i>
+                      <i class="fa-regular fa-star text-warning"></i>
+                      <i class="fa-regular fa-star text-warning"></i>
+                      <i class="fa-regular fa-star text-warning"></i>
+                      (1)
+                    </label>
+                </div>
+                
+
+
+            </div>
+        </div>
+
+          <!-- flights -->
+          <div class="py-2 px-3 rounded-5  bg-white">
+            <div class="d-flex justify-content-between align-items-center">
+                <h6 class="text-black fw-bold">Flights</h6>
+                <!-- Buttons trigger collapse -->
+                <button class="border-0 outline-0 bg-transparent btns" type="button"
+                        data-mdb-collapse-init data-mdb-ripple-init data-mdb-target="#flights"
+                        aria-expanded="false" aria-controls="flights"><i
+                        class="fa-solid fa-minus fs-5"></i></button>
+            </div>
+
+            <!-- Collapsed content -->
+            <div class="collapse show mt-1" id="flights">
+                <!-- with flights -->
+                <div class="form-check align-items-center mt-1 p-0 d-flex">
+                    <input class="custom-checkbox me-3 text-uppercase " type="checkbox" id="withflights"/>
+                    <label class="form-check-label" for="withflights">With Flights</label>
+                </div>
+
+                <!-- without flights -->
+                <div class="form-check align-items-center mt-1 p-0 d-flex">
+
+                    <input class="custom-checkbox me-3 text-uppercase " type="checkbox" id="withoutflights"/>
+                    <label class="form-check-label" for="withoutflights">Without Flights</label>
+                </div>
+
+            </div>
+          </div>
+
+          <!-- travel type -->
+          <div class="py-2 px-3 rounded-5  bg-white">
+              <div class="d-flex justify-content-between align-items-center">
+                  <h6 class="text-black fw-bold">Travel Type</h6>
+                  <!-- Buttons trigger collapse -->
+                  <button class="border-0 outline-0 bg-transparent btns" type="button"
+                          data-mdb-collapse-init data-mdb-ripple-init data-mdb-target="#traveltype"
+                          aria-expanded="false" aria-controls="traveltype"><i
+                          class="fa-solid fa-minus fs-5"></i></button>
+              </div>
+
+              <!-- Collapsed content -->
+              <div class="collapse show mt-1" id="traveltype">
+               
+                <div class="form-check align-items-center mt-1 p-0 d-flex">
+                  <input class="custom-checkbox me-3 " type="checkbox" id="family"/>
+                  <label class="form-check-label" for="family">Family</label>
+                </div>
+               
+                <div class="form-check align-items-center mt-1 p-0 d-flex">
+                  <input class="custom-checkbox me-3 " type="checkbox" id="honeymoon"/>
+                  <label class="form-check-label" for="honeymoon">Honeymoon</label>
+                </div>
+               
+                <div class="form-check align-items-center mt-1 p-0 d-flex">
+                  <input class="custom-checkbox me-3 " type="checkbox" id="beach"/>
+                  <label class="form-check-label" for="beach">Beach</label>
+                </div>
+               
+                <div class="form-check align-items-center mt-1 p-0 d-flex">
+                  <input class="custom-checkbox me-3 " type="checkbox" id="cruise"/>
+                  <label class="form-check-label" for="cruise">Cruise</label>
+                </div>
+               
+                <div class="form-check align-items-center mt-1 p-0 d-flex">
+                  <input class="custom-checkbox me-3 " type="checkbox" id="adventure"/>
+                  <label class="form-check-label" for="adventure">Adventure</label>
+                </div>
+               
+                <div class="form-check align-items-center mt-1 p-0 d-flex">
+                  <input class="custom-checkbox me-3 " type="checkbox" id="shopping"/>
+                  <label class="form-check-label" for="shopping">Shopping</label>
+                </div>
+              </div>
+          </div>
+   
+          <!-- trip duration -->
+          <div class="py-2 px-3 rounded-5  bg-white">
+            <div class="d-flex justify-content-between align-items-center">
+                <h6 class="text-black fw-bold">Trip Duration</h6>
+                <!-- Buttons trigger collapse -->
+                <button class="border-0 outline-0 bg-transparent btns" type="button"
+                        data-mdb-collapse-init data-mdb-ripple-init data-mdb-target="#tripduration"
+                        aria-expanded="false" aria-controls="tripduration"><i
+                        class="fa-solid fa-minus fs-5"></i></button>
+            </div>
+
+            <!-- Collapsed content -->
+            <div class="collapse show mt-1" id="tripduration">
+              
+              <div class="form-check align-items-center mt-1 p-0 d-flex">
+                <input class="custom-checkbox me-3 " type="checkbox" id="upto3nights"/>
+                <label class="form-check-label" for="upto3nights">Upto 3 Nights</label>
+              </div>
+              
+              <div class="form-check align-items-center mt-1 p-0 d-flex">
+                <input class="custom-checkbox me-3 " type="checkbox" id="4to7nights"/>
+                <label class="form-check-label" for="4to7nights">4 To 7 Nights</label>
+              </div>
+              
+              <div class="form-check align-items-center mt-1 p-0 d-flex">
+                <input class="custom-checkbox me-3 " type="checkbox" id="7to11nights"/>
+                <label class="form-check-label" for="7to11nights">7 To 11 Nights</label>
+              </div>
+              
+              <div class="form-check align-items-center mt-1 p-0 d-flex">
+                <input class="custom-checkbox me-3 " type="checkbox" id="11to15nights"/>
+                <label class="form-check-label" for="11to15nights">11 To 15 Nights</label>
+              </div>
+              
+              <div class="form-check align-items-center mt-1 p-0 d-flex">
+                <input class="custom-checkbox me-3 " type="checkbox" id="15to21nights"/>
+                <label class="form-check-label" for="15to21nights">15 To 21 Nights</label>
+              </div>
+              
+              <div class="form-check align-items-center mt-1 p-0 d-flex">
+                <input class="custom-checkbox me-3 " type="checkbox" id="above21nights"/>
+                <label class="form-check-label" for="above21nights">Above 21 Nights</label>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="mt-3 mt-md-4">
+            <button class="btn btn-danger rounded-pill shadow-0 fw-bold"><i class="fa-solid fa-circle-info"></i> Need Help</button>
+            <p class="fw-bold fs-4 text-black m-0 p-0 mt-3">856 - 215 - 211</p>
+            <span class="small fw-bold">Monday to Friday 9.00am - 7.30pm</span>
+          </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-8 mt-3">
+      <div>
+        <div class="container">
+
+          <div class="row bg-white" data-aos="fade-up" data-aos-duration="2000">
+            <div class="col-12 col-md-5 mt-3">
+              <div class="list-img">
+                <div class="owl-carousel owl-theme main-carousel">
+                    <div class="item">
+                      <img src="{% static 'img/hotel_gallery/1.jpg' %}" class="img-fluid blur-up lazyload" alt="">
+                    </div>
+                    <div class="item">
+                      <img src="{% static 'img/hotel_gallery/2.jpg' %}" class="img-fluid blur-up lazyload" alt="">
+                    </div>
+                    <div class="item">
+                      <img src="{% static 'img/hotel_gallery/3.jpg' %}" class="img-fluid blur-up lazyload" alt="">
+                    </div>
+                    <div class="item">
+                      <img src="{% static 'img/hotel_gallery/4.jpg' %}" class="img-fluid blur-up lazyload" alt="">
+                    </div>
+                </div>
+
+
+                <div class="owl-carousel owl-theme thumb-carousel mt-3">
+                      <div class="item">
+                        <img src="{% static 'img/hotel_gallery/1.jpg' %}" class="img-fluid blur-up lazyload" alt="">
+                      </div>
+                      <div class="item">
+                        <img src="{% static 'img/hotel_gallery/2.jpg' %}" class="img-fluid blur-up lazyload" alt="">
+                      </div>
+                      <div class="item">
+                        <img src="{% static 'img/hotel_gallery/3.jpg' %}" class="img-fluid blur-up lazyload" alt="">
+                      </div>
+                      <div class="item">
+                        <img src="{% static 'img/hotel_gallery/4.jpg' %}" class="img-fluid blur-up lazyload" alt="">
+                      </div>
+                  </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-7 mt-3">
+              <div class="list-content">
+                  <div>
+                    <div class="d-flex align-items-center justify-content-between">
+                      <div>
+                        <a href="{% url 'tour_info' %}">
+                          <h5 class="fw-bold text-black mb-0">Sea View Hotel</h5>
+                        </a>
+                        <p class="p-0 m-0">6 Night | 7 Days</p>
+
+                        <div class="d-flex align-items-center">
+                          <i class="fa-solid fa-plane-departure me-2"></i>
+                          <p class="p-0 m-0 small text-truncate" style="max-width: 200px;">Kuta (2N) → Lombok (2N) → Ubud (2N)</p>
+                          <i class="fa-solid fa-plane-arrival ms-2"></i>
+                        </div>
+                      </div>
+                      <div class="offer-box make_color_one bg-white">
+                        <i class="fas fa-fire"></i> 8 people booked <br> this hotel today
+                      </div>
+                    </div>
+
+                      <p class="hotel-info m-0 p-0 mt-2 text-capitalize small">
+                        Exploring places is the dream of every other person, so spend your holidays and fulfil them. we will give the perfect deals with the best places and quality food. The exotic holiday tour packages provided will allow you out of the box experiences.
+                      </p>
+
+                      <div class="d-flex align-items-center mt-3">
+                          <div class="d-flex flex-column me-3 align-items-center">
+                              <img src="{% static 'img/tour_tips/hotel.png' %}"
+                                  class="img-fluid blur-up lazyload" alt="" width="25">
+                              <span>Hotel</span>
+                          </div>
+                          <div class="d-flex flex-column me-3 align-items-center">
+                              <img src="{% static 'img/tour_tips/airplane.png' %}"
+                                  class="img-fluid blur-up lazyload" alt="" width="25">
+                              <span>Flight</span>
+                          </div>
+                          <div class="d-flex flex-column me-3 align-items-center">
+                              <img src="{% static 'img/tour_tips/fork.png' %}"
+                                  class="img-fluid blur-up lazyload" alt="" width="25">
+                              <span>Meals</span>
+                          </div>
+                          <div class="d-flex flex-column me-3 align-items-center">
+                              <img src="{% static 'img/tour_tips/photo-camera.png' %}"
+                                  class="img-fluid blur-up lazyload" alt="" width="25">
+                              <span>sightseeing</span>
+                          </div>
+                          <div class="d-flex flex-column me-3 align-items-center">
+                              <img src="{% static 'img/tour_tips/visa.png' %}"
+                                  class="img-fluid blur-up lazyload" alt="" width="25">
+                              <span>Visa</span>
+                          </div>
+                      </div>
+
+
+                      <div class="d-flex justify-content-between align-items-center pb-3 mt-3">
+                        <div class="price mt-3">
+                            <del>$1300</del>
+                            <span class="fw-bolder text-black fs-5">
+                              $1254 <span class="fs-6">/ per person</span>
+                            </span>
+                        </div>
+
+                        <a href="{% url 'tour_book' %}" class="make_bg_one color btn text-white rounded-0 btn-lg shadow-0">View Details</a>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+
+{% endblock content %}
+
+
+
+{% block jsfiles %}
+
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+
+<script>
+  $(document).ready(function () {
+    var main = $('.main-carousel');
+    var thumbs = $('.thumb-carousel');
+  
+    // Initialize main carousel
+    main.owlCarousel({
+      items: 1,
+      loop: true,
+      nav: false,
+      dots: false,
+      navText: [
+        '<i class="fas fa-angle-left"></i>',
+        '<i class="fas fa-angle-right"></i>'
+      ]
+    });
+  
+    // Initialize thumbnail carousel
+    thumbs.owlCarousel({
+      items: 4,
+      margin: 10,
+      nav: false,
+      dots: false
+    });
+  
+    // Sync thumbnails with main image
+    main.on('changed.owl.carousel', function (event) {
+      let index = event.item.index - event.relatedTarget._clones.length / 2;
+      index = index % event.item.count;
+      if (index < 0) index = event.item.count + index;
+  
+      thumbs.find(".item").removeClass("active-thumb");
+      thumbs.find(".item").eq(index).addClass("active-thumb");
+  
+      // Optional: Scroll thumbs to center on active
+      thumbs.trigger('to.owl.carousel', [index, 300, true]);
+    });
+  
+    // Thumbnail click event
+    thumbs.on('click', '.item', function () {
+      var i = $(this).index();
+      main.trigger('to.owl.carousel', [i, 300]);
+    });
+  
+    // Set initial active thumb
+    thumbs.find(".item").eq(0).addClass("active-thumb");
+  });
+  
+</script>
+
+<script>
+  $('.show_widget').on('click', function () {
+    $('.widget_box').toggleClass('d-none d-block');
+  });
+</script>
+
+
+
+{% endblock jsfiles %}

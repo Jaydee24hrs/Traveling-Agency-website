@@ -1,0 +1,241 @@
+  /* ========== SLIDING NAV STYLES ========== */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+
+  /* Overlay backdrop */
+  .nav-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+  }
+  .nav-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* Slide panel */
+  .slide-nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 380px;
+    max-width: 90vw;
+    height: 100vh;
+    background: #fff;
+    z-index: 1000;
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 2rem 2rem 2.5rem;
+  }
+  .slide-nav.active {
+    transform: translateX(0);
+  }
+
+  /* Close button */
+  .slide-nav__close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #e8533f;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .slide-nav__close:hover {
+    background: #c9402e;
+    transform: scale(1.1);
+  }
+
+  /* Logo area */
+  .slide-nav__logo {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    padding-top: 0.5rem;
+  }
+  .slide-nav__logo img {
+    max-width: 160px;
+    height: auto;
+  }
+  .slide-nav__logo-text {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-top: 0.5rem;
+  }
+  .slide-nav__logo-sub {
+    font-size: 0.75rem;
+    color: #888;
+    font-style: italic;
+  }
+
+  /* Description */
+  .slide-nav__desc {
+    color: #555;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+
+  /* Section heading */
+  .slide-nav__heading {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 1.25rem;
+  }
+
+  /* Contact list */
+  .slide-nav__contact {
+    margin-left: 0;
+    list-style: none;
+  }
+  .slide-nav__contact li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+    color: #444;
+    line-height: 1.3;
+  }
+
+  .slide-nav__contact .aaa {
+    margin-left: -0.85rem; /* Pull text left to align with nav items */
+  }
+  .slide-nav__contact li .icon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    color: #e8533f;
+    margin-top: 2px;
+  }
+
+  /* Social icons */
+  .slide-nav__social {
+    display: flex;
+    gap: 0.75rem;
+    /* margin-top: auto; */
+  }
+  .slide-nav__social a {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1.5px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #555;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+  }
+  .slide-nav__social a:hover {
+    border-color: #e8533f;
+    color: #e8533f;
+    background: rgba(232, 83, 63, 0.06);
+  }
+  /* Improve contact item alignment – override your current li selector */
+.slide-nav__contact li {
+  display: flex;
+  align-items: center;          /* Changed from flex-start → centers icon vertically */
+  gap: 0.4rem;                  /* Slightly more breathing room than 0.75rem */
+  margin-bottom: 1rem;
+  font-size: 0.92rem;
+  color: #333;
+  line-height: 1.45;
+}
+
+/* Make icon perfectly centered regardless of text height */
+.slide-nav__contact li .icon {
+  flex-shrink: 0;
+  width: 22px;                  /* Slightly larger = better visual balance */
+  height: 22px;
+  color: #e8533f;
+  margin-top: 0;                /* Remove your manual 2px tweak */
+}
+
+/* New – wrapper for phone numbers so they behave as one unit */
+.phone-group {
+  display: flex;
+  flex-direction: column;       /* Stack phones vertically */
+  gap: 0.35rem;                 /* Small space between the two numbers */
+}
+
+.phone-group a {
+  color: #e8533f;
+  text-decoration: none;
+}
+
+.phone-group a:hover {
+  text-decoration: underline;
+}
+
+
+
+/* nav list */
+/* Make sure the parent section has white background */
+
+/* Remove bullets & spacing */
+.nav-list {
+    list-style: none;
+    padding: 11px 20px 2px 20px; /* Add padding to create space from the description */
+    margin-left: -10px; /* Align with contact items */
+}
+
+/* Space between items */
+.nav-list li {
+    margin-left: -9px;
+    margin-bottom: 7px;
+}
+
+/* Big clean text */
+.nav-list li a {
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    color: #111;
+    font-family: 'Segoe UI', sans-serif;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+/* Hover effect (smooth slide like modern menu) */
+.nav-list li a:hover {
+    color: #0077ff;
+    transform: translateX(10px);
+}
+
+/* Optional bottom divider line */
+.nav-list::after {
+    content: "";
+    display: block;
+    margin-top: 20px;
+    height: 1px;
+    background: #ddd;
+}
+
+
+  /* Hamburger trigger button */
+
+  /* Hide on mobile if desired — remove this block to show on all sizes */
+  /*
+  @media (max-width: 768px) {
+    .nav-trigger { display: none; }
+  }
+  */

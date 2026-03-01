@@ -1,0 +1,1356 @@
+{% extends "base/base2.html" %}
+{% load static %}
+{% load custom_tags %}
+{% load humanize %}
+{% block title %} Booking Information {% endblock title %}
+
+{% block cssfiles %}
+    <link rel="stylesheet" href="{% static 'css/dashboard/bookinginfo.css' %}">
+    <style>
+        .hide {
+            display: none;
+        }
+
+        .show {
+            display: block;
+        }
+
+        .watermark_parent{
+            position: relative;
+            width: 100%;
+            height: 100%; 
+        }
+
+        .watermark {
+            position: absolute;
+            font-size: 50px;
+            transform: rotate(-45deg);
+            color: rgba(251, 0, 0, 0.335);
+            white-space: nowrap;
+            user-select: none;
+            opacity: 0.5;
+        }
+
+        .watermark.centered {
+            top: 50%;
+            left: 50%;
+            margin: auto;
+            transform: translate(-50%, -50%) rotate(-45deg);
+        }
+
+        
+        /* .lets_spin {
+            width: 10rem;
+            height: 10rem;
+        }
+         */
+        .preloader_img{
+            max-width: 300px;
+        }
+
+        .blink-red {
+            color: #185286;
+            animation: smooth-blink 1.5s ease-in-out infinite;
+          }
+          
+          
+        @keyframes smooth-blink {
+            0%, 100% {
+            opacity: 1;
+            }
+            50% {
+            opacity: 0;
+            }
+        }
+
+        .ticket_time_limit_table{
+            position: relative;
+        }
+
+        .ticket_time_limit_box{
+            position: absolute;
+        }
+
+        .ticket_time_limit{
+            cursor: pointer;
+        }
+
+        .seatmap {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr); /* Adjust based on deck width */
+            gap: 5px;
+        }
+
+        .small_menu:hover{
+            background-color: #eaeaea;
+        }
+
+
+        .manage_btn,
+        .manage_btn:hover{
+          background: #185286;
+          color: #fff;
+        }
+
+        .make_background{
+            background: #185286;
+        }
+
+        .make_color{
+            color: #185286;
+        }
+
+        .progress-bar-animated-custom {
+            animation: loadProgress 2s linear infinite;
+          }
+        
+          @keyframes loadProgress {
+          0% {
+              width: 0%;
+          }
+          100% {
+              width: 100%;
+          }
+          }
+        
+    </style>
+
+    <style>
+        /* Custom print styles */
+        @media print {
+            @page {
+                size: Letter;
+                margin-top: 0.05in;
+                margin-bottom: 0.5in;
+                margin-left: 0;
+                margin-right: 0;
+            }
+        
+            /* Ensure print contents fill the page width */
+            #booking_information {
+                width: 100%;
+                margin: 0;
+                padding: 0;
+            }
+        
+            /* Customize other print-related styles as needed */
+        }
+
+        body{
+            background: #f9f9f9 !important;
+        }
+        .make_bg_info{
+            background: #E8EEF3 !important;
+        }
+
+        .make_border_end{
+            border-left: 2px dashed gray;
+            border-right: 2px dashed gray;
+        }
+        
+      </style>
+    
+{% endblock cssfiles %}
+
+{% block content %}
+
+<!-- Modal -->
+<div id="preloader">
+    <img src="{% static 'img/loader.gif' %}" alt="" width="20%">
+</div>
+
+        <!-- Offcanvas for small Screen -->
+        <div class="offcanvas offcanvas-start w-75" tabindex="-1" id="managebookingsmall" aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header">
+            <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn-close text-reset" data-mdb-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+
+                <!-- Fare Rules -->
+                <div class="btns1 rounded d-flex align-items-center small_menu w-100 p-2 ps-0" data-mdb-ripple-init data-mdb-modal-init data-mdb-target="#fareRules">
+                    <button class="btn bg-transparent shadow-0 d-flex align-items-center" style="white-space: nowrap;"><i class="fa-solid fa-sheet-plastic me-2 fs-5"></i> Fare Rules</button>
+                </div>
+
+                <!-- Email  Itinerary -->
+                <div class="btns2 rounded d-flex align-items-center" data-mdb-ripple-init data-mdb-modal-init data-mdb-target="#email">
+                    <button class="btn bg-transparent shadow-0 d-flex align-items-center"><i class="fa-solid fa-envelope me-2 fs-5"></i> Email Itinerary</button>
+                </div>
+
+                <!-- Print  Itinerary -->
+                <!-- <div class="btns3 rounded d-flex align-items-center print_itinerary2 small_menu w-100 p-2 ps-0" id="print_itinerary2">
+                    <button class="btn bg-transparent shadow-0 d-flex align-items-center" style="white-space: nowrap;" data-mdb-dismiss="offcanvas"><i class="fa-solid fa-download me-2 fs-5"></i> Download Itinerary</button>
+                </div> -->
+
+
+                <!-- Print  Itinerary -->
+                <!-- <div class="btns3 rounded d-flex align-items-center print_itinerary small_menu w-100 p-2 ps-0" id="print_itinerary">
+                    <button class="btn bg-transparent shadow-0 d-flex align-items-center" style="white-space: nowrap;"><i class="fa-solid fa-print me-2 fs-5"></i> Print Itinerary</button>
+                </div> -->
+
+                <div class="btns3 rounded d-flex align-items-center print_itinerary small_menu w-100 p-2 ps-0" id="print_itinerary">
+                    <button class="btn bg-transparent shadow-0 d-flex align-items-center" style="white-space: nowrap;"><i class="fa-solid fa-print me-2 fs-5"></i> Print Itinerary</button>
+                </div>
+
+                <div class="btns3 rounded d-flex align-items-center print_itinerary_full small_menu w-100 p-2 ps-0" id="print_itinerary_full">
+                    <button class="btn bg-transparent shadow-0 d-flex align-items-center" style="white-space: nowrap;"><i class="fa-solid fa-print me-2 fs-5"></i> Print Itinerary Full</button>
+                </div>
+
+                <!-- Cancel  Itinerary -->
+                <div class="btns4 rounded align-items-center {% if booking.status == 'Issued' or booking.status == 'Exchanged' or booking.status == 'Refunded'  %} d-none {% else %} d-flex {% endif %} small_menu w-100 p-2 ps-0" data-mdb-ripple-init data-mdb-modal-init data-mdb-target="#cancel">
+                    <button class="btn bg-transparent shadow-0 d-flex align-items-center" style="white-space: nowrap;"><i class="fa-solid fa-circle-xmark me-2 fs-5"></i> Cancel Itinerary</button>
+                </div>
+            </div>
+        </div>
+        <!-- Offcanvas for small Screen -->
+
+        <div class="contriner-fluid make_bg_three p-3 p-md-5 text-white">
+            <div class="container">
+                <h3>Flight Itinerary</h3>
+                <p class="m-0 p-0 small fw-light">Your flight summary</p>
+            </div>
+        </div>
+
+        <div class="rounded mt-3">
+            <!-- Modal For fare Rules -->
+            <div class="modal fade" id="fareRules" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+                data-mdb-backdrop="static" data-mdb-keyboard="false">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content">
+
+                        <div class="modal-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5>Fare Rules</h5>
+                                <button type="button" class="btn-close" data-mdb-ripple-init data-mdb-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <div>
+                                {% for key, value in booking.farerules.included.detailed_fare_rules.items %}
+                                    <div class="mt-3 border border-muted rounded p-3">
+                                        <h5 class="" style="text-transform: capitalize;">Fare Basis: {{ value.fareBasis }} - {{ value.name }}</h5><br>
+                                        {% for info in value.fareNotes.descriptions %}
+                                            {% if info.descriptionType == "PENALTIES" %}
+                                                <h6 class="">{{ info.descriptionType }}</h6>
+                                                <p class="mt-3 text-lowercase">{{ info.text|remove_dashes }}</p>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-mdb-ripple-init
+                                    data-mdb-dismiss="modal">Close
+                            </button>
+                            <button type="button" class="btn btn-primary" data-mdb-ripple-init onclick="downloadModalContent()">Download</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container mb-5">
+
+                <div class="">
+
+                    <!-- Modal For Email Itinerary -->
+                    <div class="modal fade" id="email" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+                        data-mdb-backdrop="static" data-mdb-keyboard="false">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Email Itinerary</h5>
+                                    <button type="button" class="btn-close" data-mdb-ripple-init data-mdb-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="emailForm" method="post" action="{% url 'send_pdf_via_email' booking.id %}"
+                                        enctype="multipart/form-data">
+
+                                        {% csrf_token %}
+                                        <div class="form-outline" data-mdb-input-init>
+                                            <input name="email" type="text" id="form12" class="form-control"/>
+                                            <label class="form-label" for="form12">Enter Email Address</label>
+                                        </div>
+
+                                         <div class="d-flex align-items-center mt-3 mt-md-4">
+                                            <div class="form-check me-3">
+                                                <input class="form-check-input" type="radio" name="email_with_receipt" id="yes"/>
+                                                <label class="form-check-label" for="yes">Email With Receipt</label>
+                                            </div>
+                                            
+                                            <!-- Default checked radio -->
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="email_with_receipt" id="no" checked/>
+                                                <label class="form-check-label" for="no"> Email Without Receipt </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-3 pb-3">
+                                            <h6 class="fw-bold m-0 p-0">Note:</h6>
+                                            <p class="m-0 p-0 mt-1 small">Seperate multiple emails with comer <br> Example: <strong>email1@email.com, email2@email.com</strong></p>
+                                        </div>
+
+                                        <!-- <div class="form-outline mt-3" data-mdb-input-init>
+                                            <textarea name="message" class="form-control" id="textAreaExample"
+                                                    rows="4"></textarea>
+                                            <label class="form-label" for="textAreaExample">Compose Message</label>
+                                        </div> -->
+
+                                        <!-- Attach Itinerary -->
+                                        <!-- <div class="form-check mt-3">
+                                            <input name="attach_itinerary" class="form-check-input" type="checkbox" value=""
+                                                id="flexCheckChecked"
+                                                checked required/>
+                                            <label class="form-check-label" for="flexCheckChecked">Attach itinerary as
+                                                PDF</label>
+                                        </div> -->
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-mdb-ripple-init
+                                                    data-mdb-dismiss="modal">Close
+                                            </button>
+                                            <button type="submit" class="btn btn-primary" data-mdb-ripple-init>Send</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                {#                            </form>#}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal For Cancel Itinerary -->
+                    <div class="modal fade" id="cancel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+                        data-mdb-backdrop="static" data-mdb-keyboard="false">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Cancle Itinerary</h5>
+                                    <button type="button" class="btn-close" data-mdb-ripple-init data-mdb-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Are you sure you want to cancel <b>Itinerary</b>?<br>You're about to cancel your
+                                        Itinerary; You will be unable to use reservations made and all itinerary history
+                                        would
+                                        be lost.</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-mdb-ripple-init
+                                            data-mdb-dismiss="modal">Close
+                                    </button>
+                                    <form method="post" action="{% url 'cancel_booking' booking.id %}" id="cancel_itinerary_form">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger" data-mdb-ripple-init>Cancel Itinerary
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section For Itinerary -->
+                    
+                    <div class="container p-0 mt-3 mt-md-5">
+                        <!-- Tab navs -->
+                        <div class="bg-white shadow-1 py-3 px-3 control d-block d-lg-none">
+                            <button data-mdb-button-init data-mdb-ripple-init class="btn btn-light justify-content-between align-items-center d-flex d-lg-none" type="button" data-mdb-toggle="offcanvas" data-mdb-target="#managebookingsmall"
+                            aria-controls="managebookingsmall">
+                            <i class="fa-solid fa-bars fs-5 text-black me-2"></i> Menu
+                            </button>
+                        </div>
+            
+                        <div class="make_bg_info shadow-1 py-2 px-3 control justify-content-between align-items-center d-none d-lg-flex rounded-0">
+            
+                                <!-- Fare Rules -->
+                                <div class="btns1 rounded d-flex align-items-center" data-mdb-ripple-init data-mdb-modal-init data-mdb-target="#fareRules">
+                                    <button class="btn bg-transparent shadow-0 d-flex align-items-center" style="white-space: nowrap;"><i class="fa-solid fa-sheet-plastic me-2 fs-5"></i> Fare Rules</button>
+                                </div>
+            
+                                <!-- Email  Itinerary -->
+                                <div class="btns2 rounded d-flex align-items-center" data-mdb-ripple-init data-mdb-modal-init data-mdb-target="#email">
+                                    <button class="btn bg-transparent shadow-0 d-flex align-items-center"><i class="fa-solid fa-envelope me-2 fs-5"></i> Email Itinerary</button>
+                                </div>
+            
+                                <!-- Print  Itinerary -->
+                                <!-- <div class="btns3 rounded d-flex align-items-center print_itinerary" id="print_itinerary">
+                                    <button class="btn bg-transparent shadow-0 d-flex align-items-center" style="white-space: nowrap;"><i class="fa-solid fa-print me-2 fs-5"></i> Print Itinerary</button>
+                                </div> -->
+
+
+                                <div class="dropdown">
+                                    <button class="btn bg-trabsparent shadow-0 align-items-center  dropdown-toggle" type="button" id="dropdownMenuButton" data-mdb-dropdown-init data-mdb-ripple-init aria-expanded="false" style="font-size: 13px;">
+                                        <i class="fa-solid fa-print me-2 fs-5"></i>   Print
+                                    </button>
+
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                      <li> 
+                                        <div class="btns rounded d-flex align-items-center print_itinerary dropdown-item" id="print_itinerary">
+                                        <button class="btn bg-transparent shadow-0 d-flex align-items-center" style="white-space: nowrap;"><i class="fa-solid fa-print me-2 fs-5"></i> Without Receipt</button>
+                                        </div>
+                                    </li>
+
+                                    <li> 
+                                        <div class="btns rounded d-flex align-items-center print_itinerary_full dropdown-item" id="print_itinerary_full">
+                                        <button class="btn bg-transparent shadow-0 d-flex align-items-center" style="white-space: nowrap;"><i class="fa-solid fa-print me-2 fs-5"></i> With Receipt</button>
+                                        </div>
+                                    </li>
+
+                                    </ul>
+                                </div>
+            
+                                {% if user.position != 'Finance' %}
+                                <!-- Cancel  Itinerary -->
+                                <div class="btns4 rounded align-items-center {% if booking.status == 'Issued' or booking.status == 'Exchanged' or booking.status == 'Refunded'  %} d-none {% else %} d-flex {% endif %}" data-mdb-ripple-init data-mdb-modal-init data-mdb-target="#cancel">
+                                    <button class="btn bg-transparent shadow-0 d-flex align-items-center" style="white-space: nowrap;"><i class="fa-solid fa-circle-xmark me-2 fs-5"></i> Cancel Itinerary</button>
+                                </div>
+                                {% endif %}
+
+                        </div>
+                    </div>
+
+                    <!-- Booking Information -->
+                    <div class="table-responsive mt-3 rounded-0">
+                        <table class="table table-sm table-borderless mt-1 ticket_time_limit_table rounded-0 border">
+                            <thead>
+                            <tr>
+                                <th scope="col" style="white-space: nowrap;">Booking Date</th>
+                                <th scope="col" style="white-space: nowrap;">Booked Amount</th>
+                                {% if booking.status == 'Reserved' or booking.status == 'Cancelled' %}
+                                <th scope="col"  class="text-center" style="white-space: nowrap;">Current Amount</th>
+                                {% endif %}
+                                {% if booking.status == 'Issued' %}    
+                                <th scope="col"  class="text-center" style="white-space: nowrap;">Ticketed Amount</th>
+                                {% endif %}
+                                <th scope="col" class="text-center" style="white-space: nowrap;">Trip ID</th>
+                                <th scope="col" class="text-center">PNR</th>
+                                <th scope="col" class="text-center" style="white-space: nowrap;">Payment Method</th>
+                                <th scope="col" class="text-center">Status</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="white-space: nowrap;">{{ booking.booking_date }}</td>
+                                    <td style="white-space: nowrap;">{% if booking.currency == "NGN" %}&#8358; {% elif  booking.flight_data.is_converted %} &#8358;{% else %}&#36;{% endif %} {{ booking.converted_amount|floatformat:2|intcomma }}</td>
+
+                                    {% if  booking.status  == 'Cancelled' %}
+                                    <td class="text-center" style="white-space: nowrap;">{% if booking.currency == "NGN" %}&#8358; {% elif  booking.flight_data.is_converted %} &#8358;{% else %}&#36;{% endif %} 0.00 </td>
+                                    {% elif booking.status == 'Reserved' %}
+                                    <td class="text-center" style="white-space: nowrap;"> <span class="blink-red">{% if booking.currency == "NGN" %}&#8358; {% elif  booking.flight_data.is_converted %} &#8358;{% else %}&#36;{% endif %} {{ booking.tyktt_currency_price|floatformat:2|intcomma }}</span> </td>
+                                    {% endif %}
+    
+    
+                                    {% if booking.status == 'Issued' %}                                
+                                    <td class="text-center" style="white-space: nowrap;"> <span>{% if booking.currency == "NGN" %}&#8358; {% elif  booking.flight_data.is_converted %} &#8358;{% else %}&#36;{% endif %} {{ booking.tyktt_currency_price|floatformat:2|intcomma }}</span> </td>
+                                    {% endif %}
+
+                                    <td class="text-center" style="white-space: nowrap;">{{ booking.formatted_id }}</td>
+                                    <td class="text-center">{{ booking.pnr }}</td>
+
+                                    <td class="text-center" style="white-space: nowrap;">{{ booking.payment_type }}</td>
+                                    
+
+                                    <td class="{% if booking.status == 'Reserved' %} text-warning {% elif booking.status == 'Cancelled' or booking.status == 'Voided'  %} text-danger  {% elif booking.status == 'Issued' %} text-success {% endif %} text-center">
+                                        {% if booking.status == 'Issued' %}
+                                            Ticketed
+                                        {% else %}
+                                        {{ booking.status }}
+                                        {% endif %}
+                                    </td>
+                                    
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Passenger Information -->
+                    <div class="table-responsive mt-3 rounded-0">
+                        <table class="table table-sm table-borderless table-striped ticket_time_limit_table border">
+                            <!-- <p class="m-0 text-uppercase fw-bolder make_color mt-4">Passenger Information</p> -->
+                            <thead>
+                            <tr>
+                                <th scope="col" style="white-space: nowrap;">Passenger Name</th>
+                                <th scope="col" style="white-space: nowrap;">Passenger Type</th>
+                                <th scope="col" style="white-space: nowrap;">Passenger Email</th>
+                                <th scope="col" style="white-space: nowrap;">Passenger Phone number</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for traveller in booking.response.data.travelers %}
+                                    {% for pricing in booking.response.data.flightOffers.0.travelerPricings %}
+                                        {% if pricing.travelerId == traveller.id %}
+                                            <tr>
+                                                <td class="text-uppercase" style="white-space: nowrap;">{{ traveller.name.lastName }} {{ traveller.name.firstName }}</td>
+                                                <td class="" style="white-space: nowrap;">
+                                                    {% if pricing.travelerType == 'HELD_INFANT' %}
+                                                        INFANT
+                                                    {% else %}
+                                                        {{ pricing.travelerType }}
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-uppercase" style="white-space: nowrap;">
+                                                    {{ traveller.contact.emailAddress }}
+                                                </td>
+                                                <td class="text-uppercase" style="white-space: nowrap;">
+                                                    {% if traveller.contact.phones %}
+                                                        {{ traveller.contact.phones.0.countryCallingCode }} {{ traveller.contact.phones.0.number }}
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                         <!-- Travel Pay Plan Section -->
+                         <!-- {% if pay_small_small or most_recent_transaction or fluter_wave_transaction or cash_transfer %}
+                         <div class="table-responsive shadow-2 rounded mt-2 px-3">
+                             <table class="table table-striped table-borderless mt-1 table-sm">
+                                 <p class="m-0 text-uppercase fw-bolder make_color mt-4">Travel Pay Plan Information</p>
+                                 <thead>
+                                 <tr>
+                                     <th scope="col" style="white-space: nowrap;">Payment Type</th>
+                                     <th scope="col" style="white-space: nowrap;">Payment Plan</th>
+                                     <th scope="col" style="white-space: nowrap;">Payment Due Date</th>
+                                     <th scope="col" style="white-space: nowrap;">Payment Amount</th>
+                                     <th scope="col" style="white-space: nowrap;">Payment Date and Amount</th>
+     
+                                 </tr>
+                                 </thead>
+                                 <tbody class="align-middle">
+                                 {% if pay_small_small and most_recent_transaction  %}
+                                     {% for pay_small in pay_small_small %}
+                                     <tr>
+                                         <td style="white-space: nowrap;">Travel Pay Plan</td>
+                                         <td style="white-space: nowrap;">{{ pay_small.payment_plan|get_payment_plan }}</td>
+                                         <td style="white-space: nowrap;">{{ pay_small.due_date }}</td>
+                                         <td style="white-space: nowrap;">{% if booking.currency == "NGN" %}&#8358; {% elif  booking.flight_data.is_converted %} &#8358;{% else %}&#36;{% endif %} {% if pay_small.balance %}{{ pay_small.balance }}{% else %}{{ pay_small.amount }}{% endif %}</td>
+                                         {% if pay_small.paystack %}
+                                             <td>{{ pay_small.paystack.status }} -  {{ pay_small.paystack.amount }}</td>
+                                         {% elif pay_small.balance == 0.0 %}
+                                             <td>Successful - {{ pay_small.paid }}</td>
+                                         {% else %}
+                                         <td style="max-width: 200px;">
+                                             <form action="{% url 'manual_payment' %}" class="d-flex justify-items-between align-items-center" method="post">
+                                                 {% csrf_token %}
+                                                 <input type="text" style="display: none" name="booking_id" value="{{ booking.id }}">
+                                                 <input type="text" style="display: none" name="paysmall_id" value="{{ pay_small.id }}">
+                                                 <div class="form-outline me-2" data-mdb-input-init>
+                                                     <input type="date" id="date" name="date" class="form-control py-1 date" required/>
+                                                     <label class="form-label" for="date">Date</label>
+                                                 </div>
+     
+                                                 <div class="form-outline me-2" data-mdb-input-init>
+                                                     <input type="text" id="amount" name="amount" class="form-control py-1 amount" required/>
+                                                     <label class="form-label" for="amount">Amount</label>
+                                                 </div>
+     
+     
+                                                 <div class="dropdown">
+                                                     <button class="btn btn-primary dropdown-toggle" type="button" id="pay_small_small_1" data-mdb-dropdown-init data-mdb-ripple-init aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                                                     
+                                                     <ul class="dropdown-menu" aria-labelledby="pay_small_small_1">
+                                                         <div class="d-flex align-items-center">
+                                                             <li class="me-2">
+                                                                 <button name="action" value="pay_small_small" type="submit" class="btn btn-success">Submit</button>
+                                                             </li>
+     
+                                                             <li>
+                                                                 <button name="action" value="send_reminder" class="btn btn-warning" type="submit">Send Reminder</button>
+                                                             </li>
+                                                         </div>
+                                                     </ul>
+                                                   </div>
+                                             </form>
+                                         </td>   
+                                         {% endif %}
+                                     </tr>
+                                     {% endfor %}
+                                     
+                                     <tr>
+                                         <td style="white-space: nowrap;" class="fw-bold">Total Amount</td>
+                                         <td style="white-space: nowrap;"></td>
+                                         <td style="white-space: nowrap;"></td>
+                                         <td style="white-space: nowrap;" class="fw-bold">{% if booking.currency == "NGN" %}&#8358; {% elif  booking.flight_data.is_converted %} &#8358;{% else %}&#36;{% endif %} {{ total_amount_small }}</td>                                    
+                                         <td style="white-space: nowrap;" class="fw-bold text-end">Balance: {% if booking.currency == "NGN" %}&#8358; {% elif  booking.flight_data.is_converted %} &#8358;{% else %}&#36;{% endif %} {{ total_balance_small }}</td>                                    
+                                     </tr>
+                                 {% elif most_recent_transaction or fluter_wave_transaction %}
+                                     {% if most_recent_transaction %}
+                                         <tr>
+                                             <td style="white-space: nowrap;">{{ most_recent_transaction.payment_type }}</td>
+                                             <td style="white-space: nowrap;">Instant Payment</td>
+                                             <td style="white-space: nowrap;">{{ most_recent_transaction.date_created }}</td>
+                                             <td style="white-space: nowrap;">
+                                                 {% if booking.currency == "NGN" %}&#8358; {% elif  booking.flight_data.is_converted %} &#8358;{% else %}&#36;{% endif %} {{ most_recent_transaction.amount|floatformat:2|intcomma }}
+                                                 </td>
+                                             <td style="max-width: 200px;">
+                                                 {{ most_recent_transaction.status }}
+                                             </td>
+                                         </tr>
+                                     {% endif %}
+                                     {% if fluter_wave_transaction %}
+                                     {% for fluter_wave_trans in fluter_wave_transaction %}
+                                     <tr>
+                                         <td style="white-space: nowrap;">Flutter Wave</td>
+                                         <td style="white-space: nowrap;">None</td>
+                                         <td style="white-space: nowrap;">{{ fluter_wave_trans.created_at|date:"Y-m-d" }}</td>
+                                         <td style="white-space: nowrap;">{% if booking.currency == "NGN" %}&#8358; {% elif  booking.flight_data.is_converted %} &#8358;{% else %}&#36;{% endif %} {{ fluter_wave_trans.amount|floatformat:2|intcomma }}</td>
+                                         <td style="max-width: 200px;">
+                                             {{ fluter_wave_trans.status }}
+                                         </td>
+                                     </tr>
+                                     {% endfor %}
+                                 {% endif %}
+                                 {% elif pay_small_small %}
+                                 {% for pay_small in pay_small_small %}
+                                 <tr>
+                                     <td style="white-space: nowrap;">Travel Pay Plan</td>
+                                     <td style="white-space: nowrap;">{{ pay_small.payment_plan|get_payment_plan }}</td>
+                                     <td style="white-space: nowrap;">{{ pay_small.due_date }}</td>
+                                     <td style="white-space: nowrap;">{% if booking.currency == "NGN" %}&#8358; {% elif  booking.flight_data.is_converted %} &#8358;{% else %}&#36;{% endif %} {% if pay_small.balance %}{{ pay_small.balance }}{% else %}{{ pay_small.amount }}{% endif %}</td>
+                                     {% if pay_small.paystack %}
+                                         <td>{{ pay_small.paystack.status }} -  {{ pay_small.paystack.amount }}</td>
+                                     {% elif pay_small.balance == 0.0 %}
+                                         <td>Successful - {{ pay_small.paid }}</td>
+                                     {% else %}
+                                     <td style="max-width: 200px;">
+                                         <form action="{% url 'manual_payment' %}" class="d-flex justify-items-between align-items-center" method="post">
+                                             {% csrf_token %}
+                                             <input type="text" style="display: none" name="booking_id" value="{{ booking.id }}">
+                                             <input type="text" style="display: none" name="paysmall_id" value="{{ pay_small.id }}">
+                                             <div class="form-outline me-2" data-mdb-input-init>
+                                                 <input type="date" id="date" name="date" class="form-control py-1 date" required/>
+                                                 <label class="form-label" for="date">Date</label>
+                                             </div>
+     
+                                             <div class="form-outline me-2" data-mdb-input-init>
+                                                 <input type="text" id="amount" name="amount" class="form-control py-1 amount" required/>
+                                                 <label class="form-label" for="amount">Amount</label>
+                                             </div>
+     
+     
+                                             <div class="dropdown">
+                                                 <button class="btn btn-primary dropdown-toggle" type="button" id="pay_small_small_1" data-mdb-dropdown-init data-mdb-ripple-init aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                                                 
+                                                 <ul class="dropdown-menu" aria-labelledby="pay_small_small_1">
+                                                     <div class="d-flex align-items-center">
+                                                         <li class="me-2">
+                                                             <button name="action" value="pay_small_small" type="submit" class="btn btn-success">Submit</button>
+                                                         </li>
+     
+                                                         <li>
+                                                             <button name="action" value="send_reminder" class="btn btn-warning" type="submit">Send Reminder</button>
+                                                         </li>
+                                                     </div>
+                                                 </ul>
+                                               </div>
+                                         </form>
+                                     </td>   
+                                     {% endif %}
+                                 </tr>
+                                 {% endfor %}
+                                 {% elif cash_transfer %}
+                                     <tr>
+                                         <td style="white-space: nowrap;">{{ cash_transfer.Message }}</td>
+                                     </tr>
+                                 {% endif %}
+     
+                                 </tbody>
+                             </table>
+                         </div>
+                         {% endif %} -->
+
+
+                    <!-- Booker Information  -->
+                    <!-- Itinerary Information -->
+                    <!-- <p class="m-0 text-uppercase fw-bolder make_color py-2">Itinerary Information</p> -->
+
+                    <section id="full_itinerary">
+                        <section id="booking_information" class="mt-3">
+
+                            <div class="overflow-x-scroll">
+                                <div class="container overflow-x-scroll bg-white border shadow-1 small rounded-0" style="min-width: 700px;">
+                                    <div class="d-flex justify-content-between p-3">
+                                        <div class="">
+                                            <img src="{% static 'img/logo.png' %}" alt="logo" width="100" class="rounded object-fit-cover comapny_logo">
+                                        </div>
+
+
+                                        <div class="">
+                                            <div class="text-end">
+                                                <p class="m-0 text-uppercase" style="white-space: nowrap;">Jomivic Travels</p>
+                                                <p class="m-0 mt-1" style="white-space: nowrap;">Sheraton Hotel, 30, Mobolaji Bank Anthony, Ikeja,<br> Lagos Nigeria</p>
+                                                <p class="m-0 mt-1" style="white-space: nowrap;">Info@jomivictravels.com</p>
+                                                <p class="m-0 mt-1" style="white-space: nowrap;">012934120</p>
+                                                <a href="https://jomivictravels.com/" target="_blank" class="m-0 make_color" style="white-space: nowrap;">www.jomivictravels.com</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mt-3 make_bg_three container overflow-x-scroll p-3 p-lg-4 rounded-0 d-flex justify-content-between text-white" style="min-width: 700px;">
+                                    <div class="">
+                                        <p class="m-0 p-0">Your Trip Summary</p>
+                                    </div>
+
+                                    <div class="text-end">
+                                        <p class="m-0 mt-1  fw-light">Booking Date: <Span class="text-uppercase fw-normal" style="white-space: nowrap;">{{ booking.booking_date }}</Span></p>
+                                        <p class="m-0 mt-1  fw-light" style="white-space: nowrap;">Trip ID: <Span class="text-uppercase fw-normal">{{ booking.formatted_id }}</Span></p>
+                                        <p class="m-0 mt-1  fw-light" style="white-space: nowrap;">Booking PNR: <Span class="text-uppercase fw-normal">{{ booking.pnr }}</Span></p>
+                                        
+                                        <div class="d-flex">
+                                            <p class="m-0 me-2 fw-light" style="white-space: nowrap;">Airline Reference Number: </p>
+                                            <div class="d-flex flex-column" style="white-space: nowrap;">
+                                            {% for ref in booking.response.data.associatedRecords %}
+                                            {% if ref.originSystemCode != 'GDS' %}
+                                                <div>
+                                                    <span class="text-uppercase fw-normal" style="white-space: nowrap;">{{ ref.originSystemCode }} - </span>
+                                                    <span class="fw-normal" style="white-space: nowrap;">{{ ref.reference }}</span>
+                                                </div>
+                                            {% endif %}
+                                            {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!-- Passenger Information -->
+                            
+
+                                <div class="container p-0 mt-3 rounded-0" style="min-width: 700px;">
+
+                                    <div class="make_bg_itinerary text-white p-3 rounded-0">
+                                        <p class="m-0 fs-6">Travellers</p>
+                                    </div>
+                                    
+                                    <div class="d-flex justify-content-between align-items-start table-responsive">
+                                        <table class="table table-borderless table-sm table-striped border">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col" style="white-space: nowrap;" class="fw-bold">Name</th>
+                                                <th scope="col" class="text-center fw-bold">Type</th>
+                                                {% if travelers_table.dateOfBirth  %}
+                                                <th scope="col" class="text-center fw-bold" style="white-space: nowrap;">Date Of Birth</th>
+                                                {% endif %}
+                                                {% if travelers_table.loyaltyPrograms  %}
+                                                <th scope="col" class="text-center fw-bold" style="white-space: nowrap;">Miles Number</th>
+                                                {% endif %}
+                                                {% if travelers_table.documents  %}
+                                                <th scope="col" class="text-center fw-bold" style="white-space: nowrap;">Passport Number</th>
+                                                {% endif %}
+                                                {% if travelers_table.tickets  %}
+                                                <th scope="col" class="text-end fw-bold" style="white-space: nowrap;">Ticket Number</th>
+                                                {% endif %}
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for traveller in booking.response.data.travelers %}
+                                                {% for pricing in booking.response.data.flightOffers.0.travelerPricings %}
+                                                    {% if pricing.travelerId == traveller.id %}
+                                                        <tr>
+                                                            <td class="text-uppercase" style="white-space: nowrap;">{{ traveller.name.lastName }} {{ traveller.name.firstName }}</td>
+                                                            <td class="text-center" style="white-space: nowrap;">
+                                                                {% if pricing.travelerType == 'HELD_INFANT' %}
+                                                                    INFANT
+                                                                {% else %}
+                                                                    {{ pricing.travelerType }}
+                                                                {% endif %}
+                                                            </td>
+                                                            {% if travelers_table.dateOfBirth  %}
+                                                            <td class="text-center" style="white-space: nowrap;">
+                                                                {% if traveller.dateOfBirth %}
+                                                                    {{ traveller.dateOfBirth|format_dob }}
+                                                                {% else %}
+                                                                {% endif %}
+                                                            </td>
+                                                            {% endif %}
+                                                            {% if travelers_table.loyaltyPrograms  %}
+                                                            <td class="text-center" style="white-space: nowrap;">
+                                                                {% if traveller.loyaltyPrograms %}
+                                                                    {% for program in traveller.loyaltyPrograms %}
+                                                                    {{ program.programOwner }} - {{ program.id }}
+                                                                    {% endfor %}
+                                                                {% else %}
+
+                                                                {% endif %}
+                                                            </td>
+                                                            {% endif %}
+                                                            {% if travelers_table.documents  %}
+                                                            <td class="text-center" style="white-space: nowrap;">
+                                                                {% if traveller.documents %}
+                                                                    {% for document in traveller.documents %}
+                                                                        {% if document.documentType == 'PASSPORT' %}
+                                                                            {{ document.number }}
+                                                                        {% endif %}
+                                                                    {% endfor %}
+                                                                {% endif %}
+                                                            </td>
+                                                            {% endif %}
+                                                            {% if travelers_table.tickets  %}
+                                                            <td class="text-end " style="white-space: nowrap;">
+                                                                {% for ticket in booking.response.data.tickets %}
+                                                                    {% if ticket.travelerId == traveller.id %}
+                                                                        {{ ticket.documentNumber }}
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                            </td>
+                                                            {% endif %}
+                                                        </tr>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% endfor %}
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Itinerary -->
+                            <div class="overflow-x-scroll watermark_parent">
+
+                                {% if booking.status == "Cancelled" %}
+                                <div class="watermark centered">
+                                    {{ booking.status }}
+                                </div>
+                                {% endif %}
+
+
+                                {% for  itinerary in booking.response.data.flightOffers.0.itineraries %}
+                                    {% for segment in itinerary.segments %}
+                                        {% for fareDetail in booking.response.data.flightOffers.0.travelerPricings.0.fareDetailsBySegment %}
+                                            {% if fareDetail.segmentId == segment.id %}
+
+                                            <div class="container mt-3 bg-white border p-3 rounded-0" style="min-width: 700px;">
+                                                <div class="row align-items-center">
+
+                                                    <div class="col-3">
+                                                        <div class="d-flex flex-column justify-content-between align-items-center text-center h-100">
+                                                            {% with carrier_code=segment.carrierCode|upper carrier_name=booking.airlines|get_item:segment.carrierCode|upper %}
+                                                            {% with image_path=carrier_code|add:'_'|add:carrier_name|add:'.PNG' %}
+                                                            <div>
+                                                                <img src="{% static 'img/v2/tail/'|add:image_path %}"
+                                                                alt="{{ carrier_name }}" width="30" height="30"
+                                                                class="object-fit-cover rounded-3">
+                                                            </div>
+                                
+                                                                <div class="d-flex flex-column mt-1">
+                                                                <p class="m-0 small">{{ carrier_name }}</p>
+
+                                                                <p class="m-0 p-0 small">
+                                                                    {% if fareDetail.cabin == 'PREMIUM_ECONOMY'  %}
+                                                                        PREMIUM
+                                                                    {% else %}
+                                                                        {{ fareDetail.cabin }}
+                                                                    {% endif %} 
+                                                                    <span>({{ fareDetail.class }})</span>
+                                                                </p>
+
+                                                                <p class="m-0 p-0 small">{{ segment.carrierCode }} {{ segment.number }}</p>
+                                                                <!-- <span>(BOEING 777-300ER)</span> -->
+                                                                </div>
+                                                            {% endwith %}
+                                                        {% endwith %}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-9">
+                                                        <div class="row">
+
+                                                            <div class="col-4">
+                                                                <div>
+                                                                    <p class="m-0 small">{{ segment.departure.at|format_date_short }}</p>
+                                                                    <p class="m-0 small">{{ segment.departure.at|format_time_segment }}</p>
+                                                                    <p class="m-0 small">{{ segment.departure.iataCode|get_airport_name }} <span>({{ segment.departure.iataCode }})</span></p>
+                                                                    <p class="m-0"><span>Terminal: <span>{{ segment.departure.terminal|default:"-" }}</span></span></p>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-4">
+                                                                <div class="text-center d-flex flex-column justify-content-center align-items-center">
+                                                                    <p class="m-0 p-0 small">Duration: <span>{{ segment.duration|format_duration }}</span></p>
+
+                                                                    <!-- <div class="mt-2">
+                                                                        <img src="{% static 'img/forth.svg' %}" alt="">
+                                                                    </div> -->
+
+                                                                    <div class="d-flex justify-content-between align-items-center to_fro_new_svg" style="width: 10rem">
+                                                                        <i class="fas fa-plane-departure float-start make_color_result"></i>
+                                                                        <div class="border w-100 mx-3"></div>
+                                                                        <i class="fas fa-plane-arrival float-end make_color_result"></i>
+                                                                    </div>
+
+                                                                    <p class="m-0 p-0 small mt-2">Stops: 
+                                                                    <span>
+                                                                        {% if segment.numberOfStops == 0 %}
+                                                                            Non
+                                                                        {%  elif segment.numberOfStops == 1 %}
+                                                                            1
+                                                                        {%  elif segment.numberOfStops == 2 %}
+                                                                            2
+                                                                        {%  elif segment.numberOfStops >= 2 %}
+                                                                            2+
+                                                                        {% endif %}
+                                                                    </span></p>
+
+                                                                    <p class="m-0 p-0 small mt-2">
+                                                                        {% if segment.layover_time %}
+                                                                        Layover: <span class="ps-1">{{ segment.layover_time }}</span>
+                                                                        {% endif %}
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-4">
+                                                                <div class="text-start text-md-end">
+                                                                    <p class="m-0 small">{{ segment.arrival.at|format_date_short }}</p>
+                                                                    <p class="m-0 small">{{ segment.arrival.at|format_time_segment }}</p>
+                                                                    <p class="m-0  small">{{ segment.arrival.iataCode|get_airport_name }} <span>({{ segment.arrival.iataCode }})</span></p>
+                                                                    <p class="m-0"><span>Terminal: <span>{{ segment.arrival.terminal|default:"-" }}</span></span></p>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="container mt-3 p-0" style="min-width: 700px;">
+                                                <p class="m-0 p-0 make_bg_itinerary text-white p-3 rounded-0">Service - {{ segment.carrierCode }} {{ segment.number }}</p>
+
+                                                <!-- Baggage -->
+                                                    <div class="table-responsive">
+                                                        <table class="table table-borderless table-sm table-striped border">
+                                                            <thead>
+                                                            <tr>
+                                                                <!-- <th scope="col">Flight No.</th> -->
+                                                                <th scope="col" class="fw-bold">Name</th>
+                                                                <th scope="col" class="text-center fw-bold">Baggage</th>
+                                                                <th scope="col" class="text-center fw-bold" style="white-space: nowrap;">Seat</th>
+                                                                <th scope="col" class="text-center fw-bold">Meal</th>
+                                                                <!-- {% if booking.status == 'Issued' or booking.status == 'Exchanged' or booking.status == 'Refunded' %}
+                                                                <th scope="col" class="text-center fw-bold" style="white-space: nowrap;">Coupon Status</th>
+                                                                {% endif %} -->
+                                                                <!-- <th scope="col" class="text-end">Wheel Chair</th> -->
+                                                                <!-- <th scope="col">Duration</th> -->
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                {% for traveler in booking.response.data.travelers %}
+                                                                {% for travelerPricing in booking.response.data.flightOffers.0.travelerPricings %}
+                                                                    {% if traveler.id == travelerPricing.travelerId %}
+                                                                        {% for fareDetail in travelerPricing.fareDetailsBySegment %}
+                                                                            {% if fareDetail.segmentId == segment.id %}
+                                                                            <tr>
+                                                                                <td class="text-uppercase" style="white-space: nowrap;">{{ traveler.name.lastName }} {{ traveler.name.firstName }}</td>
+                                                                                <td class="text-center" style="white-space: nowrap;">
+                                                                                    {% if fareDetail.includedCheckedBags %}
+                                                                                        {% if fareDetail.includedCheckedBags.quantity is not None %}
+                                                                                        {{ fareDetail.includedCheckedBags.quantity|default_if_none:0 }}
+                                                                                        {% else %}
+                                                                                            {{ fareDetail.includedCheckedBags.weight }} {{ fareDetail.includedCheckedBags.weightUnit }}
+                                                                                        {% endif %}
+                                                                                    {% else %}
+                                                                                        No baggage included
+                                                                                    {% endif %}
+                                                                                </td>
+
+                                                                                <td class="text-center" style="white-space: nowrap;">
+                                                                                    {% if fareDetail.additionalServices.chargeableSeatNumber %}
+                                                                                        {{ fareDetail.additionalServices.chargeableSeatNumber }}
+                                                                                    {% else %}
+                                                                                        
+                                                                                    {% endif %}
+                                                                                </td>
+
+                                                                                <td class="text-center" style="white-space: nowrap;">
+                                                                                    {% if fareDetail.mealServices %}
+                                                                                    {% for meal in fareDetail.mealServices %}
+                                                                                            {{ meal.label }}
+                                                                                        {% endfor %}
+                                                                                    {% else %}
+                                                                                        No meal service
+                                                                                    {% endif %}
+                                                                                </td>
+
+
+                                                                            <!-- {% if booking.status == 'Issued' or booking.status == 'Exchanged' or booking.status == 'Refunded' %}
+                                                                            <td class="text-center" style="white-space: nowrap;">
+                                                                                {% if segment.isFlown %}
+                                                                                    Flown
+                                                                                {% else %}
+                                                                                    Open
+                                                                                {% endif %}
+                                                                            </td>
+                                                                            {% endif %}
+                                                                            </tr> -->
+
+                                                                            {% endif %}
+                                                                        {% endfor %}
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                            {% endfor %}
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                            </div>
+
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endfor %}
+                                {% endfor %}
+
+
+                            </div>
+                        </section>
+
+                        <div class="container p-0 mt-3" style="min-width: 700px;">
+                            <p class="m-0 p-3 make_bg_itinerary rounded-0 text-white">Price Summary</p>
+
+
+                            <div class="table-responsive">
+                                <table class="table table-borderless table-sm table-striped border">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" style="white-space: nowrap;" class="fw-bold">Name</th>
+                                        <th scope="col" class="text-center fw-bold">Type</th>
+                                        <th scope="col" class="text-center fw-bold" style="white-space: nowrap;">Base Price</th>
+                                        <th scope="col" class="text-center fw-bold" style="white-space: nowrap;">Tax</th>
+                                        <th scope="col" class="text-end fw-bold">Total</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for traveller in booking.response.data.travelers %}
+                                        {% for pricing in booking.response.data.flightOffers.0.travelerPricings %}
+                                            {% if pricing.travelerId == traveller.id %}
+                                            <tr>
+                                                <td class="text-uppercase" style="white-space: nowrap;">{{ traveller.name.lastName }}  {{ traveller.name.firstName }} </td>
+                                                <td class="text-center">
+                                                    {% if pricing.travelerType == 'HELD_INFANT' %}
+                                                        INFANT
+                                                    {% else %}
+                                                        {{ pricing.travelerType }}
+                                                    {% endif %}
+                                                </td>
+
+                                                {% if  booking.status  == 'Cancelled' %}
+                                                <td class="text-center" style="white-space: nowrap;">{% if booking.currency == "NGN" %}&#8358; {% elif  booking.flight_data.is_converted %} &#8358; {% else %}&#36;{% endif %} 0.00 </td>
+                                                <td class="text-center" style="white-space: nowrap;">{% if booking.currency == "NGN" %}&#8358; {% elif  booking.flight_data.is_converted %} &#8358; {% else %}&#36;{% endif %} 0.00 </td>
+                                                <td class="text-center" style="white-space: nowrap;">{% if booking.currency == "NGN" %}&#8358; {% elif  booking.flight_data.is_converted %} &#8358; {% else %}&#36;{% endif %} 0.00 </td>
+                                                {% elif booking.status == 'Issued' or booking.status == 'Voided' %}
+                                                <td class="text-center" style="white-space: nowrap;">{% if booking.currency == "NGN" %}&#8358; {% elif  booking.flight_data.is_converted %} &#8358; {% else %}&#36;{% endif %} {{ taxes_by_traveler|get_item:traveller.id|get_item:"converted_base_fare_tyktt"|floatformat:2|intcomma }} </td>
+                                                <td class="text-center" style="white-space: nowrap;">{% if booking.currency == "NGN" %}&#8358; {% elif  booking.flight_data.is_converted %} &#8358; {% else %}&#36;{% endif %} {{ taxes_by_traveler|get_item:traveller.id|get_item:"total_taxes"|floatformat:2|intcomma }}</td>
+                                                <td class="fw-bold text-end" style="white-space: nowrap;">{% if booking.currency == "NGN" %}&#8358; {% elif  booking.flight_data.is_converted %} &#8358; {% else %}&#36;{% endif %} {{ taxes_by_traveler|get_item:traveller.id|get_item:"converted_total_fare_tyktt"|floatformat:2|intcomma }} </td>
+                                                {% else %}
+                                                <td class="text-center" style="white-space: nowrap;">{% if booking.currency == "NGN" %}&#8358; {% elif  booking.flight_data.is_converted %} &#8358; {% else %}&#36;{% endif %} {{ taxes_by_traveler|get_item:traveller.id|get_item:"converted_base_fare_tyktt"|floatformat:2|intcomma }} </td>
+                                                <td class="text-center" style="white-space: nowrap;">{% if booking.currency == "NGN" %}&#8358; {% elif  booking.flight_data.is_converted %} &#8358; {% else %}&#36;{% endif %} {{ taxes_by_traveler|get_item:traveller.id|get_item:"total_taxes"|floatformat:2|intcomma }}</td>
+                                                <td class="fw-bold text-end" style="white-space: nowrap;">{% if booking.currency == "NGN" %}&#8358; {% elif  booking.flight_data.is_converted %} &#8358; {% else %}&#36;{% endif %} {{ taxes_by_traveler|get_item:traveller.id|get_item:"converted_total_fare_tyktt"|floatformat:2|intcomma }} </td>
+                                                {% endif %}
+
+                                            </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endfor %}
+
+                                    <tr>
+                                        <td class="fw-bold text-start">Grand Total</td>
+                                        {% if  booking.status  == 'Cancelled' %}
+                                        <td class="fw-bold text-end" colspan="4" style="white-space: nowrap;">{% if booking.currency == "NGN" %}&#8358; {% elif  booking.flight_data.is_converted %} &#8358; {% else %}&#36;{% endif %} 0.00 </td>
+                                        {% else %}
+                                        <td class="fw-bold text-end" colspan="4" style="white-space: nowrap;">{% if booking.currency == "NGN" %}&#8358; {% elif  booking.flight_data.is_converted %} &#8358; {% else %}&#36;{% endif %} {{ booking.tyktt_currency_price|floatformat:2|intcomma }}</td>
+                                        {% endif %}
+                                        
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+        </div>
+
+
+{% endblock content %}
+
+{% block jsfiles %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+
+    <script>
+        document.querySelectorAll(".print_itinerary2").forEach(function(button) {
+            button.addEventListener("click", function() {
+                // Specify the element to convert to PDF
+                var element = document.getElementById('booking_information');
+    
+                // Use jsPDF library to generate PDF with text
+                var opt = {
+                    margin: 0.5, // Margin around the page
+                    filename: 'Itinerary.pdf', // The name of the PDF file
+                    jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' } // PDF format and orientation
+                };
+    
+                // Use html2pdf to convert HTML to PDF
+                html2pdf()
+                    .from(element)
+                    .set(opt)
+                    .toPdf()
+                    .get('pdf')
+                    .then(function(pdf) {
+                        // Check the user agent to determine the platform
+                        var isAndroid = /Android/i.test(navigator.userAgent);
+                        var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+    
+                        if (isAndroid) {
+                            // For Android devices, open the PDF in a new tab
+                            var pdfBlob = pdf.output('blob'); // Get PDF as a blob
+                            var url = URL.createObjectURL(pdfBlob); // Create a URL for the blob
+                            window.open(url); // Open the PDF in a new tab
+    
+                            // Optional: Release the object URL after use
+                            setTimeout(function() {
+                                URL.revokeObjectURL(url);
+                            }, 100);
+                        } else if (isIOS || /Macintosh/.test(navigator.userAgent)) {
+                            // For iOS devices and computers, download the PDF
+                            pdf.save('Itinerary.pdf'); // This will trigger the download of the PDF file
+                        } else {
+                            // Default action for other devices (e.g., Windows)
+                            pdf.save('Itinerary.pdf'); // Trigger download as a fallback
+                        }
+                    })
+                    .catch(function(error) {
+                        console.error('Error while generating PDF:', error);
+                    });
+            });
+        });
+    </script>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch('https://restcountries.com/v3.1/all')
+                .then(response => response.json())
+                .then(countries => {
+
+                    countries.sort((a, b) => {
+                        if (a.name.common < b.name.common) return -1;
+                        if (a.name.common > b.name.common) return 1;
+                        return 0;
+                    });
+        
+                    const travelers = {{ booking.response.data.travelers|safe }};
+        
+                    travelers.forEach(traveler => {
+                        const issuesBySelect = document.getElementById(`issues_by_${traveler.id}`);
+                        const nationalitySelect = document.getElementById(`nationality_${traveler.id}`);
+        
+                        // Populate the dropdowns for each traveler
+                        countries.forEach(country => {
+                            const countryCode = country.cca2; // 2-letter country code
+                            const countryName = country.name.common;
+        
+                            // Create an option element for each country
+                            const option1 = document.createElement('option');
+                            option1.value = countryCode;
+                            option1.textContent = `${countryCode} - ${countryName}`;
+        
+                            const option2 = document.createElement('option');
+                            option2.value = countryCode;
+                            option2.textContent = `${countryCode} - ${countryName}`;
+        
+                            // Append the options to the respective select elements
+                            issuesBySelect.appendChild(option1);
+                            nationalitySelect.appendChild(option2);
+                        });
+                    });
+                })
+                .catch(error => console.error('Error fetching country data:', error));
+        });
+   
+    </script>
+
+    <script>
+
+        $(document).ready(function(){
+            $("#ticket_time_limit").click(function(){
+                $("#ticket_time_limit_box").toggleClass("hide");
+            });
+        });
+
+        function downloadModalContent() {
+            // Get the modal content
+            var modalContent = document.querySelector('#fareRules .modal-content').cloneNode(true);
+
+            // Remove the modal footer (which contains the buttons)
+            var modalFooter = modalContent.querySelector('.modal-footer');
+            if (modalFooter) {
+                modalFooter.remove();
+            }
+
+            // Create a Blob object with the updated modal content
+            var blob = new Blob([modalContent.outerHTML], {type: 'text/html'});
+
+            // Create a link element
+            var link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+
+            // Set the download attribute with a filename
+            link.download = 'fare-rules.html';
+
+            // Append the link to the body
+            document.body.appendChild(link);
+
+            // Trigger the download
+            link.click();
+
+            // Remove the link from the document
+            document.body.removeChild(link);
+        }
+
+
+        document.getElementById('emailForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent the default form submission
+        
+            // Reference the submit button
+            const submitButton = event.target.querySelector('button[type="submit"]');
+        
+            // Show loading icon and disable button
+            submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Sending...';
+            submitButton.disabled = true;
+        
+            // Capture the section to convert to PDF
+            let contentToCapture = document.getElementById('booking_information');
+        
+            // Use html2canvas to convert HTML to a canvas
+            html2canvas(contentToCapture, {
+                scale: 2, // Increase scale for better quality
+                scrollX: 0,
+                scrollY: 0,
+                windowWidth: document.documentElement.offsetWidth,
+                windowHeight: document.documentElement.offsetHeight
+            }).then(canvas => {
+                // Create a FormData object and append the data
+                let formData = new FormData(event.target);
+                formData.append('html_content', contentToCapture.innerHTML);
+                const selectedOption = document.querySelector('input[name="email_with_receipt"]:checked');
+                const selectedValue = selectedOption ? selectedOption.id : null;
+                formData.append('email_with_receipt', selectedValue);
+                // formData.append('pdf_file', pdfBlob, 'itinerary.pdf');
+        
+                // Send the form data via AJAX
+                fetch(event.target.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                    }
+                })
+                .then(response => response.text())
+                .then(data => {
+                    alert('Email sent successfully!');
+                    // Reset button text and state
+                    submitButton.innerHTML = 'Send';
+                    submitButton.disabled = false;
+                })
+                .catch(error => {
+                    alert('An error occurred.');
+                    // Reset button text and state
+                    submitButton.innerHTML = 'Send';
+                    submitButton.disabled = false;
+                });
+            });
+        });
+        
+
+
+        // JavaScript to handle selection and update display
+          document.getElementById('nationality').addEventListener('input', function() {
+            // Get the input element and the displayed element
+            var input = document.getElementById('nationality');
+            var display = document.getElementById('selectedNationality');
+        
+            // Get all options from the datalist
+            var options = document.getElementById('nationalities').options;
+            var selectedText = '';
+        
+            // Loop through options to find the matching value
+            for (var i = 0; i < options.length; i++) {
+              if (options[i].value === input.value) {
+                selectedText = options[i].text; // Get the full text (e.g., "AF - Afghanistan")
+                break;
+              }
+            }
+        
+            // Update the displayed element with the selected text
+            display.textContent = selectedText;
+        
+            // Clear the input field to hide the datalist options
+            input.value = '';
+          });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const preloader = document.getElementById('preloader');
+            
+        
+            document.getElementById('cancel_itinerary_form').addEventListener('submit', function(event) {
+                sessionStorage.setItem('preloaderVisible', 'true');
+                preloader.style.display = 'flex';
+            });
+        
+            document.getElementById('update_itinerary_form').addEventListener('submit', function(event) {
+                sessionStorage.setItem('preloaderVisible', 'true');
+                preloader.style.display = 'flex';
+            });
+        
+            document.getElementById('update_itinerary_form2').addEventListener('submit', function(event) {
+                sessionStorage.setItem('preloaderVisible', 'true');
+                preloader.style.display = 'flex';
+            });
+        
+    
+            function hidePreloader() {
+                preloader.style.display = 'none';
+                sessionStorage.removeItem('preloaderVisible');
+            }
+        
+    
+            window.onload = function() {
+                if (sessionStorage.getItem('preloaderVisible') === 'false') {
+                    preloader.style.display = 'flex';
+                }
+            };
+        
+            document.addEventListener('filteringComplete', function() {
+                hidePreloader();
+            });
+        });
+    </script>
+
+    <script>
+        // Optional: Add JavaScript to handle the selected value
+        document.getElementById('airline_search').addEventListener('input', function() {
+            const input = this.value;
+            const options = document.querySelectorAll('#airlines_list option');
+            let selectedCode = '';
+    
+            options.forEach(option => {
+                if (option.value === input) {
+                    selectedCode = option.getAttribute('data-code');
+                }
+            });
+        });
+    </script>
+
+    <script src="{% static 'js/dashboard/bookinginfo.js' %}"></script>
+{% endblock jsfiles %}
+
+
+

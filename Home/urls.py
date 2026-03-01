@@ -1,0 +1,46 @@
+from django.urls import path
+from . import views
+
+urlpatterns = [
+  path('', views.dashboard, name='dashboard'),
+  path('managebooking/signin', views.signin, name='signin'),
+  path('signout', views.signout, name='signout'),
+  path('terms_and_conditions', views.terms_and_conditions, name='terms_and_conditions'),
+  path('refund_and_cancellation', views.refund_and_cancellation, name='refund_and_cancellation'),
+  path('privacy_legal', views.privacy_legal, name='privacy_legal'),
+  path('teams', views.teams, name='teams'),
+  path('markup', views.markup, name='markup'),
+  path('all_countries', views.all_countries, name='all_countries'),
+  path('crm', views.crm, name='crm'),
+  path('viewItinerary/<int:booking_id>', views.viewItinerary, name='viewItinerary'),
+  path('crm', views.crm, name='crm'),
+  path('about', views.about, name='about'),
+  path('service', views.service, name='service'),
+  path('contact', views.contact, name='contact'),
+  path('faq', views.faq, name='faq'),
+  path('portfolio', views.portfolio, name='portfolio'),
+  path('blog', views.blog, name='blog'),
+  path('blog_information', views.blog_information, name='blog_information'),
+  path('hotel_details', views.hotel_details, name='hotel_details'),
+  path('hotel_info', views.hotel_info, name='hotel_info'),
+  path('hotel_book', views.hotel_book, name='hotel_book'),
+  path('hotel_checkout', views.hotel_checkout, name='hotel_checkout'),
+  path('hotel_page', views.hotel_page, name='hotel_page'),
+  
+  path('tour_details', views.tour_details, name='tour_details'),
+  path('tour_book', views.tour_book, name='tour_book'),
+  path('tour_checkout', views.tour_checkout, name='tour_checkout'),
+  path('tour_info', views.tour_info, name='tour_info'),
+  path('tour_page', views.tour_page, name='tour_page'),
+  
+  path('car_details', views.car_details, name='car_details'),
+  path('car_book', views.car_book, name='car_book'),
+  path('car_checkout', views.car_checkout, name='car_checkout'),
+  path('car_info', views.car_info, name='car_info'),
+  path('car_page', views.car_page, name='car_page'),
+  
+  path('resturant_details', views.resturant_details, name='resturant_details'),
+  path('resturant_checkout', views.resturant_checkout, name='resturant_checkout'),
+  path('resturant_info', views.resturant_info, name='resturant_info'),
+  path('resturant_page', views.resturant_page, name='resturant_page'),
+]
