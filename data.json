@@ -1,0 +1,228 @@
+{
+  "meta": {
+    "count": 1,
+    "links": {
+      "self": "https://test.travel.api.amadeus.com/v1/booking/flight-orders/eJzTd9f3NzaKNLYEAAp8Ah8%3D"
+    }
+  },
+  "data": {
+    "type": "flight-order",
+    "id": "eJzTd9f3NzaKNLYEAAp8Ah8%3D",
+    "queuingOfficeId": "LOSN828HJ",
+    "associatedRecords": [
+      {
+        "reference": "AOOIWW",
+        "originSystemCode": "AW",
+        "flightOfferId": "1"
+      },
+      {
+        "reference": "O32Y39",
+        "creationDate": "2024-10-31T21:12:00",
+        "originSystemCode": "GDS",
+        "flightOfferId": "1"
+      }
+    ],
+    "flightOffers": [
+      {
+        "type": "flight-offer",
+        "id": "1",
+        "source": "GDS",
+        "nonHomogeneous": false,
+        "lastTicketingDate": "2024-11-01",
+        "itineraries": [
+          {
+            "segments": [
+              {
+                "departure": {
+                  "iataCode": "LOS",
+                  "terminal": "2",
+                  "at": "2024-11-01T09:10:00"
+                },
+                "arrival": {
+                  "iataCode": "ACC",
+                  "terminal": "3",
+                  "at": "2024-11-01T09:10:00"
+                },
+                "carrierCode": "AW",
+                "number": "211",
+                "aircraft": {
+                  "code": "ER4"
+                },
+                "duration": "PT1H",
+                "bookingStatus": "CONFIRMED",
+                "segmentType": "ACTIVE",
+                "isFlown": false,
+                "id": "1",
+                "numberOfStops": 0,
+                "co2Emissions": [
+                  {
+                    "weight": 93,
+                    "weightUnit": "KG",
+                    "cabin": "ECONOMY"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "price": {
+          "currency": "NGN",
+          "total": "245200.00",
+          "base": "15264.00",
+          "grandTotal": "245200.00"
+        },
+        "pricingOptions": {
+          "fareType": [
+            "PUBLISHED"
+          ]
+        },
+        "validatingAirlineCodes": [
+          "AW"
+        ],
+        "travelerPricings": [
+          {
+            "travelerId": "1",
+            "travelerType": "ADULT",
+            "price": {
+              "currency": "NGN",
+              "total": "245200.00",
+              "base": "15264.00",
+              "taxes": [
+                {
+                  "amount": "19504.00",
+                  "code": "G5"
+                },
+                {
+                  "amount": "2672.00",
+                  "code": "NG"
+                },
+                {
+                  "amount": "135680.00",
+                  "code": "QT"
+                },
+                {
+                  "amount": "33920.00",
+                  "code": "TE"
+                },
+                {
+                  "amount": "38160.00",
+                  "code": "YQ"
+                }
+              ]
+            },
+            "fareDetailsBySegment": [
+              {
+                "segmentId": "1",
+                "cabin": "ECONOMY",
+                "fareBasis": "TOWRN",
+                "class": "T",
+                "includedCheckedBags": {
+                  "weight": 23,
+                  "weightUnit": "KG"
+                },
+                "mealServices": [
+                  {
+                    "label": "No meal service"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "travelers": [
+      {
+        "id": "1",
+        "gender": "MALE",
+        "name": {
+          "firstName": "JAMES",
+          "lastName": "MACALISTER"
+        },
+        "contact": {
+          "purpose": "STANDARD",
+          "phones": [
+            {
+              "deviceType": "MOBILE",
+              "countryCallingCode": "213",
+              "number": "90902987654"
+            }
+          ],
+          "emailAddress": "FREEZYDANIEL@YAHOO.COM"
+        }
+      }
+    ],
+    "remarks": {
+      "general": [
+        {
+          "subType": "GENERAL_MISCELLANEOUS",
+          "text": "PRICING ENTRY FXP/SBF/R,P,VC-AW,FC-NGN/P1",
+          "flightOfferIds": [
+            "1"
+          ]
+        }
+      ],
+      "airline": [
+        {
+          "subType": "ADVANCED_TICKET_TIME_LIMIT",
+          "airlineCode": "AW",
+          "text": "TO AW ON/BEFORE 01NOV/0010 AT LOS OTHERWISE WILL BE XLD",
+          "flightOfferIds": [
+            "1"
+          ]
+        }
+      ]
+    },
+    "ticketingAgreement": {
+      "option": "DELAY_TO_CANCEL",
+      "dateTime": "2024-10-31"
+    },
+    "contacts": [
+      {
+        "addresseeName": {
+          "firstName": "JOMIVIC TRAVELS"
+        },
+        "address": {
+          "lines": [
+            "25, THE PROVIDENCE STREET",
+            "OPP. PENINSULA HOTEL, LEKKI PHASE 1"
+          ],
+          "postalCode": "23401",
+          "countryCode": "NG",
+          "cityName": "LAGOS",
+          "stateName": "LAGOS"
+        },
+        "purpose": "STANDARD",
+        "emailAddress": "Info@jomivictravels.com"
+      },
+      {
+        "addresseeName": {
+          "firstName": "JOMIVIC TRAVELS"
+        },
+        "address": {
+          "lines": [
+            "25, THE PROVIDENCE STREET",
+            "OPP. PENINSULA HOTEL, LEKKI PHASE 1"
+          ],
+          "postalCode": "23401",
+          "countryCode": "NG",
+          "cityName": "LAGOS",
+          "stateName": "LAGOS"
+        },
+        "purpose": "INVOICE"
+      }
+    ]
+  },
+  "dictionaries": {
+    "locations": {
+      "LOS": {
+        "cityCode": "LOS",
+        "countryCode": "NG"
+      },
+      "ACC": {
+        "cityCode": "ACC",
+        "countryCode": "GH"
+      }
+    }
+  }
+}

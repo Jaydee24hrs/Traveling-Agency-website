@@ -1,0 +1,42 @@
+/media
+../.env
+.env
+# Ignore migration files
+db.sqlite3
+# Ignore SQLite database files
+*.sqlite3
+.idea/
+django.log
+# But do not ignore __init__.py
+!*/migrations/__init__.py
+media
+/*/__pycache__/
+/*.pyc
+*/__pycache__/
+*.pyc
+# Ignore all __init__.py files
+__init__.py
+
+# Ignore all migration files
+*/migrations/*.py
+!*/migrations/__init__.py
+
+# Ignore compiled files
+*.pyc
+*.pyo
+
+# Ignore environment files and directories
+env/
+.env
+
+# Ignore database files
+*.sqlite3
+.DS_Store
+
+# Ignore any media/uploads or other large files you don’t want to track
+media/
+uploads/
+
+# Ignore Django static files (generated after running collectstatic)
+staticfiles/
+.venv/
